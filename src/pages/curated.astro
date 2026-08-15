@@ -1,0 +1,205 @@
+---
+import { Crown, Star } from '@lucide/astro'
+
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { formatCompactNumber, type Catalog } from '../lib/catalog'
+import { getCuratedGroups } from '../data/curated'
+import catalogData from '../data/catalog.json'
+
+const catalog = catalogData as Catalog
+const curatedGroups = getCuratedGroups()
+const curatedByName = new Map(
+  catalog.repositories.map((repository) => [repository.fullName, repository]),
+)
+const pickCount = curatedGroups.reduce((sum, group) => sum + group.picks.length, 0)
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
+---
+
+<BaseLayout title="站长精选 · DeepSeek Harness插件市场">
+  <section class="curated-page">
+    <div class="container">
+      <div class="curated-page__head">
+        <h1 class="curated-page__title">
+          <Crown size={22} stroke-width={1.7} />
+          站长精选
+        </h1>
+        <p class="curated-page__count">共 {pickCount} 个</p>
+      </div>
+
+      <div class="curated-list">
+        {curatedGroups.map((group) => (
+          <div class="curated-group">
+            <h2 class="curated-group__title">{group.category}</h2>
+            <div class="curated-grid">
+              {group.picks.map((pick) => {
+                const entry = curatedByName.get(pick.fullName)
+                const href = entry
+                  ? `${baseUrl}plugins/${entry.slug}`
+                  : `https://github.com/${pick.fullName}`
+                const stars = entry ? formatCompactNumber(entry.stars) : '—'
+                const owner = entry?.owner.login ?? pick.fullName.split('/')[0]
+                const name = entry?.name ?? pick.fullName.split('/')[1]
+                return (
+                  <a class="curated-card" href={href}>
+                    <span class="curated-card__rank">Top {pick.rank}</span>
+                    <span class="curated-card__name">{name}</span>
+                    <span class="curated-card__meta">
+                      <span class="curated-card__owner">{owner}</span>
+                      <span class="curated-card__stars">
+                        <Star size={12} stroke-width={1.8} />
+                        {stars}
+                      </span>
+                    </span>
+                    <span class="curated-card__reason">{pick.reason}</span>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .curated-page {
+    min-height: 60vh;
+    padding-block: 36px 64px;
+  }
+
+  .curated-page__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+
+  .curated-page__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: -0.01em;
+  }
+
+  .curated-page__count {
+    color: var(--text-3);
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .curated-group + .curated-group {
+    margin-top: 30px;
+  }
+
+  .curated-group__title {
+    margin-bottom: 12px;
+    color: var(--text-2);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .curated-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .curated-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+    padding: 14px 16px 16px;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .curated-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-pop);
+  }
+
+  .curated-card__rank {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 1px 8px;
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 18px;
+  }
+
+  .curated-card__name {
+    color: var(--text-1);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+
+  .curated-card:hover .curated-card__name {
+    color: var(--accent);
+  }
+
+  .curated-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--text-3);
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .curated-card__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .curated-card__reason {
+    color: var(--text-2);
+    font-size: 12.5px;
+    line-height: 20px;
+  }
+
+  @media (max-width: 1023px) {
+    .curated-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .curated-page {
+      padding-block: 28px 48px;
+    }
+
+    .curated-page__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .curated-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

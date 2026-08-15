@@ -1,0 +1,339 @@
+---
+import { Archive, Bookmark, CalendarDays, Code, Sparkle, Star, Tag } from '@lucide/astro'
+
+import type { CatalogEntry } from '../lib/catalog'
+import { formatCompactNumber } from '../lib/catalog'
+import { getCategory, getProjectTypeLabel } from '../lib/classification'
+
+interface Props {
+  repository: CatalogEntry
+}
+
+const { repository } = Astro.props
+const category = getCategory(repository.category)
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
+const detailUrl = `${baseUrl}plugins/${repository.slug}`
+const searchable = [
+  repository.name,
+  repository.fullName,
+  repository.description,
+  repository.language ?? '',
+  ...repository.topics,
+].join(' ').toLocaleLowerCase('zh-CN')
+
+// 收录 7 天内的仓库标记为“新”
+const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400_000
+
+// 状态徽章最多显示一个，优先级：已归档 > 精选。
+// 全部渲染，由服务端或前端 JS 按状态切换 hidden。
+const activeStatusKind = repository.archived
+  ? 'archived'
+  : repository.featured
+    ? 'featured'
+    : null
+
+const visibleTopics = repository.topics.slice(0, 2)
+
+// 创建日期，固定 Asia/Shanghai 时区，格式 YYYY-MM-DD
+const formatCreatedDate = (value: string): string => {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '未知'
+  const parts = new Intl.DateTimeFormat('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date)
+  const get = (type: string) => parts.find((part) => part.type === type)?.value ?? ''
+  return `${get('year')}-${get('month')}-${get('day')}`
+}
+---
+
+<article
+  class="project-card card"
+  data-project-card
+  data-search={searchable}
+  data-category={repository.category}
+  data-type={repository.projectType}
+  data-stars={repository.stars}
+  data-updated={repository.pushedAt}
+>
+  <div class="project-card__topline">
+    <span class="project-card__category">
+      <i style={`--category-color: ${category.color}`}></i>
+      <span data-field="category">{category.label}</span>
+    </span>
+    <span class="badge badge--new" data-status-kind="new" hidden={!isNew}>
+      <Sparkle size={12} stroke-width={2} />
+      新
+    </span>
+    <span class="project-card__type" data-field="project-type">
+      {getProjectTypeLabel(repository.projectType)}
+    </span>
+    <span class="badge badge--featured" data-status-kind="featured" hidden={activeStatusKind !== 'featured'}>
+      <Star size={12} stroke-width={2} />
+      精选
+    </span>
+    <span class="badge badge--archived" data-status-kind="archived" hidden={activeStatusKind !== 'archived'}>
+      <Archive size={12} stroke-width={2} />
+      已归档
+    </span>
+  </div>
+
+  <div class="project-card__identity">
+    <h2>
+      <a data-field="detail-link" href={detailUrl}>{repository.name}</a>
+    </h2>
+    <p data-field="owner">{repository.owner.login}</p>
+  </div>
+
+  <p class="project-card__description" data-field="description">{repository.description}</p>
+
+  {
+    visibleTopics.length > 0 && (
+      <div class="project-card__topics" data-field="topics" aria-label="项目标签">
+        {visibleTopics.map((topic) => (
+          <a href={`${baseUrl}topics/${encodeURIComponent(topic)}`} title={`查看 ${topic} 标签下的项目`}>
+            <Tag size={11} stroke-width={2} />
+            <span data-field="topic-text">{topic}</span>
+          </a>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="project-card__meta">
+    <span class="project-card__stars" title="Star 数">
+      <Star size={13} stroke-width={1.7} />
+      <span data-field="stars">{formatCompactNumber(repository.stars)}</span>
+    </span>
+    {
+      repository.language && (
+        <span class="project-card__language" title="主要语言">
+          <Code size={13} stroke-width={1.7} />
+          <span data-field="language">{repository.language}</span>
+        </span>
+      )
+    }
+    <span class="project-card__created" title="创建日期">
+      <CalendarDays size={13} stroke-width={1.7} />
+      <span data-field="created">{formatCreatedDate(repository.createdAt)}</span>
+    </span>
+    <button
+      class="project-card__fav"
+      data-fav
+      data-fav-id={repository.repositoryId}
+      type="button"
+      aria-label={`收藏 ${repository.name}`}
+      aria-pressed="false"
+      title="收藏"
+    >
+      <Bookmark size={15} stroke-width={1.7} />
+    </button>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 236px;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-pop);
+  }
+
+  .project-card__topline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .project-card__category {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    color: var(--text-2);
+    font-size: 12px;
+  }
+
+  .project-card__category i {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--category-color);
+  }
+
+  .project-card__category span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .badge--new {
+    background: var(--warning-soft);
+    color: var(--warning);
+  }
+
+  .project-card__type {
+    margin-left: auto;
+    color: var(--text-3);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .project-card__identity {
+    min-width: 0;
+  }
+
+  .project-card__identity h2 {
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-card__identity h2 a {
+    transition: color 140ms ease;
+  }
+
+  .project-card__identity h2 a::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+
+  .project-card:hover .project-card__identity h2 a {
+    color: var(--accent);
+  }
+
+  .project-card__identity p {
+    margin-top: 2px;
+    color: var(--text-3);
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .project-card__description {
+    display: -webkit-box;
+    min-height: 42px;
+    overflow: hidden;
+    color: var(--text-2);
+    font-size: 13px;
+    line-height: 21px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .project-card__topics {
+    display: flex;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .project-card__topics a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 22px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-soft);
+    color: var(--text-3);
+    font-size: 11px;
+    line-height: 1;
+    padding: 0 8px;
+    transition:
+      background-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .project-card__topics a:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .project-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+
+  .project-card__meta > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .project-card__language span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-card__stars {
+    color: var(--text-2);
+  }
+
+  .project-card__fav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-left: auto;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-3);
+    cursor: pointer;
+    transition:
+      color 140ms ease,
+      background-color 140ms ease,
+      border-color 140ms ease;
+  }
+
+  .project-card__fav:hover {
+    background: var(--bg-soft);
+    color: var(--text-1);
+  }
+
+  .project-card__fav.is-active {
+    color: var(--accent);
+  }
+
+  .project-card__fav.is-active svg {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+
+  @media (max-width: 767px) {
+    .project-card {
+      min-height: 0;
+    }
+
+    .project-card__fav {
+      width: 34px;
+      height: 34px;
+    }
+  }
+</style>

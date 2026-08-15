@@ -1,0 +1,30 @@
+{
+  "name": "dsh-plugin-store",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "sync": "tsx scripts/sync-github.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "@astrojs/sitemap": "^3.7.3",
+    "@lucide/astro": "^1.31.0",
+    "astro": "latest",
+    "cheerio": "^1.2.0",
+    "simple-icons-astro": "^16.1.0",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@vitest/coverage-v8": "latest",
+    "tsx": "latest",
+    "vitest": "latest"
+  }
+}

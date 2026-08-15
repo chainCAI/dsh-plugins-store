@@ -1,0 +1,759 @@
+---
+import {
+  Bookmark,
+  Boxes,
+  ChevronDown,
+  Crown,
+  LayoutGrid,
+  Layers,
+  RefreshCw,
+  Search,
+  SlidersHorizontal,
+  Star,
+} from '@lucide/astro'
+
+import ProjectCard from '../components/ProjectCard.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { sortCatalogEntries, type Catalog } from '../lib/catalog'
+import { CATEGORIES, PROJECT_TYPES } from '../lib/classification'
+import { CURATED_PICKS } from '../data/curated'
+import catalogData from '../data/catalog.json'
+
+const catalog = catalogData as Catalog
+const featuredCount = catalog.repositories.filter((repository) => repository.featured).length
+const initialRepositories = sortCatalogEntries(catalog.repositories, 'stars').slice(0, 24)
+const generatedDate = new Intl.DateTimeFormat('zh-CN', {
+  timeZone: 'Asia/Shanghai',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+}).format(new Date(catalog.generatedAt))
+const serializedCatalog = JSON.stringify(catalog.repositories).replace(/</g, '\\u003c')
+const serializedCategories = JSON.stringify(CATEGORIES).replace(/</g, '\\u003c')
+const serializedTypes = JSON.stringify(PROJECT_TYPES).replace(/</g, '\\u003c')
+const serializedCurated = JSON.stringify(CURATED_PICKS.map((pick) => pick.fullName)).replace(/</g, '\\u003c')
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
+---
+
+<BaseLayout>
+  <section class="home-hero">
+    <div class="container home-hero__inner">
+      <p class="mono-label">DEEPSEEK HARNESS PLUGIN STORE</p>
+      <img class="home-hero__logo" src={`${baseUrl}logo-hero.png`} width="160" height="160" alt="" />
+      <h1>DeepSeek Harness插件市场</h1>
+      <p class="home-hero__lead">从 GitHub 自动收录 DeepSeek Harness 插件，按使用场景分类浏览。</p>
+
+      <label class="field home-search">
+        <Search size={17} stroke-width={1.7} />
+        <input
+          id="catalog-search"
+          type="search"
+          placeholder="搜索插件、作者、描述或标签"
+          autocomplete="off"
+        />
+      </label>
+
+      <div class="home-hero__stats" aria-label="收录统计">
+        <dl class="home-hero__stats-grid">
+          <div class="home-stat">
+            <dt><Boxes size={14} stroke-width={1.7} /> 已收录</dt>
+            <dd>{catalog.stats.fetched}</dd>
+          </div>
+          <div class="home-stat">
+            <dt><Star size={14} stroke-width={1.7} /> 精选</dt>
+            <dd>{featuredCount}</dd>
+          </div>
+          <div class="home-stat">
+            <dt><LayoutGrid size={14} stroke-width={1.7} /> 功能分类</dt>
+            <dd>{CATEGORIES.length}</dd>
+          </div>
+          <div class="home-stat">
+            <dt><RefreshCw size={14} stroke-width={1.7} /> 数据更新</dt>
+            <dd class="home-stat__time">{generatedDate}</dd>
+          </div>
+        </dl>
+        <a class="curated-hero-btn" href={`${baseUrl}curated`}>
+          <Crown size={16} stroke-width={1.8} aria-hidden="true" />
+          <span class="curated-hero-btn__label">站长精选</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-tools">
+    <div class="container">
+      <div class="home-tools__row">
+        <div class="home-tools__selects">
+          <label class="field select-field">
+            <SlidersHorizontal size={14} stroke-width={1.7} />
+            <span class="select-value" id="sort-filter-value">最多 Star</span>
+            <select id="sort-filter" aria-label="排序方式">
+              <option value="stars">最多 Star</option>
+              <option value="updated">最近更新</option>
+              <option value="name">名称排序</option>
+            </select>
+            <ChevronDown size={13} stroke-width={1.7} />
+          </label>
+          <label class="field select-field">
+            <Layers size={14} stroke-width={1.7} />
+            <span class="select-value" id="type-filter-value">全部类型</span>
+            <select id="type-filter" aria-label="项目类型">
+              <option value="all">全部类型</option>
+              {PROJECT_TYPES.map((type) => (
+                <option value={type.id}>{type.label} · {catalog.stats.projectTypes[type.id] ?? 0}</option>
+              ))}
+            </select>
+            <ChevronDown size={13} stroke-width={1.7} />
+          </label>
+        </div>
+        <div class="category-row" id="category-filter" aria-label="筛选">
+          <button class="chip is-active" type="button" data-category="all">
+            全部 <span class="chip__count">{catalog.stats.fetched}</span>
+          </button>
+          <button class="chip" type="button" data-category="favorites">
+            <Bookmark size={12} stroke-width={1.8} />
+            收藏 <span class="chip__count" id="favorite-count">0</span>
+          </button>
+          <button class="chip" type="button" data-category="curated">
+            <Crown size={12} stroke-width={1.8} />
+            站长精选 <span class="chip__count">{CURATED_PICKS.length}</span>
+          </button>
+          <button class="chip" type="button" data-category="featured">
+            <i class="chip__dot chip__dot--featured"></i>
+            精选 <span class="chip__count">{featuredCount}</span>
+          </button>
+          {CATEGORIES.map((category) => (
+            <button class="chip" type="button" data-category={category.id}>
+              <i class="chip__dot" style={`--category-color: ${category.color}`}></i>
+              {category.label}
+              <span class="chip__count">{catalog.stats.categories[category.id] ?? 0}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-results">
+    <div class="container">
+      <div class="results-head">
+        <p><span id="result-count">{catalog.stats.fetched}</span> 个项目</p>
+        <p class="results-head__note">自动同步 GitHub 数据</p>
+      </div>
+
+      <div class="project-grid" id="project-grid">
+        {initialRepositories.map((repository) => <ProjectCard repository={repository} />)}
+      </div>
+
+      <div class="empty-state" id="empty-state" hidden>
+        <Search size={28} stroke-width={1.4} />
+        <h2>没有找到匹配项目</h2>
+        <p>换个关键词或清除筛选条件试试。</p>
+        <button class="btn" id="clear-filters" type="button">清除筛选</button>
+      </div>
+
+      <div class="load-row">
+        <button class="btn" id="load-more" type="button">
+          加载更多
+          <span id="remaining-count">{Math.max(0, catalog.stats.fetched - initialRepositories.length)}</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script id="catalog-data" type="application/json" set:html={serializedCatalog} is:inline></script>
+  <script id="category-data" type="application/json" set:html={serializedCategories} is:inline></script>
+  <script id="type-data" type="application/json" set:html={serializedTypes} is:inline></script>
+  <script id="curated-data" type="application/json" set:html={serializedCurated} is:inline></script>
+  <script id="base-url" type="application/json" set:html={JSON.stringify(baseUrl)} is:inline></script>
+
+  <script is:inline>
+    const repositories = JSON.parse(document.getElementById('catalog-data').textContent)
+    const categories = JSON.parse(document.getElementById('category-data').textContent)
+    const projectTypes = JSON.parse(document.getElementById('type-data').textContent)
+    const curatedNames = new Set(JSON.parse(document.getElementById('curated-data').textContent))
+    const baseUrl = JSON.parse(document.getElementById('base-url').textContent)
+    const categoryById = new Map(categories.map((category) => [category.id, category]))
+    const typeById = new Map(projectTypes.map((type) => [type.id, type]))
+    const grid = document.getElementById('project-grid')
+    const sourceCard = grid.querySelector('[data-project-card]').cloneNode(true)
+    const searchInput = document.getElementById('catalog-search')
+    const typeFilter = document.getElementById('type-filter')
+    const sortFilter = document.getElementById('sort-filter')
+    const typeFilterValue = document.getElementById('type-filter-value')
+    const sortFilterValue = document.getElementById('sort-filter-value')
+    const categoryFilter = document.getElementById('category-filter')
+    const resultCount = document.getElementById('result-count')
+    const loadMore = document.getElementById('load-more')
+    const remainingCount = document.getElementById('remaining-count')
+    const emptyState = document.getElementById('empty-state')
+    const clearFilters = document.getElementById('clear-filters')
+    const favoriteCount = document.getElementById('favorite-count')
+    const pageSize = 24
+
+    // ---------- 收藏（localStorage） ----------
+    const FAVORITES_KEY = 'dsh-market:favorites'
+    const readFavorites = () => {
+      try {
+        const raw = localStorage.getItem(FAVORITES_KEY)
+        return new Set(raw ? JSON.parse(raw) : [])
+      } catch {
+        return new Set()
+      }
+    }
+    let favorites = readFavorites()
+    const writeFavorites = () => {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]))
+      favoriteCount.textContent = String(favorites.size)
+    }
+
+    const requestedCategory = new URLSearchParams(window.location.search).get('category')
+    let selectedCategory = requestedCategory === 'featured'
+      || requestedCategory === 'favorites'
+      || requestedCategory === 'curated'
+      || categoryById.has(requestedCategory)
+      ? requestedCategory
+      : 'all'
+    let visibleCount = pageSize
+
+    const compactNumber = (value) => {
+      if (value < 1000) return String(value)
+      if (value < 1000000) return `${(value / 1000).toFixed(1).replace(/\.0$/, '')}k`
+      return `${(value / 1000000).toFixed(1).replace(/\.0$/, '')}m`
+    }
+
+    // 创建日期，固定 Asia/Shanghai 时区，格式 YYYY-MM-DD
+    const formatCreatedDate = (value) => {
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) return '未知'
+      const parts = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Asia/Shanghai',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(date)
+      const get = (type) => parts.find((part) => part.type === type)?.value ?? ''
+      return `${get('year')}-${get('month')}-${get('day')}`
+    }
+
+    const setText = (card, selector, value) => {
+      const target = card.querySelector(selector)
+      if (target) target.textContent = value
+    }
+
+    const createCard = (repository) => {
+      const card = sourceCard.cloneNode(true)
+      const category = categoryById.get(repository.category)
+      const projectType = typeById.get(repository.projectType)
+      const detailUrl = `${baseUrl}plugins/${repository.slug}`
+      const searchable = [
+        repository.name,
+        repository.fullName,
+        repository.description,
+        repository.language || '',
+        ...repository.topics,
+      ].join(' ').toLocaleLowerCase('zh-CN')
+
+      card.dataset.search = searchable
+      card.dataset.category = repository.category
+      card.dataset.type = repository.projectType
+      card.dataset.stars = String(repository.stars)
+      card.dataset.updated = repository.pushedAt
+
+      const categoryDot = card.querySelector('.project-card__category i')
+      if (categoryDot) categoryDot.style.setProperty('--category-color', category.color)
+      setText(card, '[data-field="category"]', category.label)
+      setText(card, '[data-field="project-type"]', projectType.label)
+      setText(card, '[data-field="owner"]', repository.owner.login)
+      setText(card, '[data-field="description"]', repository.description)
+      setText(card, '[data-field="stars"]', compactNumber(repository.stars))
+      setText(card, '[data-field="created"]', formatCreatedDate(repository.createdAt))
+
+      const language = card.querySelector('[data-field="language"]')
+      if (language) {
+        language.textContent = repository.language || ''
+        language.closest('.project-card__language').hidden = !repository.language
+      }
+
+      const detailLink = card.querySelector('[data-field="detail-link"]')
+      detailLink.href = detailUrl
+      detailLink.textContent = repository.name
+
+      // 状态徽章：新（7 天）独立；已归档 > 精选 互斥
+      const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86400000
+      const statusKind = repository.archived
+        ? 'archived'
+        : repository.featured
+          ? 'featured'
+          : null
+      card.querySelectorAll('[data-status-kind]').forEach((badge) => {
+        badge.hidden = true
+      })
+      if (isNew) {
+        const newBadge = card.querySelector('[data-status-kind="new"]')
+        if (newBadge) newBadge.hidden = false
+      }
+      if (statusKind) {
+        const statusBadge = card.querySelector(`[data-status-kind="${statusKind}"]`)
+        if (statusBadge) statusBadge.hidden = false
+      }
+
+      // 标签（最多 2 个，可点击跳转）
+      const topicList = card.querySelector('[data-field="topics"]')
+      if (topicList) {
+        const topics = repository.topics.slice(0, 2)
+        if (topics.length > 0) {
+          const templateLink = topicList.querySelector('a')
+          topicList.replaceChildren(...topics.map((topic) => {
+            const link = templateLink.cloneNode(true)
+            link.href = `${baseUrl}topics/${encodeURIComponent(topic)}`
+            link.title = `查看 ${topic} 标签下的项目`
+            const text = link.querySelector('[data-field="topic-text"]')
+            if (text) text.textContent = topic
+            return link
+          }))
+        } else {
+          topicList.remove()
+        }
+      }
+
+      // 收藏按钮
+      const favButton = card.querySelector('[data-fav]')
+      if (favButton) {
+        const favId = String(repository.repositoryId)
+        favButton.dataset.favId = favId
+        favButton.setAttribute('aria-label', `收藏 ${repository.name}`)
+        const isFav = favorites.has(favId)
+        favButton.classList.toggle('is-active', isFav)
+        favButton.setAttribute('aria-pressed', String(isFav))
+        favButton.addEventListener('click', (event) => {
+          event.preventDefault()
+          event.stopPropagation()
+          const active = !favorites.has(favId)
+          if (active) {
+            favorites.add(favId)
+          } else {
+            favorites.delete(favId)
+          }
+          writeFavorites()
+          favButton.classList.toggle('is-active', active)
+          favButton.setAttribute('aria-pressed', String(active))
+          if (selectedCategory === 'favorites') render()
+        })
+      }
+
+      return card
+    }
+
+    const getFilteredRepositories = () => {
+      const query = searchInput.value.trim().toLocaleLowerCase('zh-CN')
+      const selectedType = typeFilter.value
+      return repositories.filter((repository) => {
+        const searchable = [
+          repository.name,
+          repository.fullName,
+          repository.description,
+          repository.language || '',
+          ...repository.topics,
+        ].join(' ').toLocaleLowerCase('zh-CN')
+        const matchesQuery = !query || searchable.includes(query)
+        const matchesCategory = selectedCategory === 'all'
+          || (selectedCategory === 'favorites'
+            ? favorites.has(String(repository.repositoryId))
+            : selectedCategory === 'curated'
+              ? curatedNames.has(repository.fullName)
+              : selectedCategory === 'featured'
+                ? repository.featured
+                : repository.category === selectedCategory)
+        const matchesType = selectedType === 'all' || repository.projectType === selectedType
+        return matchesQuery && matchesCategory && matchesType
+      })
+    }
+
+    const compareStatus = (left, right) => {
+      const featuredPriority = Number(right.featured) - Number(left.featured)
+      return featuredPriority
+    }
+    const compareStars = (left, right) => (
+      right.stars - left.stars
+      || compareStatus(left, right)
+      || left.fullName.localeCompare(right.fullName)
+    )
+
+    const sortRepositories = (filtered) => {
+      const sort = sortFilter.value
+      if (sort === 'updated') {
+        return filtered.sort((left, right) => (
+          Date.parse(right.pushedAt) - Date.parse(left.pushedAt)
+          || compareStatus(left, right)
+          || left.fullName.localeCompare(right.fullName)
+        ))
+      }
+      if (sort === 'name') {
+        return filtered.sort((left, right) => (
+          left.name.localeCompare(right.name)
+          || compareStatus(left, right)
+          || left.fullName.localeCompare(right.fullName)
+        ))
+      }
+      return filtered.sort(compareStars)
+    }
+
+    const render = () => {
+      const filtered = sortRepositories(getFilteredRepositories())
+      const visible = filtered.slice(0, visibleCount)
+      grid.replaceChildren(...visible.map(createCard))
+      resultCount.textContent = String(filtered.length)
+      emptyState.hidden = filtered.length !== 0
+      grid.hidden = filtered.length === 0
+      const remaining = Math.max(0, filtered.length - visible.length)
+      loadMore.hidden = remaining === 0
+      remainingCount.textContent = String(remaining)
+    }
+
+    const resetAndRender = () => {
+      visibleCount = pageSize
+      render()
+    }
+
+    const syncSelectValue = (select, target) => {
+      target.textContent = select.selectedOptions[0]?.textContent ?? ''
+    }
+
+    const setCategory = (category) => {
+      selectedCategory = category
+      categoryFilter.querySelectorAll('[data-category]').forEach((item) => {
+        item.classList.toggle('is-active', item.dataset.category === category)
+      })
+      resetAndRender()
+    }
+
+    searchInput.addEventListener('input', resetAndRender)
+    typeFilter.addEventListener('change', () => {
+      syncSelectValue(typeFilter, typeFilterValue)
+      resetAndRender()
+    })
+    sortFilter.addEventListener('change', () => {
+      syncSelectValue(sortFilter, sortFilterValue)
+      resetAndRender()
+    })
+    categoryFilter.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-category]')
+      if (!button) return
+      setCategory(button.dataset.category)
+    })
+    loadMore.addEventListener('click', () => {
+      visibleCount += pageSize
+      render()
+    })
+    clearFilters.addEventListener('click', () => {
+      searchInput.value = ''
+      typeFilter.value = 'all'
+      sortFilter.value = 'stars'
+      syncSelectValue(typeFilter, typeFilterValue)
+      syncSelectValue(sortFilter, sortFilterValue)
+      setCategory('all')
+      searchInput.focus()
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '/' && document.activeElement !== searchInput) {
+        event.preventDefault()
+        searchInput.focus()
+      }
+      if (event.key === 'Escape' && document.activeElement === searchInput) {
+        searchInput.value = ''
+        searchInput.blur()
+        resetAndRender()
+      }
+    })
+    if (selectedCategory !== 'all') {
+      categoryFilter.querySelectorAll('[data-category]').forEach((item) => {
+        item.classList.toggle('is-active', item.dataset.category === selectedCategory)
+      })
+      resetAndRender()
+    }
+    favoriteCount.textContent = String(favorites.size)
+  </script>
+</BaseLayout>
+
+<style>
+  /* ---------- hero ---------- */
+
+  .home-hero {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .home-hero__inner {
+    display: grid;
+    justify-items: center;
+    padding-block: 64px 44px;
+    text-align: center;
+  }
+
+  .home-hero h1 {
+    margin-top: 12px;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: -0.01em;
+  }
+
+  .home-hero__logo {
+    width: 128px;
+    height: 128px;
+    margin-top: 20px;
+    border-radius: 28px;
+    box-shadow: 0 8px 24px rgb(16 35 77 / 0.12);
+  }
+
+  .home-hero__lead {
+    margin-top: 8px;
+    color: var(--text-2);
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .home-search {
+    width: min(480px, 100%);
+    min-height: 44px;
+    margin-top: 28px;
+  }
+
+  .home-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    width: min(760px, 100%);
+    margin: 32px 0 0;
+    text-align: left;
+  }
+
+  .home-hero__stats-grid {
+    display: contents;
+  }
+
+  .home-stat {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+    box-shadow: var(--shadow-card);
+    padding: 14px 16px;
+  }
+
+  .home-stat dt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-3);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .home-stat dd {
+    margin: 5px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .home-stat__time {
+    font-family: var(--font-mono);
+    font-size: 16px !important;
+    line-height: 30px !important;
+  }
+
+  .curated-hero-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    background: var(--accent-soft);
+    box-shadow: var(--shadow-card);
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    text-decoration: none;
+    padding: 14px 16px;
+    transition:
+      background-color 140ms ease,
+      border-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .curated-hero-btn:hover {
+    border-color: var(--accent-hover);
+    background: #dcebff;
+    color: var(--accent-hover);
+  }
+
+  /* ---------- tools ---------- */
+
+  .home-tools {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-subtle);
+  }
+
+  .home-tools__row {
+    display: grid;
+    gap: 12px;
+    padding-block: 14px;
+  }
+
+  .home-tools__selects {
+    display: flex;
+    gap: 8px;
+  }
+
+  .home-tools__selects .field {
+    min-height: 34px;
+    flex: 0 1 200px;
+  }
+
+  .category-row {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .category-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    flex: 0 0 auto;
+  }
+
+  .chip[data-category='curated'] .lucide-crown {
+    fill: #ffd700;
+  }
+
+  .chip__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--category-color, var(--text-3));
+  }
+
+  .chip__dot--featured {
+    background: var(--accent);
+  }
+
+  /* ---------- results ---------- */
+
+  .home-results {
+    min-height: 60vh;
+    padding-block: 24px 64px;
+  }
+
+  .results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 14px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+
+  .results-head p {
+    margin: 0;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .empty-state {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+    padding-block: 64px;
+    color: var(--text-3);
+    text-align: center;
+  }
+
+  .empty-state h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+
+  .empty-state p {
+    margin-bottom: 8px;
+  }
+
+  .load-row {
+    display: flex;
+    justify-content: center;
+    padding-top: 28px;
+  }
+
+  .load-row .btn {
+    min-width: 140px;
+    min-height: 38px;
+  }
+
+  @media (max-width: 1023px) {
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .home-hero__inner {
+      padding-block: 40px 32px;
+    }
+
+    .home-hero h1 {
+      font-size: 30px;
+      line-height: 38px;
+    }
+
+    .home-hero__stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .curated-hero-btn {
+      grid-column: 1 / -1;
+      flex-direction: row;
+    }
+
+    .home-stat {
+      padding: 12px 14px;
+    }
+
+    .home-stat dd {
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    .home-stat__time {
+      font-size: 14px !important;
+      line-height: 26px !important;
+    }
+
+    .home-tools__selects .field {
+      flex: 1 1 0;
+    }
+
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

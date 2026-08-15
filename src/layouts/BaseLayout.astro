@@ -1,0 +1,364 @@
+---
+import { getCanonicalUrl } from '../lib/seo'
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = 'DeepSeek Harness插件市场',
+  description = '自动收录并分类 GitHub dsh-plugin Topic 项目，提供搜索、筛选与验证信息。',
+} = Astro.props
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
+const canonicalUrl = getCanonicalUrl(Astro.url)
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="DeepSeek Harness插件市场" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href={`${baseUrl}favicon.png`} type="image/png" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href={baseUrl} aria-label="返回 DeepSeek Harness插件市场首页">
+          <span class="brand__mark" aria-hidden="true">
+            <img src={`${baseUrl}favicon.png`} width="30" height="30" alt="" />
+          </span>
+          <span class="brand__name">DeepSeek Harness插件市场</span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <div class="nav-pop">
+            <button class="btn btn--ghost nav-pop__trigger" type="button" aria-haspopup="true" aria-expanded="false">
+              公众号
+            </button>
+            <div class="nav-pop__card" role="group" aria-label="公众号 白菜与风AI">
+              <p class="nav-pop__title">白菜与风AI</p>
+              <img
+                class="nav-pop__qr"
+                src={`${baseUrl}wechat-gzh.png`}
+                width="220"
+                height="220"
+                alt="公众号 白菜与风AI 二维码"
+                loading="lazy"
+              />
+              <p class="nav-pop__id">
+                <span>微信ID：chainCAI</span>
+                <button class="nav-pop__copy" type="button" data-copy="chainCAI">复制</button>
+              </p>
+            </div>
+          </div>
+          <div class="nav-pop">
+            <button class="btn btn--ghost nav-pop__trigger" type="button" aria-haspopup="true" aria-expanded="false">
+              加入社群
+            </button>
+            <div class="nav-pop__card" role="group" aria-label="DSH千人社群">
+              <p class="nav-pop__title">DSH千人社群</p>
+              <img
+                class="nav-pop__qr"
+                src={`${baseUrl}wechat-group.webp`}
+                width="220"
+                height="308"
+                alt="DSH千人社群二维码"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p class="site-footer__copy">DeepSeek Harness插件市场 · MIT License</p>
+        <p class="site-footer__note">
+          数据来自 GitHub Topic，收录不代表审核、兼容或安全背书。
+        </p>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // 触屏支持：点击"公众号 / 加入社群"切换弹层，点击其他区域关闭（桌面端 hover 仍可用）
+      const navPops = document.querySelectorAll('.nav-pop')
+      const closeAllPops = () => {
+        navPops.forEach((pop) => {
+          pop.classList.remove('is-open')
+          pop.querySelector('.nav-pop__trigger')?.setAttribute('aria-expanded', 'false')
+        })
+      }
+      navPops.forEach((pop) => {
+        const trigger = pop.querySelector('.nav-pop__trigger')
+        trigger?.addEventListener('click', (event) => {
+          event.stopPropagation()
+          const isOpen = pop.classList.toggle('is-open')
+          trigger.setAttribute('aria-expanded', String(isOpen))
+        })
+      })
+      document.addEventListener('click', closeAllPops)
+
+      // 复制微信ID：优先 Clipboard API，失败时降级 execCommand
+      document.querySelectorAll('[data-copy]').forEach((button) => {
+        button.addEventListener('click', async (event) => {
+          event.stopPropagation()
+          const text = button.dataset.copy
+          try {
+            await navigator.clipboard.writeText(text)
+          } catch {
+            const area = document.createElement('textarea')
+            area.value = text
+            area.style.position = 'fixed'
+            area.style.opacity = '0'
+            document.body.appendChild(area)
+            area.select()
+            document.execCommand('copy')
+            area.remove()
+          }
+          button.textContent = '已复制'
+          button.classList.add('is-copied')
+          setTimeout(() => {
+            button.textContent = '复制'
+            button.classList.remove('is-copied')
+          }, 1600)
+        })
+      })
+    </script>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 30;
+    top: 0;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--header-h);
+    gap: 24px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .brand__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .brand__mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .brand__name {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* 按钮文字禁止折行（窄屏下"公众号/加入社群"不能变成"公众/号"） */
+  .nav-pop__trigger {
+    white-space: nowrap;
+  }
+
+  /* ---------- nav hover popovers (公众号 / 加入社群) ---------- */
+
+  .nav-pop {
+    position: relative;
+  }
+
+  /* 触发器与卡片之间的透明桥，保证悬停移动不中断 */
+  .nav-pop::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 10px;
+  }
+
+  .nav-pop__card {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 40;
+    width: 236px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg);
+    box-shadow: var(--shadow-pop);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 160ms;
+  }
+
+  .nav-pop__card::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    width: 9px;
+    height: 9px;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    transform: rotate(45deg);
+  }
+
+  .nav-pop:hover .nav-pop__card,
+  .nav-pop:focus-within .nav-pop__card,
+  .nav-pop.is-open .nav-pop__card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-pop__title {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+
+  .nav-pop__qr {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .nav-pop__id {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  .nav-pop__copy {
+    flex: 0 0 auto;
+    min-height: 22px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text-2);
+    font-size: 11px;
+    line-height: 1;
+    padding: 0 10px;
+    cursor: pointer;
+    transition:
+      border-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .nav-pop__copy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .nav-pop__copy.is-copied {
+    border-color: var(--success);
+    color: var(--success);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 24px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-2);
+    white-space: nowrap;
+    transition: color 140ms ease;
+  }
+
+  .site-footer__link:hover {
+    color: var(--text-1);
+  }
+
+  @media (max-width: 767px) {
+    .site-nav .btn--ghost:not(.btn--icon) {
+      padding: 0 10px;
+    }
+
+    .site-footer__inner {
+      flex-wrap: wrap;
+      padding-block: 20px;
+    }
+  }
+</style>

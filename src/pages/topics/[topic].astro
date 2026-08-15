@@ -1,0 +1,188 @@
+---
+import { ArrowLeft, Tag } from '@lucide/astro'
+
+import ProjectCard from '../../components/ProjectCard.astro'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { sortCatalogEntries, type Catalog, type CatalogEntry } from '../../lib/catalog'
+import catalogData from '../../data/catalog.json'
+
+interface Props {
+  topic: string
+  repositories: CatalogEntry[]
+}
+
+export function getStaticPaths() {
+  const catalog = catalogData as Catalog
+  const topics = [...new Set(catalog.repositories.flatMap((repository) => repository.topics))]
+    .sort((left, right) => left.localeCompare(right))
+
+  return topics.map((topic) => ({
+    params: { topic },
+    props: {
+      topic,
+      repositories: sortCatalogEntries(
+        catalog.repositories.filter((repository) => repository.topics.includes(topic)),
+        'rating',
+      ),
+    },
+  }))
+}
+
+const { topic, repositories } = Astro.props as Props
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
+---
+
+<BaseLayout
+  title={`${topic} 标签 · DeepSeek Harness插件市场`}
+  description={`浏览 GitHub Topic 为 ${topic} 的 DSH 生态项目。`}
+>
+  <section class="topic-hero">
+    <div class="container">
+      <a class="back-link" href={baseUrl}><ArrowLeft size={15} stroke-width={1.7} /> 返回目录</a>
+      <div class="topic-hero__content">
+        <div>
+          <p class="mono-label">GITHUB TOPIC</p>
+          <h1><Tag size={26} stroke-width={1.6} /> {topic}</h1>
+        </div>
+        <p><strong>{repositories.length}</strong> 个项目包含此标签</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="topic-results">
+    <div class="container">
+      <div class="results-head">
+        <p><span id="result-count">{repositories.length}</span> 个项目</p>
+        <p class="results-head__note">GitHub Topic 精确匹配</p>
+      </div>
+      <div class="project-grid">
+        {repositories.map((repository) => <ProjectCard repository={repository} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .topic-hero {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .topic-hero .container {
+    padding-block: 24px 40px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-3);
+    font-size: 13px;
+    transition: color 140ms ease;
+  }
+
+  .back-link:hover {
+    color: var(--text-1);
+  }
+
+  .topic-hero__content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+    padding-top: 40px;
+  }
+
+  .topic-hero__content h1 {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: -0.01em;
+  }
+
+  .topic-hero__content h1 svg {
+    color: var(--text-3);
+  }
+
+  .topic-hero__content > p {
+    flex: 0 0 auto;
+    color: var(--text-3);
+    font-size: 13px;
+  }
+
+  .topic-hero__content strong {
+    color: var(--text-1);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .topic-results {
+    min-height: 60vh;
+    padding-block: 28px 64px;
+  }
+
+  .results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+
+  .results-head p {
+    margin: 0;
+  }
+
+  .results-head__note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  @media (max-width: 1023px) {
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .topic-hero .container {
+      padding-block: 20px 32px;
+    }
+
+    .topic-hero__content {
+      display: grid;
+      gap: 20px;
+      padding-top: 32px;
+    }
+
+    .topic-hero__content h1 {
+      font-size: 26px;
+      line-height: 34px;
+    }
+
+    .topic-hero__content > p {
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
