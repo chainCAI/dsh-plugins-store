@@ -1,6 +1,8 @@
 import { load } from 'cheerio'
 
 const AWESOME_LISTED_STATUSES = new Set(['兼容', '关注', '需适配', '待调研'])
+/** 上游 PLUGINS.md 新格式状态列：✅ 兼容 / 已测 / 待测 视为在列，❌ 视为不在列 */
+const AWESOME_LISTED_CHECKED_STATUSES = new Set(['✅', '已测', '待测'])
 
 function getRepositoryPath(href: string): [string, string] | null {
   try {
@@ -26,9 +28,15 @@ export function extractAwesomeRepositoryNames(html: string): Set<string> {
 
   $('tr').each((_, row) => {
     const cells = $(row).find('td')
-    if (cells.length < 3 || !AWESOME_LISTED_STATUSES.has(cells.eq(2).text().trim())) return
+    if (cells.length < 3) return
 
-    const href = cells.eq(0).find('a[href]').first().attr('href')
+    // 旧格式：第 3 列为中文生命周期状态；新格式（PLUGINS.md）：最后一列为 ✅/已测/待测/❌
+    const isListed = AWESOME_LISTED_STATUSES.has(cells.eq(2).text().trim())
+      || (cells.length >= 4 && AWESOME_LISTED_CHECKED_STATUSES.has(cells.eq(3).text().trim()))
+    if (!isListed) return
+
+    // 链接可能在第 1 列（旧格式）或第 2 列（新格式），取行内第一个 GitHub 仓库链接
+    const href = cells.find('a[href]').first().attr('href')
     if (!href) return
     const name = getRepositoryName(href)
     if (name) names.add(name)

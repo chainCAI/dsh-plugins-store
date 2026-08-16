@@ -42,6 +42,25 @@ describe('awesome-dsh-plugins catalog matching', () => {
 
     expect([...extractAwesomeRepositoryNames(html)]).toEqual([])
   })
+  it('parses the PLUGINS.md format: name / owner-repo link / description / check status', () => {
+    const html = `
+      <table>
+        <tbody>
+          <tr><td>dsh-office</td><td><a href="https://github.com/Fayelin12/dsh-office">Fayelin12/dsh-office</a></td><td>工作区仪表盘</td><td>✅</td></tr>
+          <tr><td>heartflow</td><td><a href="https://github.com/yun520-1/deepseek-heartflow">yun520-1/deepseek-heartflow</a></td><td>门禁工具</td><td>已测</td></tr>
+          <tr><td>pending-plugin</td><td><a href="https://github.com/Owner/Pending-Plugin">Owner/Pending-Plugin</a></td><td>待测试</td><td>待测</td></tr>
+          <tr><td>broken-plugin</td><td><a href="https://github.com/Owner/Broken-Plugin">Owner/Broken-Plugin</a></td><td>不兼容</td><td>❌</td></tr>
+          <tr><td>no-status</td><td><a href="https://github.com/Owner/No-Status">Owner/No-Status</a></td><td>描述</td><td>?</td></tr>
+        </tbody>
+      </table>
+    `
+
+    expect([...extractAwesomeRepositoryNames(html)].sort()).toEqual([
+      'deepseek-heartflow',
+      'dsh-office',
+      'pending-plugin',
+    ])
+  })
 })
 
 describe('dsh-plugin-verify catalog matching', () => {

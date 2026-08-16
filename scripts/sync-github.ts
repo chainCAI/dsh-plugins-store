@@ -35,7 +35,7 @@ const VERIFY_REPOSITORY = 'qing3a/dsh-plugin-verify'
 const PAGE_SIZE = 100
 /** 只收录公测后创建的仓库：DeepSeek Harness 本体创建于 2026-08-13，此前的仓库都是蹭标签的老项目。
  *  站长收藏清单（src/data/curated.ts）中的仓库不受此过滤，经 collectCurated 白名单补充收录。 */
-const MIN_CREATED_AT = '2026-08-13'
+const MIN_CREATED_AT = '2026-08-13T00:00:00Z'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const outputPath = resolve(root, 'src/data/catalog.json')
 
@@ -63,6 +63,13 @@ async function fetchRenderedReadme(fullName: string): Promise<Response> {
   })
 }
 
+async function fetchRenderedFile(fullName: string, path: string): Promise<Response> {
+  const repositoryPath = fullName.split('/').map(encodeURIComponent).join('/')
+  return fetch(`${API_URL}/repos/${repositoryPath}/contents/${encodeURIComponent(path)}`, {
+    headers: getHeaders('application/vnd.github.html+json'),
+  })
+}
+
 async function fetchPage(page: number, query: string): Promise<SearchResponse> {
   const searchParams = new URLSearchParams({
     q: query,
@@ -79,10 +86,10 @@ async function fetchPage(page: number, query: string): Promise<SearchResponse> {
   return response.json() as Promise<SearchResponse>
 }
 
-/** 简单节流：Search API 限额 30 次/分钟，请求间隔至少 1.2 秒 */
+/** 简单节流：Search API 限额 30 次/分钟，请求间隔至少 2.1 秒 */
 let lastRequestAt = 0
 async function throttledFetch(url: string): Promise<Response> {
-  const wait = 1_200 - (Date.now() - lastRequestAt)
+  const wait = 2_100 - (Date.now() - lastRequestAt)
   if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait))
   lastRequestAt = Date.now()
 
@@ -100,39 +107,49 @@ async function throttledFetch(url: string): Promise<Response> {
   throw lastError
 }
 
-/**
- * star 区间分段。
- * GitHub Search 单查询最多返回 1000 条，分段必须保证每段 < 1000。
- * 实测（2026-08-15）：topic:dsh-plugin created:>=2026-08-13 共约 2300 个仓库，
- * 各星段数量：1★=536、2★=591、3★=336、4★=115、5-9★=152、0★=485、≥10★=96。
- * （不能按 created 日期分段：大量仓库的 created_at 是 GitHub 导入时间，集中在同一天）
- */
-const STAR_SEGMENTS: ReadonlyArray<{ min: number; max?: number }> = [
-  { min: 10 },
-  { min: 5, max: 9 },
-  { min: 3, max: 4 },
-  { min: 2, max: 2 },
-  { min: 1, max: 1 },
-  { min: 0, max: 0 },
-]
+/** GitHub Search 单查询最多返回 1000 条 */
+const SEARCH_RESULT_CAP = 1000
+/** 创建时间窗二分最大深度：2^6 = 64 段，足以自适应目录增长 */
+const MAX_SPLIT_DEPTH = 6
 
-function buildStarQuery(segment: { min: number; max?: number }): string {
-  const { min, max } = segment
-  const base = `topic:dsh-plugin created:>=${MIN_CREATED_AT}`
-  if (max === undefined) return `${base} stars:>=${min}`
-  if (min === max) return `${base} stars:${min}`
-  return `${base} stars:${min}..${max}`
+function buildRangeQuery(stars: string, start: string, end: string): string {
+  const base = `topic:dsh-plugin created:${start}..${end}`
+  return stars ? `${base} ${stars}` : base
 }
 
-async function collectSegment(
-  query: string,
+function splitMidpoint(start: string, end: string): string {
+  const midpoint = Math.floor((Date.parse(start) + Date.parse(end)) / 2)
+  return new Date(midpoint).toISOString()
+}
+
+/**
+ * 按创建时间窗收集仓库：单查询超过 1000 条上限（或结果不完整）时，
+ * 把时间窗二分后递归重试。
+ * 仓库 created_at 在导入场景会集中在同一天，纯星段切分不可靠；
+ * 时间窗二分对任意分布都成立（范围两端包含、重叠由 Map 按 id 去重），
+ * 目录增长后无需人工维护分段。
+ */
+async function collectRange(
+  stars: string,
+  start: string,
+  end: string,
+  depth: number,
   repositories: Map<number, GitHubRepository>,
-  incompleteSegments: { count: number },
 ): Promise<void> {
+  const query = buildRangeQuery(stars, start, end)
   const firstPage = await fetchPage(1, query)
   const pageCount = Math.ceil(firstPage.total_count / PAGE_SIZE)
-  if (pageCount > 10) {
-    throw new Error(`分段 ${query} 返回 ${firstPage.total_count} 个仓库，超出单查询 1000 条上限，需要更细的分段`)
+
+  if (pageCount > 10 || firstPage.incomplete_results) {
+    if (depth >= MAX_SPLIT_DEPTH) {
+      throw new Error(
+        `分段 ${query} 返回 ${firstPage.total_count} 个仓库，超出单查询 ${SEARCH_RESULT_CAP} 条上限，且已达最大拆分深度 ${MAX_SPLIT_DEPTH}`,
+      )
+    }
+    const mid = splitMidpoint(start, end)
+    await collectRange(stars, start, mid, depth + 1, repositories)
+    await collectRange(stars, mid, end, depth + 1, repositories)
+    return
   }
 
   let incomplete = firstPage.incomplete_results
@@ -143,7 +160,16 @@ async function collectSegment(
     for (const repository of response.items) repositories.set(repository.id, repository)
   }
 
-  if (incomplete) incompleteSegments.count += 1
+  if (incomplete) {
+    if (depth >= MAX_SPLIT_DEPTH) {
+      throw new Error(
+        `分段 ${query} 结果不完整，且已达最大拆分深度 ${MAX_SPLIT_DEPTH}，目录可能缺少仓库`,
+      )
+    }
+    const mid = splitMidpoint(start, end)
+    await collectRange(stars, start, mid, depth + 1, repositories)
+    await collectRange(stars, mid, end, depth + 1, repositories)
+  }
 }
 
 /**
@@ -173,19 +199,17 @@ const EXCLUDED_REPOSITORIES: ReadonlySet<string> = new Set(['ZASENJC/dsh-plugins
 
 async function fetchRepositories() {
   const repositories = new Map<number, GitHubRepository>()
-  const firstPage = await fetchPage(1, `topic:dsh-plugin created:>=${MIN_CREATED_AT}`)
-  const reportedByGitHub = firstPage.total_count
-  const incompleteSegments = { count: 0 }
+  const now = new Date().toISOString()
+  const reportedByGitHub = await fetchPage(
+    1,
+    `topic:dsh-plugin created:>=${MIN_CREATED_AT}`,
+  ).then((page) => page.total_count)
 
-  for (const segment of STAR_SEGMENTS) {
-    await collectSegment(buildStarQuery(segment), repositories, incompleteSegments)
-  }
+  // 全量 topic 仓库按创建时间窗二分收集，单段超过 1000 条时自动切分
+  await collectRange('', MIN_CREATED_AT, now, 0, repositories)
 
   const curatedCount = await collectCurated(repositories)
 
-  if (incompleteSegments.count > 0) {
-    console.warn(`有 ${incompleteSegments.count} 个分段搜索不完整，目录可能缺少少量仓库`)
-  }
   console.log(`站长收藏补充收录 ${curatedCount} 个仓库`)
   const repositoriesList = [...repositories.values()].filter(
     (repository) => !EXCLUDED_REPOSITORIES.has(repository.full_name),
@@ -195,8 +219,9 @@ async function fetchRepositories() {
 
 async function sync() {
   const { repositories, reportedByGitHub } = await fetchRepositories()
-  const [awesomeResponse, verifyResponse] = await Promise.all([
+  const [awesomeResponse, pluginsResponse, verifyResponse] = await Promise.all([
     fetchRenderedReadme(AWESOME_REPOSITORY),
+    fetchRenderedFile(AWESOME_REPOSITORY, 'PLUGINS.md'),
     fetchRenderedReadme(VERIFY_REPOSITORY),
   ])
   if (!awesomeResponse.ok || !verifyResponse.ok) {
@@ -204,7 +229,11 @@ async function sync() {
       `目录清单请求失败：Awesome ${awesomeResponse.status}，Verify ${verifyResponse.status}`,
     )
   }
-  const awesomeRepositoryNames = extractAwesomeRepositoryNames(await awesomeResponse.text())
+  // 上游把插件目录从 README 迁移到了 PLUGINS.md：两份都解析并合并
+  const awesomeRepositoryNames = new Set<string>([
+    ...extractAwesomeRepositoryNames(await awesomeResponse.text()),
+    ...(pluginsResponse.ok ? extractAwesomeRepositoryNames(await pluginsResponse.text()) : []),
+  ])
   const verifiedRepositoryNames = extractVerifiedRepositoryNames(await verifyResponse.text())
   const generatedAt = new Date().toISOString()
   const catalog = buildCatalog(
