@@ -2,8 +2,9 @@ name: Sync catalog
 
 on:
   schedule:
-    # 每 30 分钟自动同步一次；catalog.json 有变化时才提交并部署 Cloudflare Pages
-    - cron: '*/30 * * * *'
+    # 每天北京时间凌晨 0:00 同步一次（GitHub Actions cron 为 UTC：0:00 UTC+8 = 16:00 UTC）。
+    # 目录有变化时才提交并部署 Cloudflare Pages。
+    - cron: '0 16 * * *'
   workflow_dispatch:
 
 permissions:

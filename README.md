@@ -25,7 +25,7 @@
 - **搜索筛选**：支持名称、作者、描述、标签搜索；按类型（含「社群发布」）、分类筛选；按创建时间 / Star / 更新时间 / 名称排序
 - **本地收藏**：点击书签收藏插件，首页可筛选"我的收藏"，数据保存在浏览器 localStorage
 - **标签跳转**：卡片标签可点击，跳转到对应标签聚合页
-- **自动更新**：GitHub Actions 每 30 分钟同步一次，catalog.json / community.json 有变化即提交，push 自动触发 Cloudflare Pages 重建
+- **自动更新**：GitHub Actions 每天北京时间凌晨 0:00 同步一次，catalog.json / community.json 有变化即提交，push 自动触发 Cloudflare Pages 重建
 
 ## 技术栈
 
@@ -94,7 +94,7 @@ npx wrangler pages dev dist --kv COMMUNITY_KV
 
 ### 自动更新（可选但推荐）
 
-仓库内置 `.github/workflows/sync-catalog.yml`：每 30 分钟运行一次同步，`src/data/catalog.json` / `src/data/community.json` 有变化时自动提交并推送，从而触发 Cloudflare Pages 自动重建。启用后无需手动操作。
+仓库内置 `.github/workflows/sync-catalog.yml`：每天北京时间凌晨 0:00 运行一次同步（GitHub Actions cron 为 UTC，故配置为 `0 16 * * *`），`src/data/catalog.json` / `src/data/community.json` 有变化时自动提交并推送，从而触发 Cloudflare Pages 自动重建。启用后无需手动操作。也可在 Actions 页面手动触发（Run workflow）。
 
 > 提示：`sync` 步骤失败不会阻断 workflow（会跳过提交），站点继续使用仓库里已有的 catalog.json。
 
