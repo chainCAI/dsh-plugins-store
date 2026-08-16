@@ -152,7 +152,7 @@ async function collectRange(
     return
   }
 
-  let incomplete = firstPage.incomplete_results
+  let incomplete: boolean = firstPage.incomplete_results
   for (const repository of firstPage.items) repositories.set(repository.id, repository)
   for (let page = 2; page <= pageCount; page += 1) {
     const response = await fetchPage(page, query)
