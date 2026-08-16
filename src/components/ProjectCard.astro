@@ -1,15 +1,18 @@
 ---
-import { Archive, Bookmark, CalendarDays, Code, Sparkle, Star, Tag } from '@lucide/astro'
+import { Archive, Bookmark, CalendarDays, Code, Star, Tag } from '@lucide/astro'
 
 import type { CatalogEntry } from '../lib/catalog'
-import { formatCompactNumber } from '../lib/catalog'
+import { formatCompactNumber, isOfficialRepository } from '../lib/catalog'
 import { getCategory, getProjectTypeLabel } from '../lib/classification'
 
 interface Props {
   repository: CatalogEntry
+  /** 首页「最新创建」排序下展示相对创建时间（如“5 分钟前创建”），其他页面用完整日期 */
+  createdDisplay?: 'date' | 'relative'
 }
 
 const { repository } = Astro.props
+const createdDisplay = Astro.props.createdDisplay ?? 'date'
 const category = getCategory(repository.category)
 const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 const detailUrl = `${baseUrl}plugins/${repository.slug}`
@@ -21,8 +24,8 @@ const searchable = [
   ...repository.topics,
 ].join(' ').toLocaleLowerCase('zh-CN')
 
-// 收录 7 天内的仓库标记为“新”
-const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400_000
+const isOfficial = isOfficialRepository(repository.fullName)
+const isCommunity = repository.source === 'community' || repository.projectType === 'community'
 
 // 状态徽章最多显示一个，优先级：已归档 > 精选。
 // 全部渲染，由服务端或前端 JS 按状态切换 hidden。
@@ -47,6 +50,18 @@ const formatCreatedDate = (value: string): string => {
   const get = (type: string) => parts.find((part) => part.type === type)?.value ?? ''
   return `${get('year')}-${get('month')}-${get('day')}`
 }
+
+// 相对创建时间：只看创建时间，与更新时间无关（仅「最新创建」排序使用）
+const formatRelativeCreated = (value: string): string => {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return '未知'
+  const elapsed = Date.now() - date.getTime()
+  if (elapsed < 60_000) return '刚刚创建'
+  if (elapsed < 3_600_000) return `${Math.floor(elapsed / 60_000)} 分钟前创建`
+  if (elapsed < 86_400_000) return `${Math.floor(elapsed / 3_600_000)} 小时前创建`
+  if (elapsed < 7 * 86_400_000) return `${Math.floor(elapsed / 86_400_000)} 天前创建`
+  return formatCreatedDate(value)
+}
 ---
 
 <article
@@ -57,17 +72,20 @@ const formatCreatedDate = (value: string): string => {
   data-type={repository.projectType}
   data-stars={repository.stars}
   data-updated={repository.pushedAt}
+  data-created={repository.createdAt}
 >
   <div class="project-card__topline">
     <span class="project-card__category">
       <i style={`--category-color: ${category.color}`}></i>
       <span data-field="category">{category.label}</span>
     </span>
-    <span class="badge badge--new" data-status-kind="new" hidden={!isNew}>
-      <Sparkle size={12} stroke-width={2} />
-      新
+    <span class="badge badge--official" data-status-kind="official" hidden={!isOfficial}>
+      官方
     </span>
-    <span class="project-card__type" data-field="project-type">
+    <span class="badge badge--community" data-source-kind="community" hidden={!isCommunity}>
+      社群发布
+    </span>
+    <span class="project-card__type" data-field="project-type" hidden={isCommunity}>
       {getProjectTypeLabel(repository.projectType)}
     </span>
     <span class="badge badge--featured" data-status-kind="featured" hidden={activeStatusKind !== 'featured'}>
@@ -115,9 +133,13 @@ const formatCreatedDate = (value: string): string => {
         </span>
       )
     }
-    <span class="project-card__created" title="创建日期">
+    <span class="project-card__created" title={`创建日期 ${formatCreatedDate(repository.createdAt)}`}>
       <CalendarDays size={13} stroke-width={1.7} />
-      <span data-field="created">{formatCreatedDate(repository.createdAt)}</span>
+      <span data-field="created">
+        {createdDisplay === 'relative'
+          ? formatRelativeCreated(repository.createdAt)
+          : formatCreatedDate(repository.createdAt)}
+      </span>
     </span>
     <button
       class="project-card__fav"
@@ -180,11 +202,6 @@ const formatCreatedDate = (value: string): string => {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .badge--new {
-    background: var(--warning-soft);
-    color: var(--warning);
   }
 
   .project-card__type {

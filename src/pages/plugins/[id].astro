@@ -11,7 +11,6 @@ import {
   ExternalLink,
   GitFork,
   GitBranch,
-  Sparkle,
   Star,
 } from '@lucide/astro'
 
@@ -19,16 +18,21 @@ import ProjectCard from '../../components/ProjectCard.astro'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import {
   formatCompactNumber,
+  isOfficialRepository,
   sortCatalogEntries,
   type Catalog,
   type CatalogEntry,
 } from '../../lib/catalog'
+import { mergeCommunityEntries, type CommunityEntry } from '../../lib/community'
 import { getCategory, getProjectTypeLabel } from '../../lib/classification'
 import { getReadmeApiUrl } from '../../lib/readme'
 import catalogData from '../../data/catalog.json'
+import communityData from '../../data/community.json'
+
+const catalog = mergeCommunityEntries(catalogData as Catalog, communityData as CommunityEntry[])
 
 export function getStaticPaths() {
-  const catalog = catalogData as Catalog
+  const catalog = mergeCommunityEntries(catalogData as Catalog, communityData as CommunityEntry[])
   return catalog.repositories.map((repository) => ({
     params: { id: repository.slug },
     props: { repository },
@@ -42,7 +46,7 @@ interface Props {
 const { repository } = Astro.props as Props
 const category = getCategory(repository.category)
 const related = sortCatalogEntries(
-  (catalogData as Catalog).repositories
+  catalog.repositories
     .filter((item) => item.repositoryId !== repository.repositoryId && item.category === repository.category),
   'stars',
 ).slice(0, 3)
@@ -53,6 +57,17 @@ const createdDate = new Intl.DateTimeFormat('zh-CN', {
   month: '2-digit',
   day: '2-digit',
 }).format(new Date(repository.createdAt))
+const submittedDate = repository.submittedAt
+  ? new Intl.DateTimeFormat('zh-CN', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).format(new Date(repository.submittedAt))
+  : null
 const pushedAtDate = new Intl.DateTimeFormat('zh-CN', {
   timeZone: 'Asia/Shanghai',
   year: 'numeric',
@@ -69,7 +84,8 @@ const statusBadge = repository.archived
   : repository.featured
     ? { kind: 'featured', label: '精选' }
     : null
-const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400_000
+const isOfficial = isOfficialRepository(repository.fullName)
+const isCommunity = repository.source === 'community' || repository.projectType === 'community'
 ---
 
 <BaseLayout title={`${repository.name} · DeepSeek Harness插件市场`} description={repository.description}>
@@ -82,21 +98,23 @@ const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400
           <div class="detail-eyebrow">
             <span class="category-dot" style={`--category-color: ${category.color}`}></span>
             <span>{category.label}</span>
-            <span class="detail-eyebrow__type">{getProjectTypeLabel(repository.projectType)}</span>
+            <span class="detail-eyebrow__type" hidden={isCommunity}>{getProjectTypeLabel(repository.projectType)}</span>
+            {
+              isOfficial && (
+                <span class="badge badge--official">官方</span>
+              )
+            }
+            {
+              isCommunity && (
+                <span class="badge badge--community">社群发布</span>
+              )
+            }
             {
               statusBadge && (
                 <span class={`badge badge--${statusBadge.kind}`}>
                   {statusBadge.kind === 'featured' && <Star size={12} stroke-width={2} />}
                   {statusBadge.kind === 'archived' && <CircleAlert size={12} stroke-width={2} />}
                   {statusBadge.label}
-                </span>
-              )
-            }
-            {
-              isNew && (
-                <span class="badge badge--new">
-                  <Sparkle size={12} stroke-width={2} />
-                  新
                 </span>
               )
             }
@@ -138,7 +156,12 @@ const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400
             <div><dt>默认分支</dt><dd class="facts-mono"><GitBranch size={12} stroke-width={1.7} /> {repository.defaultBranch}</dd></div>
             <div><dt>创建时间</dt><dd>{createdDate}</dd></div>
             <div><dt>归档状态</dt><dd>{repository.archived ? '已归档' : '活跃'}</dd></div>
-            <div><dt>数据来源</dt><dd>GitHub Topic</dd></div>
+            {
+              submittedDate && (
+                <div><dt>提交时间</dt><dd>{submittedDate}</dd></div>
+              )
+            }
+            <div><dt>数据来源</dt><dd>{isCommunity ? '社群发布' : 'GitHub Topic'}</dd></div>
           </dl>
           <p class="facts-note">
             本店只收录 GitHub 上标注 dsh-plugin Topic 的公开仓库，不下载、不执行第三方代码；
@@ -407,11 +430,6 @@ const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86_400
     height: 7px;
     border-radius: 50%;
     background: var(--category-color);
-  }
-
-  .badge--new {
-    background: var(--warning-soft);
-    color: var(--warning);
   }
 
   .detail-title {

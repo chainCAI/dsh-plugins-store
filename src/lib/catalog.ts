@@ -14,6 +14,14 @@ export const VERIFIED_REPOSITORY_OVERRIDES: ReadonlyMap<string, string> = new Ma
   ['ccch1mneyyy/dsh-tui', 'https://github.com/ccch1mneyyy/dsh-TUI'],
 ])
 
+/** 官方仓库：只有 DeepSeek Harness 本体打「官方」标签 */
+export const OFFICIAL_REPOSITORY_FULL_NAME = 'deepseek-ai/deepseek-harness'
+
+/** 判断是否为官方仓库（大小写不敏感） */
+export function isOfficialRepository(fullName: string): boolean {
+  return fullName.toLowerCase() === OFFICIAL_REPOSITORY_FULL_NAME
+}
+
 export interface GitHubRepository {
   id: number
   name: string
@@ -167,9 +175,13 @@ export interface CatalogEntry {
   featured: boolean
   rating: Rating
   status: {
-    discovery: 'topic-listed'
+    discovery: 'topic-listed' | 'community'
     verification: 'verified' | 'not-verified'
   }
+  /** 数据来源：社群发布（用户提交）条目标记为 'community'；GitHub 自动收录条目省略 */
+  source?: 'github' | 'community'
+  /** 社群发布条目的提交时间（仅 source === 'community' 时有值） */
+  submittedAt?: string
 }
 
 export interface Catalog {
@@ -189,7 +201,7 @@ export interface Catalog {
   repositories: CatalogEntry[]
 }
 
-export type CatalogSort = 'recommended' | 'rating' | 'stars' | 'updated' | 'name'
+export type CatalogSort = 'recommended' | 'rating' | 'stars' | 'created' | 'updated' | 'name'
 
 export function createCatalogEntry(
   repository: GitHubRepository,
@@ -254,6 +266,7 @@ export function createCatalogEntry(
       discovery: 'topic-listed',
       verification: verificationUrl ? 'verified' : 'not-verified',
     },
+    source: 'github',
   }
 }
 
@@ -352,6 +365,11 @@ export function sortCatalogEntries(entries: CatalogEntry[], sort: CatalogSort): 
     if (sort === 'rating') {
       return right.rating.total - left.rating.total
         || right.stars - left.stars
+        || statusPriority
+        || left.fullName.localeCompare(right.fullName)
+    }
+    if (sort === 'created') {
+      return Date.parse(right.createdAt) - Date.parse(left.createdAt)
         || statusPriority
         || left.fullName.localeCompare(right.fullName)
     }

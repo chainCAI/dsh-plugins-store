@@ -6,24 +6,30 @@ import {
   Crown,
   LayoutGrid,
   Layers,
+  Link2,
   RefreshCw,
   Search,
+  Send,
   SlidersHorizontal,
   Star,
+  X,
 } from '@lucide/astro'
 
 import ProjectCard from '../components/ProjectCard.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { sortCatalogEntries, type Catalog } from '../lib/catalog'
+import { mergeCommunityEntries, type CommunityEntry } from '../lib/community'
 import { CATEGORIES, PROJECT_TYPES } from '../lib/classification'
 import { CURATED_PICKS } from '../data/curated'
 import catalogData from '../data/catalog.json'
+import communityData from '../data/community.json'
 
-const catalog = catalogData as Catalog
+const catalog = mergeCommunityEntries(catalogData as Catalog, communityData as CommunityEntry[])
 const featuredCount = catalog.repositories.filter((repository) => repository.featured).length
-const initialRepositories = sortCatalogEntries(catalog.repositories, 'stars').slice(0, 24)
+const initialRepositories = sortCatalogEntries(catalog.repositories, 'created').slice(0, 24)
 const generatedDate = new Intl.DateTimeFormat('zh-CN', {
   timeZone: 'Asia/Shanghai',
+  year: 'numeric',
   month: '2-digit',
   day: '2-digit',
   hour: '2-digit',
@@ -62,6 +68,10 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
             <dd>{catalog.stats.fetched}</dd>
           </div>
           <div class="home-stat">
+            <dt><RefreshCw size={14} stroke-width={1.7} /> 数据更新</dt>
+            <dd class="home-stat__time">{generatedDate}</dd>
+          </div>
+          <div class="home-stat">
             <dt><Star size={14} stroke-width={1.7} /> 精选</dt>
             <dd>{featuredCount}</dd>
           </div>
@@ -69,15 +79,17 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
             <dt><LayoutGrid size={14} stroke-width={1.7} /> 功能分类</dt>
             <dd>{CATEGORIES.length}</dd>
           </div>
-          <div class="home-stat">
-            <dt><RefreshCw size={14} stroke-width={1.7} /> 数据更新</dt>
-            <dd class="home-stat__time">{generatedDate}</dd>
-          </div>
         </dl>
-        <a class="curated-hero-btn" href={`${baseUrl}curated`}>
-          <Crown size={16} stroke-width={1.8} aria-hidden="true" />
-          <span class="curated-hero-btn__label">站长精选</span>
-        </a>
+        <div class="home-hero__actions">
+          <a class="curated-hero-btn" href={`${baseUrl}curated`}>
+            <Crown size={16} stroke-width={1.8} aria-hidden="true" />
+            <span class="curated-hero-btn__label">站长精选</span>
+          </a>
+          <button class="curated-hero-btn curated-hero-btn--community" id="community-open-btn" type="button">
+            <Send size={16} stroke-width={1.8} aria-hidden="true" />
+            <span class="curated-hero-btn__label">社区发布</span>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -88,8 +100,9 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
         <div class="home-tools__selects">
           <label class="field select-field">
             <SlidersHorizontal size={14} stroke-width={1.7} />
-            <span class="select-value" id="sort-filter-value">最多 Star</span>
+            <span class="select-value" id="sort-filter-value">最新创建</span>
             <select id="sort-filter" aria-label="排序方式">
+              <option value="created">最新创建</option>
               <option value="stars">最多 Star</option>
               <option value="updated">最近更新</option>
               <option value="name">名称排序</option>
@@ -144,7 +157,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       </div>
 
       <div class="project-grid" id="project-grid">
-        {initialRepositories.map((repository) => <ProjectCard repository={repository} />)}
+        {initialRepositories.map((repository) => <ProjectCard repository={repository} createdDisplay="relative" />)}
       </div>
 
       <div class="empty-state" id="empty-state" hidden>
@@ -162,6 +175,101 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       </div>
     </div>
   </section>
+
+  <!-- 社区发布：玻璃拟态弹窗，用户填写 GitHub 链接自动获取项目信息 -->
+  <div class="community-modal" id="community-modal" hidden aria-hidden="true">
+    <div class="community-modal__backdrop" data-community-close></div>
+    <div class="community-modal__panel" role="dialog" aria-modal="true" aria-labelledby="community-modal-title">
+      <button class="community-modal__close" type="button" data-community-close aria-label="关闭">
+        <X size={18} stroke-width={1.8} />
+      </button>
+
+      <div class="community-modal__view" id="community-view-form">
+        <div class="community-modal__head">
+          <p class="mono-label">COMMUNITY PUBLISH</p>
+          <h2 id="community-modal-title">发布你的 DSH 插件</h2>
+          <p class="community-modal__sub">填写 GitHub 仓库链接，自动获取项目信息，收录到「社群发布」分类。</p>
+        </div>
+
+        <form id="community-form" novalidate>
+          <div class="modal-field">
+            <label for="community-repo-input">GitHub 仓库链接</label>
+            <div class="field modal-repo-field">
+              <Link2 size={16} stroke-width={1.7} />
+              <input
+                id="community-repo-input"
+                type="text"
+                placeholder="https://github.com/owner/repo 或 owner/repo"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+            <p class="modal-field__hint" id="community-repo-hint">仅支持公开仓库，且必须是 DeepSeek Harness 插件。</p>
+          </div>
+
+          <div class="modal-field">
+            <span class="modal-field__label">仓库信息预览</span>
+            <div class="community-preview" id="community-preview" hidden>
+              <div class="community-preview__state" id="community-preview-state">
+                <span class="loader" aria-hidden="true"></span>
+                正在从 GitHub 获取仓库信息…
+              </div>
+              <div class="community-preview__body" id="community-preview-body" hidden>
+                <img id="community-preview-avatar" width="40" height="40" alt="" />
+                <div class="community-preview__main">
+                  <p class="community-preview__name"><span id="community-preview-name"></span><span class="badge badge--community">社群发布</span></p>
+                  <p class="community-preview__fullname" id="community-preview-fullname"></p>
+                  <p class="community-preview__desc" id="community-preview-desc"></p>
+                  <p class="community-preview__meta" id="community-preview-meta"></p>
+                  <div class="community-preview__topics" id="community-preview-topics"></div>
+                </div>
+              </div>
+              <div class="community-preview__error" id="community-preview-error" hidden></div>
+            </div>
+          </div>
+
+          <div class="modal-field">
+            <span class="modal-field__label">验证码</span>
+            <div class="captcha-row">
+              <span class="captcha-question" id="captcha-question" aria-label="验证码题目"></span>
+              <input
+                id="captcha-input"
+                type="text"
+                inputmode="numeric"
+                placeholder="结果"
+                autocomplete="off"
+                aria-label="验证码答案"
+              />
+              <button class="btn btn--icon" id="captcha-refresh" type="button" aria-label="换一道题" title="换一道题">
+                <RefreshCw size={15} stroke-width={1.7} />
+              </button>
+            </div>
+          </div>
+
+          <input class="community-honeypot" id="community-honeypot" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <p class="community-form__status" id="community-form-status" role="status" aria-live="polite"></p>
+
+          <div class="community-modal__actions">
+            <button class="btn" type="button" data-community-close>取消</button>
+            <button class="btn btn--primary" id="community-submit-btn" type="submit">
+              <Send size={15} stroke-width={1.7} />
+              提交发布
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="community-modal__view" id="community-view-success" hidden>
+        <div class="community-success">
+          <span class="community-success__check">✓</span>
+          <h2>提交成功</h2>
+          <p>你的插件已进入「社群发布」队列，审核通过后会自动展示在首页与详情页。</p>
+          <button class="btn btn--primary" type="button" data-community-close>完成</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script id="catalog-data" type="application/json" set:html={serializedCatalog} is:inline></script>
   <script id="category-data" type="application/json" set:html={serializedCategories} is:inline></script>
@@ -238,6 +346,18 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       return `${get('year')}-${get('month')}-${get('day')}`
     }
 
+    // 相对创建时间：只看创建时间，与更新时间无关（仅「最新创建」排序使用）
+    const formatRelativeCreated = (value) => {
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) return '未知'
+      const elapsed = Date.now() - date.getTime()
+      if (elapsed < 60_000) return '刚刚创建'
+      if (elapsed < 3_600_000) return `${Math.floor(elapsed / 60_000)} 分钟前创建`
+      if (elapsed < 86_400_000) return `${Math.floor(elapsed / 3_600_000)} 小时前创建`
+      if (elapsed < 7 * 86_400_000) return `${Math.floor(elapsed / 86_400_000)} 天前创建`
+      return formatCreatedDate(value)
+    }
+
     const setText = (card, selector, value) => {
       const target = card.querySelector(selector)
       if (target) target.textContent = value
@@ -261,6 +381,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       card.dataset.type = repository.projectType
       card.dataset.stars = String(repository.stars)
       card.dataset.updated = repository.pushedAt
+      card.dataset.created = repository.createdAt
 
       const categoryDot = card.querySelector('.project-card__category i')
       if (categoryDot) categoryDot.style.setProperty('--category-color', category.color)
@@ -269,7 +390,9 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       setText(card, '[data-field="owner"]', repository.owner.login)
       setText(card, '[data-field="description"]', repository.description)
       setText(card, '[data-field="stars"]', compactNumber(repository.stars))
-      setText(card, '[data-field="created"]', formatCreatedDate(repository.createdAt))
+      setText(card, '[data-field="created"]', sortFilter.value === 'created'
+        ? formatRelativeCreated(repository.createdAt)
+        : formatCreatedDate(repository.createdAt))
 
       const language = card.querySelector('[data-field="language"]')
       if (language) {
@@ -281,8 +404,8 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       detailLink.href = detailUrl
       detailLink.textContent = repository.name
 
-      // 状态徽章：新（7 天）独立；已归档 > 精选 互斥
-      const isNew = Date.now() - new Date(repository.createdAt).getTime() < 7 * 86400000
+      // 状态徽章：已归档 > 精选 互斥；官方 / 社群发布 独立
+      const isCommunityEntry = repository.source === 'community' || repository.projectType === 'community'
       const statusKind = repository.archived
         ? 'archived'
         : repository.featured
@@ -291,14 +414,18 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       card.querySelectorAll('[data-status-kind]').forEach((badge) => {
         badge.hidden = true
       })
-      if (isNew) {
-        const newBadge = card.querySelector('[data-status-kind="new"]')
-        if (newBadge) newBadge.hidden = false
-      }
       if (statusKind) {
         const statusBadge = card.querySelector(`[data-status-kind="${statusKind}"]`)
         if (statusBadge) statusBadge.hidden = false
       }
+      // 官方标签：仅 DeepSeek Harness 本体
+      const officialBadge = card.querySelector('[data-status-kind="official"]')
+      if (officialBadge) officialBadge.hidden = repository.fullName.toLowerCase() !== 'deepseek-ai/deepseek-harness'
+      // 社群发布徽章 + 隐藏重复的类型文字
+      const communityBadge = card.querySelector('[data-source-kind="community"]')
+      if (communityBadge) communityBadge.hidden = !isCommunityEntry
+      const typeLabel = card.querySelector('[data-field="project-type"]')
+      if (typeLabel) typeLabel.hidden = isCommunityEntry
 
       // 标签（最多 2 个，可点击跳转）
       const topicList = card.querySelector('[data-field="topics"]')
@@ -384,6 +511,13 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 
     const sortRepositories = (filtered) => {
       const sort = sortFilter.value
+      if (sort === 'created') {
+        return filtered.sort((left, right) => (
+          Date.parse(right.createdAt) - Date.parse(left.createdAt)
+          || compareStatus(left, right)
+          || left.fullName.localeCompare(right.fullName)
+        ))
+      }
       if (sort === 'updated') {
         return filtered.sort((left, right) => (
           Date.parse(right.pushedAt) - Date.parse(left.pushedAt)
@@ -451,7 +585,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     clearFilters.addEventListener('click', () => {
       searchInput.value = ''
       typeFilter.value = 'all'
-      sortFilter.value = 'stars'
+      sortFilter.value = 'created'
       syncSelectValue(typeFilter, typeFilterValue)
       syncSelectValue(sortFilter, sortFilterValue)
       setCategory('all')
@@ -472,8 +606,234 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       categoryFilter.querySelectorAll('[data-category]').forEach((item) => {
         item.classList.toggle('is-active', item.dataset.category === selectedCategory)
       })
-      resetAndRender()
     }
+    // 首屏也按当前筛选/排序重新渲染，保证「几分钟前创建」等相对时间是实时的
+    resetAndRender()
+
+    // ---------- 社区发布弹窗 ----------
+    const communityModal = document.getElementById('community-modal')
+    const communityOpenBtn = document.getElementById('community-open-btn')
+    const communityForm = document.getElementById('community-form')
+    const communityRepoInput = document.getElementById('community-repo-input')
+    const communityRepoHint = document.getElementById('community-repo-hint')
+    const communityPreview = document.getElementById('community-preview')
+    const communityPreviewState = document.getElementById('community-preview-state')
+    const communityPreviewBody = document.getElementById('community-preview-body')
+    const communityPreviewError = document.getElementById('community-preview-error')
+    const captchaQuestion = document.getElementById('captcha-question')
+    const captchaInput = document.getElementById('captcha-input')
+    const captchaRefresh = document.getElementById('captcha-refresh')
+    const communityFormStatus = document.getElementById('community-form-status')
+    const communitySubmitBtn = document.getElementById('community-submit-btn')
+    const communityHoneypot = document.getElementById('community-honeypot')
+    const communityViewForm = document.getElementById('community-view-form')
+    const communityViewSuccess = document.getElementById('community-view-success')
+    let captchaAnswer = 0
+    let fetchedRepo = null
+    let fetchingRepo = false
+
+    const parseFullName = (value) => {
+      const trimmed = String(value || '').trim()
+        .replace(/^https?:\/\/(www\.)?github\.com\//i, '')
+        .replace(/^git@github\.com:/i, '')
+        .replace(/\.git$/i, '')
+        .replace(/\/+$/, '')
+      const match = trimmed.match(/^([A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\/([A-Za-z0-9_.-]+)$/)
+      return match ? `${match[1]}/${match[2]}` : null
+    }
+
+    const newCaptcha = () => {
+      const left = 1 + Math.floor(Math.random() * 9)
+      const right = 1 + Math.floor(Math.random() * 9)
+      captchaAnswer = left + right
+      captchaQuestion.textContent = `${left} + ${right} = ?`
+      captchaInput.value = ''
+    }
+
+    const setFormStatus = (message, kind = 'error') => {
+      communityFormStatus.textContent = message
+      communityFormStatus.dataset.kind = kind
+    }
+
+    const formatFullCreated = (value) => {
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) return '未知'
+      const parts = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Asia/Shanghai',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(date)
+      const get = (type) => parts.find((part) => part.type === type)?.value ?? ''
+      return `${get('year')}-${get('month')}-${get('day')}`
+    }
+
+    const fetchRepoInfo = async (fullName) => {
+      const response = await fetch(`https://api.github.com/repos/${encodeURIComponent(fullName)}`, {
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'dsh-plugin-store' },
+      })
+      if (response.status === 404) throw new Error('GitHub 上找不到该仓库，请检查链接是否正确。')
+      if (response.status === 403 || response.status === 429) {
+        throw new Error('GitHub API 请求太频繁，请稍等片刻再试。')
+      }
+      if (!response.ok) throw new Error(`GitHub API 请求失败（${response.status}）。`)
+      return response.json()
+    }
+
+    const renderRepoPreview = (repo) => {
+      document.getElementById('community-preview-avatar').src = repo.owner?.avatar_url ?? ''
+      document.getElementById('community-preview-avatar').alt = repo.owner?.login ?? ''
+      document.getElementById('community-preview-name').textContent = repo.name
+      document.getElementById('community-preview-fullname').textContent = repo.full_name
+      document.getElementById('community-preview-desc').textContent = repo.description || '该仓库暂未提供项目说明。'
+      const meta = [
+        `Star ${compactNumber(repo.stargazers_count ?? 0)}`,
+        repo.language,
+        `创建于 ${formatFullCreated(repo.created_at)}`,
+      ].filter(Boolean).join(' · ')
+      document.getElementById('community-preview-meta').textContent = meta
+      const topicsEl = document.getElementById('community-preview-topics')
+      topicsEl.replaceChildren(...(repo.topics ?? []).slice(0, 4).map((topic) => {
+        const span = document.createElement('span')
+        span.className = 'community-preview__topic'
+        span.textContent = topic
+        return span
+      }))
+      communityPreviewState.hidden = true
+      communityPreviewError.hidden = true
+      communityPreviewBody.hidden = false
+    }
+
+    const autoFetchRepo = async () => {
+      if (fetchingRepo) return
+      const fullName = parseFullName(communityRepoInput.value)
+      if (!fullName) {
+        communityPreview.hidden = true
+        communityPreviewBody.hidden = true
+        communityPreviewError.hidden = true
+        return
+      }
+      fetchingRepo = true
+      communityPreview.hidden = false
+      communityPreviewBody.hidden = true
+      communityPreviewError.hidden = true
+      communityPreviewState.hidden = false
+      communityPreviewState.innerHTML = '<span class="loader" aria-hidden="true"></span> 正在从 GitHub 获取仓库信息…'
+      try {
+        const repo = await fetchRepoInfo(fullName)
+        fetchedRepo = repo
+        renderRepoPreview(repo)
+        communityRepoHint.textContent = `已获取 ${repo.full_name}，确认无误后提交。`
+        communityRepoHint.classList.add('is-ok')
+        setFormStatus('', 'ok')
+      } catch (error) {
+        fetchedRepo = null
+        communityPreviewState.hidden = true
+        communityPreviewBody.hidden = true
+        communityPreviewError.hidden = false
+        communityPreviewError.textContent = error instanceof Error ? error.message : '获取仓库信息失败，请稍后重试。'
+        communityRepoHint.textContent = '仅支持公开仓库，且必须是 DeepSeek Harness 插件。'
+        communityRepoHint.classList.remove('is-ok')
+      } finally {
+        fetchingRepo = false
+      }
+    }
+
+    const openCommunityModal = () => {
+      communityModal.hidden = false
+      communityModal.setAttribute('aria-hidden', 'false')
+      document.body.style.overflow = 'hidden'
+      communityViewForm.hidden = false
+      communityViewSuccess.hidden = true
+      communityForm.reset()
+      communityPreview.hidden = true
+      communityPreviewBody.hidden = true
+      communityPreviewError.hidden = true
+      communityPreviewState.hidden = true
+      communityRepoHint.textContent = '仅支持公开仓库，且必须是 DeepSeek Harness 插件。'
+      communityRepoHint.classList.remove('is-ok')
+      fetchedRepo = null
+      setFormStatus('', 'ok')
+      newCaptcha()
+      setTimeout(() => communityRepoInput.focus(), 60)
+    }
+
+    const closeCommunityModal = () => {
+      communityModal.hidden = true
+      communityModal.setAttribute('aria-hidden', 'true')
+      document.body.style.overflow = ''
+    }
+
+    const showCommunitySuccess = () => {
+      communityViewForm.hidden = true
+      communityViewSuccess.hidden = false
+    }
+
+    communityOpenBtn?.addEventListener('click', openCommunityModal)
+    communityModal.querySelectorAll('[data-community-close]').forEach((element) => {
+      element.addEventListener('click', closeCommunityModal)
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !communityModal.hidden) closeCommunityModal()
+    })
+    captchaRefresh?.addEventListener('click', () => {
+      newCaptcha()
+      captchaInput.focus()
+    })
+    communityRepoInput.addEventListener('blur', autoFetchRepo)
+    communityRepoInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        autoFetchRepo()
+      }
+    })
+
+    communityForm.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      if (communityHoneypot.value) {
+        showCommunitySuccess()
+        return
+      }
+      const fullName = parseFullName(communityRepoInput.value)
+      if (!fullName) {
+        setFormStatus('请填写有效的 GitHub 仓库链接。')
+        communityRepoInput.focus()
+        return
+      }
+      if (!fetchedRepo) {
+        setFormStatus('请先等待仓库信息获取成功后再提交。')
+        return
+      }
+      const answer = Number(captchaInput.value.trim())
+      if (Number.isNaN(answer) || answer !== captchaAnswer) {
+        setFormStatus('验证码不正确，请重新输入。')
+        newCaptcha()
+        captchaInput.focus()
+        return
+      }
+      communitySubmitBtn.disabled = true
+      setFormStatus('正在提交…', 'ok')
+      try {
+        const response = await fetch('/api/community/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName,
+            url: fetchedRepo.html_url || `https://github.com/${fullName}`,
+          }),
+        })
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok) {
+          throw new Error(data.error || `提交失败（${response.status}）。`)
+        }
+        showCommunitySuccess()
+      } catch (error) {
+        setFormStatus(error instanceof Error ? error.message : '提交失败，请稍后重试。')
+      } finally {
+        communitySubmitBtn.disabled = false
+      }
+    })
+
     favoriteCount.textContent = String(favorites.size)
   </script>
 </BaseLayout>
@@ -524,7 +884,6 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 
   .home-hero__stats {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 12px;
     width: min(760px, 100%);
     margin: 32px 0 0;
@@ -532,7 +891,15 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
   }
 
   .home-hero__stats-grid {
-    display: contents;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .home-hero__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .home-stat {
@@ -592,6 +959,18 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     border-color: var(--accent-hover);
     background: #dcebff;
     color: var(--accent-hover);
+  }
+
+  .curated-hero-btn--community {
+    border-color: var(--success);
+    background: var(--success-soft);
+    color: var(--success);
+  }
+
+  .curated-hero-btn--community:hover {
+    border-color: var(--success);
+    background: #d4ffdd;
+    color: #00881f;
   }
 
   /* ---------- tools ---------- */
@@ -725,12 +1104,19 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     }
 
     .home-hero__stats {
+      gap: 10px;
+    }
+
+    .home-hero__stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
+    .home-hero__actions {
+      grid-template-columns: 1fr;
+    }
+
     .curated-hero-btn {
-      grid-column: 1 / -1;
       flex-direction: row;
     }
 
@@ -755,5 +1141,325 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     .project-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* ---------- 社区发布弹窗（玻璃拟态） ---------- */
+
+  .community-modal {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+
+  .community-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(120% 90% at 12% 8%, rgb(22 93 255 / 0.16), transparent 55%),
+      radial-gradient(120% 90% at 88% 92%, rgb(0 180 42 / 0.14), transparent 55%),
+      linear-gradient(160deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.3));
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  }
+
+  .community-modal__panel {
+    position: relative;
+    width: min(540px, 100%);
+    max-height: min(720px, calc(100vh - 48px));
+    overflow-y: auto;
+    border: 1px solid rgb(255 255 255 / 0.65);
+    border-radius: 18px;
+    background: linear-gradient(165deg, rgb(255 255 255 / 0.88), rgb(255 255 255 / 0.62));
+    backdrop-filter: blur(26px) saturate(1.5);
+    -webkit-backdrop-filter: blur(26px) saturate(1.5);
+    box-shadow:
+      0 24px 64px rgb(29 33 41 / 0.22),
+      inset 0 1px 0 rgb(255 255 255 / 0.95);
+    padding: 30px 30px 26px;
+  }
+
+  .community-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.6);
+    color: var(--text-3);
+    cursor: pointer;
+    transition:
+      background-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .community-modal__close:hover {
+    background: rgb(255 255 255 / 0.95);
+    color: var(--text-1);
+  }
+
+  .community-modal__head h2 {
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+  }
+
+  .community-modal__sub {
+    margin-top: 6px;
+    color: var(--text-2);
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  #community-form {
+    display: grid;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .modal-field {
+    display: grid;
+    gap: 8px;
+  }
+
+  .modal-field label,
+  .modal-field__label {
+    color: var(--text-1);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+  }
+
+  .modal-repo-field {
+    min-height: 42px;
+  }
+
+  .modal-field__hint {
+    color: var(--text-3);
+    font-size: 11.5px;
+    line-height: 17px;
+  }
+
+  .modal-field__hint.is-ok {
+    color: var(--success);
+  }
+
+  .captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .captcha-question {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 96px;
+    min-height: 40px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.5);
+    color: var(--text-1);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .captcha-row input {
+    min-width: 0;
+    flex: 1;
+    min-height: 40px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.7);
+    color: var(--text-1);
+    font-size: 14px;
+    padding: 0 12px;
+    transition:
+      border-color 140ms ease,
+      box-shadow 140ms ease;
+  }
+
+  .captcha-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-soft);
+  }
+
+  .community-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .community-form__status {
+    min-height: 18px;
+    color: var(--danger);
+    font-size: 12.5px;
+    line-height: 18px;
+  }
+
+  .community-form__status[data-kind='ok'] {
+    color: var(--success);
+  }
+
+  .community-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .community-modal__actions .btn {
+    min-width: 96px;
+    min-height: 38px;
+  }
+
+  /* 仓库信息预览 */
+  .community-preview {
+    border: 1px solid rgb(255 255 255 / 0.8);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.55);
+    padding: 14px;
+  }
+
+  .community-preview__state {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-3);
+    font-size: 12.5px;
+  }
+
+  .loader {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+    border: 2px solid var(--line-strong);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: community-spin 700ms linear infinite;
+  }
+
+  @keyframes community-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .community-preview__body {
+    display: flex;
+    gap: 12px;
+  }
+
+  .community-preview__body > img {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--bg-soft);
+    object-fit: cover;
+  }
+
+  .community-preview__main {
+    display: grid;
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .community-preview__name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-1);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .community-preview__fullname {
+    color: var(--text-3);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+  }
+
+  .community-preview__desc {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text-2);
+    font-size: 12.5px;
+    line-height: 19px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .community-preview__meta {
+    color: var(--text-3);
+    font-size: 11.5px;
+  }
+
+  .community-preview__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .community-preview__topic {
+    border-radius: 999px;
+    background: var(--bg-soft);
+    color: var(--text-3);
+    font-size: 10.5px;
+    line-height: 1;
+    padding: 3px 8px;
+  }
+
+  .community-preview__error {
+    color: var(--danger);
+    font-size: 12.5px;
+    line-height: 18px;
+  }
+
+  /* 提交成功视图 */
+  .community-success {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: 24px 0 8px;
+    text-align: center;
+  }
+
+  .community-success__check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--success-soft);
+    color: var(--success);
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .community-success h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .community-success p {
+    max-width: 340px;
+    color: var(--text-2);
+    font-size: 13px;
+    line-height: 20px;
   }
 </style>

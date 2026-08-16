@@ -7,6 +7,8 @@ export const PROJECT_TYPES = [
   { id: 'infrastructure', label: '基础设施' },
   { id: 'directory', label: '索引目录' },
   { id: 'unknown', label: '待识别' },
+  /** 社群发布：用户自行提交、与 GitHub Topic 自动收录分开的数据类型 */
+  { id: 'community', label: '社群发布' },
 ] as const
 
 export const CATEGORIES = [

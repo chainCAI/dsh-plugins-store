@@ -235,6 +235,18 @@ svg {
   color: var(--success);
 }
 
+/* 官方标签：仅 DeepSeek Harness 本体 */
+.badge--official {
+  background: #1d2129;
+  color: #ffffff;
+}
+
+/* 社群发布：用户提交的独立数据类型 */
+.badge--community {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
 .badge--featured {
   background: var(--accent-soft);
   color: var(--accent);

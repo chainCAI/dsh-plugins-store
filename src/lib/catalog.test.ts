@@ -250,6 +250,29 @@ describe('catalog data', () => {
     expect(sortCatalogEntries(catalog.repositories, 'name')[0].fullName).toBe('owner/alpha-ordinary')
   })
 
+  it('sorts by creation time when using the created sort', () => {
+    const older = {
+      ...githubRepository,
+      id: 71,
+      name: 'older-plugin',
+      full_name: 'owner/older-plugin',
+      created_at: '2026-08-13T00:00:00Z',
+    }
+    const newer = {
+      ...githubRepository,
+      id: 72,
+      name: 'newer-plugin',
+      full_name: 'owner/newer-plugin',
+      created_at: '2026-08-15T12:00:00Z',
+    }
+    const catalog = buildCatalog([older, newer], '2026-08-16T00:00:00.000Z', 2)
+
+    expect(sortCatalogEntries(catalog.repositories, 'created').map(({ fullName }) => fullName)).toEqual([
+      'owner/newer-plugin',
+      'owner/older-plugin',
+    ])
+  })
+
   it('prefers priority and then verified projects only when global sort values are equal', () => {
     const ordinaryTie = {
       ...githubRepository,

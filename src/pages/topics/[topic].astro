@@ -4,7 +4,9 @@ import { ArrowLeft, Tag } from '@lucide/astro'
 import ProjectCard from '../../components/ProjectCard.astro'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { sortCatalogEntries, type Catalog, type CatalogEntry } from '../../lib/catalog'
+import { mergeCommunityEntries, type CommunityEntry } from '../../lib/community'
 import catalogData from '../../data/catalog.json'
+import communityData from '../../data/community.json'
 
 interface Props {
   topic: string
@@ -16,7 +18,7 @@ interface Props {
  *  全量渲染会撑爆 Cloudflare Pages 25 MiB 单文件上限，且对用户不可用。 */
 export function getStaticPaths() {
   const MAX_TOPIC_REPOSITORIES = 200
-  const catalog = catalogData as Catalog
+  const catalog = mergeCommunityEntries(catalogData as Catalog, communityData as CommunityEntry[])
   const topics = [...new Set(catalog.repositories.flatMap((repository) => repository.topics))]
     .sort((left, right) => left.localeCompare(right))
 
