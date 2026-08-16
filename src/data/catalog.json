@@ -1,32 +1,32 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-16T04:49:25.630Z",
+  "generatedAt": "2026-08-16T04:45:11.614Z",
   "source": {
     "label": "GitHub Topic",
     "topic": "dsh-plugin"
   },
   "stats": {
-    "fetched": 3932,
-    "reportedByGitHub": 3916,
+    "fetched": 3929,
+    "reportedByGitHub": 3912,
     "verified": 12,
     "categories": {
-      "other": 2381,
+      "other": 2382,
       "data": 241,
-      "development": 280,
-      "ui": 206,
+      "development": 279,
+      "ui": 205,
       "agent-session": 241,
       "communication": 123,
-      "research": 40,
+      "research": 38,
       "model-mcp": 119,
-      "operations": 129,
-      "lifestyle": 96,
+      "operations": 128,
+      "lifestyle": 97,
       "security": 76
     },
     "projectTypes": {
-      "plugin": 2009,
-      "skill": 139,
+      "plugin": 2007,
+      "skill": 137,
       "application": 103,
-      "unknown": 1449,
+      "unknown": 1450,
       "directory": 74,
       "channel": 102,
       "infrastructure": 51,
@@ -57,12 +57,12 @@
       ],
       "language": "TypeScript",
       "license": "MIT",
-      "stars": 6638,
-      "forks": 290,
-      "openIssues": 89,
+      "stars": 6625,
+      "forks": 289,
+      "openIssues": 90,
       "size": 128436,
       "createdAt": "2026-08-13T16:30:50Z",
-      "updatedAt": "2026-08-16T04:46:43Z",
+      "updatedAt": "2026-08-16T04:42:16Z",
       "pushedAt": "2026-08-15T16:41:18Z",
       "archived": false,
       "fork": false,
@@ -130,12 +130,12 @@
       ],
       "language": "TypeScript",
       "license": "MIT",
-      "stars": 2010,
+      "stars": 2008,
       "forks": 55,
       "openIssues": 6,
       "size": 13905,
       "createdAt": "2026-02-22T07:12:00Z",
-      "updatedAt": "2026-08-16T04:48:07Z",
+      "updatedAt": "2026-08-16T04:43:30Z",
       "pushedAt": "2026-08-16T03:22:04Z",
       "archived": false,
       "fork": false,
@@ -198,12 +198,12 @@
       ],
       "language": "TypeScript",
       "license": "MIT",
-      "stars": 118752,
-      "forks": 11670,
+      "stars": 118696,
+      "forks": 11662,
       "openIssues": 0,
       "size": 117204,
       "createdAt": "2026-08-13T11:56:32Z",
-      "updatedAt": "2026-08-16T04:46:40Z",
+      "updatedAt": "2026-08-16T04:42:23Z",
       "pushedAt": "2026-08-13T13:00:21Z",
       "archived": false,
       "fork": false,
@@ -261,8 +261,8 @@
       "language": "TypeScript",
       "license": "MIT",
       "stars": 1330,
-      "forks": 57,
-      "openIssues": 42,
+      "forks": 56,
+      "openIssues": 41,
       "size": 10084,
       "createdAt": "2026-08-13T12:49:31Z",
       "updatedAt": "2026-08-16T04:43:33Z",
@@ -380,8 +380,8 @@
       "language": "Python",
       "license": "CC0-1.0",
       "stars": 3287,
-      "forks": 657,
-      "openIssues": 81,
+      "forks": 656,
+      "openIssues": 79,
       "size": 54720,
       "createdAt": "2026-08-13T13:55:31Z",
       "updatedAt": "2026-08-16T04:42:04Z",
@@ -551,12 +551,12 @@
       ],
       "language": "TypeScript",
       "license": "Apache-2.0",
-      "stars": 2859,
+      "stars": 2858,
       "forks": 163,
       "openIssues": 36,
-      "size": 198594,
+      "size": 198577,
       "createdAt": "2026-08-12T05:15:20Z",
-      "updatedAt": "2026-08-16T04:44:41Z",
+      "updatedAt": "2026-08-16T04:44:06Z",
       "pushedAt": "2026-08-16T04:05:13Z",
       "archived": false,
       "fork": false,
@@ -734,12 +734,12 @@
       ],
       "language": "JavaScript",
       "license": "NOASSERTION",
-      "stars": 2394,
-      "forks": 75,
+      "stars": 2389,
+      "forks": 74,
       "openIssues": 32,
       "size": 119,
       "createdAt": "2026-08-14T14:06:39Z",
-      "updatedAt": "2026-08-16T04:46:48Z",
+      "updatedAt": "2026-08-16T04:42:45Z",
       "pushedAt": "2026-08-15T22:55:15Z",
       "archived": false,
       "fork": false,
@@ -924,12 +924,12 @@
       ],
       "language": "TypeScript",
       "license": "MIT",
-      "stars": 1354,
+      "stars": 1352,
       "forks": 84,
       "openIssues": 55,
       "size": 1789,
       "createdAt": "2026-08-07T16:04:00Z",
-      "updatedAt": "2026-08-16T04:47:47Z",
+      "updatedAt": "2026-08-16T04:43:31Z",
       "pushedAt": "2026-08-15T15:37:06Z",
       "archived": false,
       "fork": false,
@@ -1000,12 +1000,12 @@
       ],
       "language": "JavaScript",
       "license": "MIT",
-      "stars": 37,
+      "stars": 36,
       "forks": 8,
       "openIssues": 0,
       "size": 1698,
       "createdAt": "2026-08-13T14:21:58Z",
-      "updatedAt": "2026-08-16T04:43:36Z",
+      "updatedAt": "2026-08-16T04:41:24Z",
       "pushedAt": "2026-08-16T04:41:15Z",
       "archived": false,
       "fork": false,
@@ -1931,12 +1931,12 @@
       ],
       "language": "TypeScript",
       "license": "MIT",
-      "stars": 341,
+      "stars": 340,
       "forks": 28,
       "openIssues": 13,
       "size": 4483,
       "createdAt": "2026-08-14T04:58:15Z",
-      "updatedAt": "2026-08-16T04:45:54Z",
+      "updatedAt": "2026-08-16T04:38:09Z",
       "pushedAt": "2026-08-16T04:35:54Z",
       "archived": false,
       "fork": false,
@@ -2492,11 +2492,11 @@
       "license": "MIT",
       "stars": 198,
       "forks": 17,
-      "openIssues": 16,
+      "openIssues": 17,
       "size": 17879,
       "createdAt": "2026-08-11T05:31:05Z",
-      "updatedAt": "2026-08-16T04:46:14Z",
-      "pushedAt": "2026-08-16T04:47:47Z",
+      "updatedAt": "2026-08-16T04:29:20Z",
+      "pushedAt": "2026-08-16T04:42:27Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -2673,13 +2673,13 @@
       ],
       "language": "JavaScript",
       "license": "MIT",
-      "stars": 183,
+      "stars": 182,
       "forks": 15,
       "openIssues": 4,
       "size": 12186,
       "createdAt": "2026-08-13T18:57:47Z",
-      "updatedAt": "2026-08-16T04:42:37Z",
-      "pushedAt": "2026-08-16T04:42:53Z",
+      "updatedAt": "2026-08-16T04:41:49Z",
+      "pushedAt": "2026-08-16T04:42:07Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -3368,12 +3368,12 @@
       ],
       "language": "TypeScript",
       "license": "BSD-3-Clause",
-      "stars": 127,
+      "stars": 126,
       "forks": 3,
       "openIssues": 2,
       "size": 1014,
       "createdAt": "2026-08-13T13:11:49Z",
-      "updatedAt": "2026-08-16T04:43:09Z",
+      "updatedAt": "2026-08-16T00:26:17Z",
       "pushedAt": "2026-08-15T15:58:20Z",
       "archived": false,
       "fork": false,
@@ -3798,12 +3798,12 @@
       "verificationUrl": null,
       "featured": false,
       "rating": {
-        "total": 49,
-        "stars": 2.5,
+        "total": 51,
+        "stars": 2.6,
         "level": "fair",
         "breakdown": {
           "popularity": 9,
-          "activity": 28,
+          "activity": 30,
           "status": 12
         }
       },
@@ -3900,12 +3900,12 @@
       ],
       "language": "JavaScript",
       "license": "BSD-3-Clause",
-      "stars": 106,
+      "stars": 105,
       "forks": 1,
       "openIssues": 2,
       "size": 330,
       "createdAt": "2026-08-13T13:11:56Z",
-      "updatedAt": "2026-08-16T04:43:38Z",
+      "updatedAt": "2026-08-16T04:41:08Z",
       "pushedAt": "2026-08-15T15:58:22Z",
       "archived": false,
       "fork": false,
@@ -6626,8 +6626,8 @@
       "language": "TypeScript",
       "license": "NOASSERTION",
       "stars": 51,
-      "forks": 34,
-      "openIssues": 2,
+      "forks": 33,
+      "openIssues": 1,
       "size": 2853,
       "createdAt": "2026-08-13T13:54:05Z",
       "updatedAt": "2026-08-16T04:16:08Z",
@@ -7465,66 +7465,52 @@
       }
     },
     {
-      "id": "github:1334747723",
-      "repositoryId": 1334747723,
-      "slug": "1334747723",
-      "name": "deepseek-harness-studio",
-      "fullName": "fufankeji/deepseek-harness-studio",
-      "description": "DeepSeek Harness 零代码桌面端｜一键启动，支持 Windows 与 macOS；内置插件发现、热点插件推送、一键安装与管理、AI 智能推荐和视觉增强。",
-      "url": "https://github.com/fufankeji/deepseek-harness-studio",
-      "homepage": "https://deepseekdesktop.com",
+      "id": "github:1333068322",
+      "repositoryId": 1333068322,
+      "slug": "1333068322",
+      "name": "dsh-open-in-vscode",
+      "fullName": "omdsh-dev/dsh-open-in-vscode",
+      "description": "Open DeepSeek Harness workspace directories in VS Code directly from the web GUI.",
+      "url": "https://github.com/omdsh-dev/dsh-open-in-vscode",
+      "homepage": null,
       "owner": {
-        "login": "fufankeji",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/172011122?v=4"
+        "login": "omdsh-dev",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/312905287?v=4"
       },
       "topics": [
-        "ai-agent",
-        "deepseek",
-        "deepseek-harness",
-        "deepseek-harness-studio",
-        "desktop-app",
-        "developer-tools",
         "dsh",
-        "dsh-plugin",
-        "electron",
-        "macos",
-        "plugin-manager",
-        "windows"
+        "dsh-plugin"
       ],
-      "language": "TypeScript",
+      "language": "JavaScript",
       "license": "MIT",
       "stars": 46,
       "forks": 4,
-      "openIssues": 0,
-      "size": 24629,
-      "createdAt": "2026-08-15T03:00:06Z",
-      "updatedAt": "2026-08-16T04:46:33Z",
-      "pushedAt": "2026-08-16T04:09:42Z",
+      "openIssues": 2,
+      "size": 975,
+      "createdAt": "2026-08-13T12:00:02Z",
+      "updatedAt": "2026-08-15T16:38:14Z",
+      "pushedAt": "2026-08-13T16:13:51Z",
       "archived": false,
       "fork": false,
-      "projectType": "application",
-      "category": "development",
+      "projectType": "unknown",
+      "category": "other",
       "categories": [
-        "development"
+        "other"
       ],
-      "matchedTopics": [
-        "desktop-app",
-        "plugin-manager",
-        "developer-tools"
-      ],
-      "classificationConfidence": "high",
+      "matchedTopics": [],
+      "classificationConfidence": "low",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
       "featured": false,
       "rating": {
-        "total": 64,
-        "stars": 3.2,
+        "total": 62,
+        "stars": 3.1,
         "level": "good",
         "breakdown": {
           "popularity": 22,
-          "activity": 30,
+          "activity": 28,
           "status": 12
         }
       },
@@ -7653,52 +7639,61 @@
       }
     },
     {
-      "id": "github:1333068322",
-      "repositoryId": 1333068322,
-      "slug": "1333068322",
-      "name": "dsh-open-in-vscode",
-      "fullName": "omdsh-dev/dsh-open-in-vscode",
-      "description": "Open DeepSeek Harness workspace directories in VS Code directly from the web GUI.",
-      "url": "https://github.com/omdsh-dev/dsh-open-in-vscode",
+      "id": "github:1174622182",
+      "repositoryId": 1174622182,
+      "slug": "1174622182",
+      "name": "mstar-harness",
+      "fullName": "btspoony/mstar-harness",
+      "description": "A Skill-driven Harness/Loop Engineering Workflow Agent Plugin",
+      "url": "https://github.com/btspoony/mstar-harness",
       "homepage": null,
       "owner": {
-        "login": "omdsh-dev",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/312905287?v=4"
+        "login": "btspoony",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/707025?v=4"
       },
       "topics": [
-        "dsh",
-        "dsh-plugin"
+        "cursor-plugin",
+        "dsh-plugin",
+        "harness-engineering",
+        "knowledge-management",
+        "omp-plugin",
+        "opencode-plugin",
+        "sdd",
+        "spec-driven",
+        "subagents"
       ],
-      "language": "JavaScript",
+      "language": "TypeScript",
       "license": "MIT",
-      "stars": 46,
-      "forks": 4,
-      "openIssues": 2,
-      "size": 975,
-      "createdAt": "2026-08-13T12:00:02Z",
-      "updatedAt": "2026-08-15T16:38:14Z",
-      "pushedAt": "2026-08-13T16:13:51Z",
+      "stars": 45,
+      "forks": 3,
+      "openIssues": 0,
+      "size": 5116,
+      "createdAt": "2026-03-06T16:47:43Z",
+      "updatedAt": "2026-08-16T00:06:01Z",
+      "pushedAt": "2026-08-16T04:17:25Z",
       "archived": false,
       "fork": false,
-      "projectType": "unknown",
-      "category": "other",
+      "projectType": "plugin",
+      "category": "agent-session",
       "categories": [
-        "other"
+        "agent-session"
       ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
+      "matchedTopics": [
+        "subagents"
+      ],
+      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
       "featured": false,
       "rating": {
-        "total": 62,
-        "stars": 3.1,
+        "total": 64,
+        "stars": 3.2,
         "level": "good",
         "breakdown": {
           "popularity": 22,
-          "activity": 28,
+          "activity": 30,
           "status": 12
         }
       },
@@ -7827,49 +7822,54 @@
       }
     },
     {
-      "id": "github:1174622182",
-      "repositoryId": 1174622182,
-      "slug": "1174622182",
-      "name": "mstar-harness",
-      "fullName": "btspoony/mstar-harness",
-      "description": "A Skill-driven Harness/Loop Engineering Workflow Agent Plugin",
-      "url": "https://github.com/btspoony/mstar-harness",
-      "homepage": null,
+      "id": "github:1334747723",
+      "repositoryId": 1334747723,
+      "slug": "1334747723",
+      "name": "deepseek-harness-studio",
+      "fullName": "fufankeji/deepseek-harness-studio",
+      "description": "DeepSeek Harness 零代码桌面端｜一键启动，支持 Windows 与 macOS；内置插件发现、热点插件推送、一键安装与管理、AI 智能推荐和视觉增强。",
+      "url": "https://github.com/fufankeji/deepseek-harness-studio",
+      "homepage": "https://deepseekdesktop.com",
       "owner": {
-        "login": "btspoony",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/707025?v=4"
+        "login": "fufankeji",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/172011122?v=4"
       },
       "topics": [
-        "cursor-plugin",
+        "ai-agent",
+        "deepseek",
+        "deepseek-harness",
+        "deepseek-harness-studio",
+        "desktop-app",
+        "developer-tools",
+        "dsh",
         "dsh-plugin",
-        "harness-engineering",
-        "knowledge-management",
-        "omp-plugin",
-        "opencode-plugin",
-        "sdd",
-        "spec-driven",
-        "subagents"
+        "electron",
+        "macos",
+        "plugin-manager",
+        "windows"
       ],
       "language": "TypeScript",
       "license": "MIT",
       "stars": 45,
-      "forks": 3,
+      "forks": 4,
       "openIssues": 0,
-      "size": 5116,
-      "createdAt": "2026-03-06T16:47:43Z",
-      "updatedAt": "2026-08-16T00:06:01Z",
-      "pushedAt": "2026-08-16T04:17:25Z",
+      "size": 24629,
+      "createdAt": "2026-08-15T03:00:06Z",
+      "updatedAt": "2026-08-16T04:35:08Z",
+      "pushedAt": "2026-08-16T04:09:42Z",
       "archived": false,
       "fork": false,
-      "projectType": "plugin",
-      "category": "agent-session",
+      "projectType": "application",
+      "category": "development",
       "categories": [
-        "agent-session"
+        "development"
       ],
       "matchedTopics": [
-        "subagents"
+        "desktop-app",
+        "plugin-manager",
+        "developer-tools"
       ],
-      "classificationConfidence": "medium",
+      "classificationConfidence": "high",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -13179,69 +13179,6 @@
       }
     },
     {
-      "id": "github:1334156126",
-      "repositoryId": 1334156126,
-      "slug": "1334156126",
-      "name": "dsh-plugin-marketplace",
-      "fullName": "AwesomeHou/dsh-plugin-marketplace",
-      "description": "Plugin marketplace for DeepSeek Harness — live-syncs the GitHub dsh-plugin topic (1800+ repos) into a searchable, paginated settings tab with one-click install and agent tools (market_search / market_install).",
-      "url": "https://github.com/AwesomeHou/dsh-plugin-marketplace",
-      "homepage": null,
-      "owner": {
-        "login": "AwesomeHou",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/184660632?v=4"
-      },
-      "topics": [
-        "ai-agent",
-        "cordis",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin",
-        "plugin-marketplace"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 20,
-      "forks": 3,
-      "openIssues": 1,
-      "size": 512,
-      "createdAt": "2026-08-14T12:25:15Z",
-      "updatedAt": "2026-08-16T04:43:35Z",
-      "pushedAt": "2026-08-16T03:16:43Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "directory",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [
-        "plugin-marketplace"
-      ],
-      "classificationConfidence": "high",
-      "defaultBranch": "master",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 60,
-        "stars": 3,
-        "level": "good",
-        "breakdown": {
-          "popularity": 18,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
       "id": "github:1333375150",
       "repositoryId": 1333375150,
       "slug": "1333375150",
@@ -13341,6 +13278,69 @@
         "level": "good",
         "breakdown": {
           "popularity": 18,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1334156126",
+      "repositoryId": 1334156126,
+      "slug": "1334156126",
+      "name": "dsh-plugin-marketplace",
+      "fullName": "AwesomeHou/dsh-plugin-marketplace",
+      "description": "Plugin marketplace for DeepSeek Harness — live-syncs the GitHub dsh-plugin topic (1800+ repos) into a searchable, paginated settings tab with one-click install and agent tools (market_search / market_install).",
+      "url": "https://github.com/AwesomeHou/dsh-plugin-marketplace",
+      "homepage": null,
+      "owner": {
+        "login": "AwesomeHou",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/184660632?v=4"
+      },
+      "topics": [
+        "ai-agent",
+        "cordis",
+        "deepseek",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "plugin",
+        "plugin-marketplace"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 19,
+      "forks": 3,
+      "openIssues": 1,
+      "size": 512,
+      "createdAt": "2026-08-14T12:25:15Z",
+      "updatedAt": "2026-08-16T03:17:07Z",
+      "pushedAt": "2026-08-16T03:16:43Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "directory",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [
+        "plugin-marketplace"
+      ],
+      "classificationConfidence": "high",
+      "defaultBranch": "master",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 59,
+        "stars": 3,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 17,
           "activity": 30,
           "status": 12
         }
@@ -14364,10 +14364,10 @@
       "stars": 16,
       "forks": 1,
       "openIssues": 1,
-      "size": 581,
+      "size": 536,
       "createdAt": "2026-08-14T04:23:26Z",
-      "updatedAt": "2026-08-16T04:46:15Z",
-      "pushedAt": "2026-08-16T04:46:05Z",
+      "updatedAt": "2026-08-16T04:35:28Z",
+      "pushedAt": "2026-08-16T04:35:17Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -15074,7 +15074,7 @@
       "stars": 14,
       "forks": 1,
       "openIssues": 0,
-      "size": 13812,
+      "size": 13624,
       "createdAt": "2026-08-13T16:26:50Z",
       "updatedAt": "2026-08-16T04:08:55Z",
       "pushedAt": "2026-08-16T04:08:50Z",
@@ -16117,62 +16117,6 @@
       }
     },
     {
-      "id": "github:1334171801",
-      "repositoryId": 1334171801,
-      "slug": "1334171801",
-      "name": "dsh-theme-plugin",
-      "fullName": "nevertoday/dsh-theme-plugin",
-      "description": "Chinese traditional colors as a DeepSeek Harness theme pack.",
-      "url": "https://github.com/nevertoday/dsh-theme-plugin",
-      "homepage": "https://vip.xiaoxiaodong.ai/#project",
-      "owner": {
-        "login": "nevertoday",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/166048?v=4"
-      },
-      "topics": [
-        "dsh-plugin",
-        "dsh-plugin-market",
-        "dsh-plugins"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 12,
-      "forks": 1,
-      "openIssues": 0,
-      "size": 4139,
-      "createdAt": "2026-08-14T12:43:38Z",
-      "updatedAt": "2026-08-16T04:46:22Z",
-      "pushedAt": "2026-08-15T11:41:14Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 57,
-        "stars": 2.9,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 15,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
       "id": "github:1333708301",
       "repositoryId": 1333708301,
       "slug": "1333708301",
@@ -17011,6 +16955,62 @@
       }
     },
     {
+      "id": "github:1334171801",
+      "repositoryId": 1334171801,
+      "slug": "1334171801",
+      "name": "dsh-theme-plugin",
+      "fullName": "nevertoday/dsh-theme-plugin",
+      "description": "Chinese traditional colors as a DeepSeek Harness theme pack.",
+      "url": "https://github.com/nevertoday/dsh-theme-plugin",
+      "homepage": "https://vip.xiaoxiaodong.ai/#project",
+      "owner": {
+        "login": "nevertoday",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/166048?v=4"
+      },
+      "topics": [
+        "dsh-plugin",
+        "dsh-plugin-market",
+        "dsh-plugins"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 11,
+      "forks": 1,
+      "openIssues": 0,
+      "size": 4139,
+      "createdAt": "2026-08-14T12:43:38Z",
+      "updatedAt": "2026-08-16T03:09:25Z",
+      "pushedAt": "2026-08-15T11:41:14Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 56,
+        "stars": 2.8,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 14,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1334296085",
       "repositoryId": 1334296085,
       "slug": "1334296085",
@@ -17036,8 +17036,8 @@
       "openIssues": 0,
       "size": 444,
       "createdAt": "2026-08-14T15:00:28Z",
-      "updatedAt": "2026-08-16T04:43:36Z",
-      "pushedAt": "2026-08-16T04:43:25Z",
+      "updatedAt": "2026-08-16T02:03:49Z",
+      "pushedAt": "2026-08-15T17:00:06Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -18526,7 +18526,7 @@
       "license": "MIT",
       "stars": 9,
       "forks": 6,
-      "openIssues": 0,
+      "openIssues": 1,
       "size": 4223,
       "createdAt": "2026-08-14T05:53:47Z",
       "updatedAt": "2026-08-16T04:42:17Z",
@@ -18722,64 +18722,6 @@
       ],
       "classificationConfidence": "high",
       "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 55,
-        "stars": 2.8,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 13,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1333719936",
-      "repositoryId": 1333719936,
-      "slug": "1333719936",
-      "name": "dsh-phone",
-      "fullName": "railgun0325/dsh-phone",
-      "description": "让 DeepSeek Harness 的 agent 跑在手机里，通过 Magisk root 原生操作安卓系统（截图/点击/滑动/开应用）+ 移动端布局 + WebView APK",
-      "url": "https://github.com/railgun0325/dsh-phone",
-      "homepage": null,
-      "owner": {
-        "login": "railgun0325",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/102395850?v=4"
-      },
-      "topics": [
-        "agent",
-        "android",
-        "deepseek-harness",
-        "dsh-plugin",
-        "termux"
-      ],
-      "language": "Java",
-      "license": "MIT",
-      "stars": 9,
-      "forks": 1,
-      "openIssues": 0,
-      "size": 2238,
-      "createdAt": "2026-08-14T02:38:13Z",
-      "updatedAt": "2026-08-16T04:45:19Z",
-      "pushedAt": "2026-08-15T18:45:35Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
-      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -20733,6 +20675,64 @@
       ],
       "classificationConfidence": "high",
       "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 55,
+        "stars": 2.8,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 13,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1333719936",
+      "repositoryId": 1333719936,
+      "slug": "1333719936",
+      "name": "dsh-phone",
+      "fullName": "railgun0325/dsh-phone",
+      "description": "让 DeepSeek Harness 的 agent 跑在手机里，通过 Magisk root 原生操作安卓系统（截图/点击/滑动/开应用）+ 移动端布局 + WebView APK",
+      "url": "https://github.com/railgun0325/dsh-phone",
+      "homepage": null,
+      "owner": {
+        "login": "railgun0325",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/102395850?v=4"
+      },
+      "topics": [
+        "agent",
+        "android",
+        "deepseek-harness",
+        "dsh-plugin",
+        "termux"
+      ],
+      "language": "Java",
+      "license": "MIT",
+      "stars": 8,
+      "forks": 1,
+      "openIssues": 0,
+      "size": 2238,
+      "createdAt": "2026-08-14T02:38:13Z",
+      "updatedAt": "2026-08-15T18:45:45Z",
+      "pushedAt": "2026-08-15T18:45:35Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -23129,61 +23129,6 @@
       }
     },
     {
-      "id": "github:1333741476",
-      "repositoryId": 1333741476,
-      "slug": "1333741476",
-      "name": "dsh-desktop-pet",
-      "fullName": "xiaoshihou514/dsh-desktop-pet",
-      "description": "DeepSeek Harness：鲸鱼娘桌宠！",
-      "url": "https://github.com/xiaoshihou514/dsh-desktop-pet",
-      "homepage": null,
-      "owner": {
-        "login": "xiaoshihou514",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/108414369?v=4"
-      },
-      "topics": [
-        "dsh",
-        "dsh-plugin"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 7,
-      "forks": 1,
-      "openIssues": 0,
-      "size": 222,
-      "createdAt": "2026-08-14T03:12:23Z",
-      "updatedAt": "2026-08-16T04:43:54Z",
-      "pushedAt": "2026-08-16T00:49:12Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "unknown",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 54,
-        "stars": 2.7,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 12,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
       "id": "github:1334561781",
       "repositoryId": 1334561781,
       "slug": "1334561781",
@@ -23939,11 +23884,11 @@
       "license": null,
       "stars": 6,
       "forks": 1,
-      "openIssues": 2,
+      "openIssues": 4,
       "size": 693,
       "createdAt": "2026-08-15T09:52:35Z",
-      "updatedAt": "2026-08-16T04:47:04Z",
-      "pushedAt": "2026-08-16T04:47:02Z",
+      "updatedAt": "2026-08-16T04:17:04Z",
+      "pushedAt": "2026-08-16T04:36:47Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -25129,7 +25074,7 @@
       "stars": 6,
       "forks": 2,
       "openIssues": 1,
-      "size": 2342,
+      "size": 2332,
       "createdAt": "2026-08-15T08:10:42Z",
       "updatedAt": "2026-08-16T03:45:27Z",
       "pushedAt": "2026-08-16T03:45:13Z",
@@ -26565,6 +26510,61 @@
         "breakdown": {
           "popularity": 11,
           "activity": 28,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1333741476",
+      "repositoryId": 1333741476,
+      "slug": "1333741476",
+      "name": "dsh-desktop-pet",
+      "fullName": "xiaoshihou514/dsh-desktop-pet",
+      "description": "DeepSeek Harness：鲸鱼娘桌宠！",
+      "url": "https://github.com/xiaoshihou514/dsh-desktop-pet",
+      "homepage": null,
+      "owner": {
+        "login": "xiaoshihou514",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/108414369?v=4"
+      },
+      "topics": [
+        "dsh",
+        "dsh-plugin"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 0,
+      "size": 222,
+      "createdAt": "2026-08-14T03:12:23Z",
+      "updatedAt": "2026-08-16T03:33:47Z",
+      "pushedAt": "2026-08-16T00:49:12Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "unknown",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 53,
+        "stars": 2.7,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 11,
+          "activity": 30,
           "status": 12
         }
       },
@@ -31682,7 +31682,7 @@
       "stars": 5,
       "forks": 1,
       "openIssues": 0,
-      "size": 2072,
+      "size": 2058,
       "createdAt": "2026-08-13T13:30:22Z",
       "updatedAt": "2026-08-16T04:35:34Z",
       "pushedAt": "2026-08-16T04:35:22Z",
@@ -33025,64 +33025,6 @@
       ],
       "classificationConfidence": "medium",
       "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 51,
-        "stars": 2.6,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 9,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1334024593",
-      "repositoryId": 1334024593,
-      "slug": "1334024593",
-      "name": "dsh-whale-pet",
-      "fullName": "aceice01/dsh-whale-pet",
-      "description": "DeepSeek 鲸鱼娘桌宠：DSH Desktop 桌宠 + Web 版悬浮桌宠，晓伊神经网络语音、撒娇互动、任务完成提醒",
-      "url": "https://github.com/aceice01/dsh-whale-pet",
-      "homepage": null,
-      "owner": {
-        "login": "aceice01",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/60596338?v=4"
-      },
-      "topics": [
-        "deepseek",
-        "deepseek-harness",
-        "dsh-plugin",
-        "dsh-plugin-desktop",
-        "dsh-plugins"
-      ],
-      "language": "HTML",
-      "license": "NOASSERTION",
-      "stars": 4,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 1923,
-      "createdAt": "2026-08-14T09:40:22Z",
-      "updatedAt": "2026-08-16T04:44:44Z",
-      "pushedAt": "2026-08-15T07:36:32Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
-      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -41060,7 +41002,7 @@
       "stars": 4,
       "forks": 1,
       "openIssues": 0,
-      "size": 4182,
+      "size": 4132,
       "createdAt": "2026-08-14T04:04:48Z",
       "updatedAt": "2026-08-16T04:30:06Z",
       "pushedAt": "2026-08-16T04:30:00Z",
@@ -41368,68 +41310,6 @@
         "notification"
       ],
       "classificationConfidence": "high",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 51,
-        "stars": 2.6,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 9,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1334760679",
-      "repositoryId": 1334760679,
-      "slug": "1334760679",
-      "name": "dsh-client-masquerade",
-      "fullName": "ymh0000123/dsh-client-masquerade",
-      "description": "DeepSeek Harness 插件：让自定义 llm-pi-ai provider 伪装成 Claude Code / Codex 客户端（伪造客户端身份请求头）。A DeepSeek Harness plugin: masquerade a custom llm-pi-ai provider as Claude Code / Codex clients (spoofed client identity headers).",
-      "url": "https://github.com/ymh0000123/dsh-client-masquerade",
-      "homepage": null,
-      "owner": {
-        "login": "ymh0000123",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/107793048?v=4"
-      },
-      "topics": [
-        "claude-code",
-        "codex",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "llm",
-        "plugin"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 4,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 39,
-      "createdAt": "2026-08-15T03:27:34Z",
-      "updatedAt": "2026-08-16T04:44:48Z",
-      "pushedAt": "2026-08-16T04:37:35Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "development",
-      "categories": [
-        "development"
-      ],
-      "matchedTopics": [
-        "claude-code"
-      ],
-      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -42629,6 +42509,64 @@
       ],
       "classificationConfidence": "medium",
       "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 50,
+        "stars": 2.5,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 8,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1334024593",
+      "repositoryId": 1334024593,
+      "slug": "1334024593",
+      "name": "dsh-whale-pet",
+      "fullName": "aceice01/dsh-whale-pet",
+      "description": "DeepSeek 鲸鱼娘桌宠：DSH Desktop 桌宠 + Web 版悬浮桌宠，晓伊神经网络语音、撒娇互动、任务完成提醒",
+      "url": "https://github.com/aceice01/dsh-whale-pet",
+      "homepage": null,
+      "owner": {
+        "login": "aceice01",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/60596338?v=4"
+      },
+      "topics": [
+        "deepseek",
+        "deepseek-harness",
+        "dsh-plugin",
+        "dsh-plugin-desktop",
+        "dsh-plugins"
+      ],
+      "language": "HTML",
+      "license": "NOASSERTION",
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 1923,
+      "createdAt": "2026-08-14T09:40:22Z",
+      "updatedAt": "2026-08-15T09:33:53Z",
+      "pushedAt": "2026-08-15T07:36:32Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -45693,67 +45631,6 @@
       "matchedTopics": [],
       "classificationConfidence": "low",
       "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 50,
-        "stars": 2.5,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 8,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335156872",
-      "repositoryId": 1335156872,
-      "slug": "1335156872",
-      "name": "cleverer-dsh",
-      "fullName": "Classicoke/cleverer-dsh",
-      "description": "DSH execution-discipline plugin suite: 11 plugins + 6 skills, zero dependencies, 426 tests. 让 DeepSeek Harness 变聪明的插件套件。",
-      "url": "https://github.com/Classicoke/cleverer-dsh",
-      "homepage": null,
-      "owner": {
-        "login": "Classicoke",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/314667271?v=4"
-      },
-      "topics": [
-        "agent-skills",
-        "ai-agents",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 3,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 866,
-      "createdAt": "2026-08-15T14:32:44Z",
-      "updatedAt": "2026-08-16T04:47:36Z",
-      "pushedAt": "2026-08-16T03:52:25Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "skill",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [
-        "agent-skills"
-      ],
-      "classificationConfidence": "high",
-      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -52917,7 +52794,7 @@
       "stars": 3,
       "forks": 1,
       "openIssues": 3,
-      "size": 1924,
+      "size": 1916,
       "createdAt": "2026-08-15T04:48:52Z",
       "updatedAt": "2026-08-16T03:46:39Z",
       "pushedAt": "2026-08-16T03:46:33Z",
@@ -53499,8 +53376,8 @@
       "openIssues": 0,
       "size": 455,
       "createdAt": "2026-08-15T09:41:57Z",
-      "updatedAt": "2026-08-16T04:45:52Z",
-      "pushedAt": "2026-08-16T04:45:44Z",
+      "updatedAt": "2026-08-16T03:40:38Z",
+      "pushedAt": "2026-08-16T03:40:25Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -57824,6 +57701,65 @@
       }
     },
     {
+      "id": "github:1334285452",
+      "repositoryId": 1334285452,
+      "slug": "1334285452",
+      "name": "dsh-sfversion",
+      "fullName": "sparkmio/dsh-sfversion",
+      "description": "SF视觉桥——给纯文本模型的 DeepSeek Harness 装上眼睛。",
+      "url": "https://github.com/sparkmio/dsh-sfversion",
+      "homepage": null,
+      "owner": {
+        "login": "sparkmio",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/244020325?v=4"
+      },
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "stepfun",
+        "vision"
+      ],
+      "language": "JavaScript",
+      "license": null,
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 2771,
+      "createdAt": "2026-08-14T14:49:05Z",
+      "updatedAt": "2026-08-16T04:25:52Z",
+      "pushedAt": "2026-08-16T04:25:47Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "data",
+      "categories": [
+        "data"
+      ],
+      "matchedTopics": [
+        "vision"
+      ],
+      "classificationConfidence": "high",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 50,
+        "stars": 2.5,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 8,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1333928381",
       "repositoryId": 1333928381,
       "slug": "1333928381",
@@ -61685,6 +61621,68 @@
       }
     },
     {
+      "id": "github:1334760679",
+      "repositoryId": 1334760679,
+      "slug": "1334760679",
+      "name": "dsh-client-masquerade",
+      "fullName": "ymh0000123/dsh-client-masquerade",
+      "description": "DeepSeek Harness 插件：让自定义 llm-pi-ai provider 伪装成 Claude Code / Codex 客户端（伪造客户端身份请求头）。A DeepSeek Harness plugin: masquerade a custom llm-pi-ai provider as Claude Code / Codex clients (spoofed client identity headers).",
+      "url": "https://github.com/ymh0000123/dsh-client-masquerade",
+      "homepage": null,
+      "owner": {
+        "login": "ymh0000123",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/107793048?v=4"
+      },
+      "topics": [
+        "claude-code",
+        "codex",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "llm",
+        "plugin"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 39,
+      "createdAt": "2026-08-15T03:27:34Z",
+      "updatedAt": "2026-08-16T04:37:42Z",
+      "pushedAt": "2026-08-16T04:37:35Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "development",
+      "categories": [
+        "development"
+      ],
+      "matchedTopics": [
+        "claude-code"
+      ],
+      "classificationConfidence": "medium",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 50,
+        "stars": 2.5,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 8,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1333175499",
       "repositoryId": 1333175499,
       "slug": "1333175499",
@@ -63123,69 +63121,6 @@
         "vision"
       ],
       "classificationConfidence": "high",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 50,
-        "stars": 2.5,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 8,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1333810250",
-      "repositoryId": 1333810250,
-      "slug": "1333810250",
-      "name": "adhdgofly-dsh-ext",
-      "fullName": "zuoguyoupan2023/adhdgofly-dsh-ext",
-      "description": "ADHDGoFly POS highlighting plugin for DeepSeek Harness Web: nouns green, verbs red, adjectives/adverbs purple, others gray in rendered Markdown",
-      "url": "https://github.com/zuoguyoupan2023/adhdgofly-dsh-ext",
-      "homepage": "https://www.npmjs.com/package/adhdgofly-dsh-ext",
-      "owner": {
-        "login": "zuoguyoupan2023",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/233212521?v=4"
-      },
-      "topics": [
-        "adhdgofly",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "highlighting",
-        "markdown",
-        "part-of-speech"
-      ],
-      "language": "TypeScript",
-      "license": "MIT",
-      "stars": 3,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 2412,
-      "createdAt": "2026-08-14T05:03:03Z",
-      "updatedAt": "2026-08-16T04:46:28Z",
-      "pushedAt": "2026-08-14T23:11:11Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "data",
-      "categories": [
-        "data"
-      ],
-      "matchedTopics": [
-        "markdown"
-      ],
-      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -65759,6 +65694,60 @@
         "breakdown": {
           "popularity": 6,
           "activity": 28,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1334435919",
+      "repositoryId": 1334435919,
+      "slug": "1334435919",
+      "name": "dsh-zh-hant-hk",
+      "fullName": "Argonaut790/dsh-zh-hant-hk",
+      "description": "DeepSeek Harness plugin: Hong Kong Traditional Chinese wording (對話, 設定, 儲存)",
+      "url": "https://github.com/Argonaut790/dsh-zh-hant-hk",
+      "homepage": null,
+      "owner": {
+        "login": "Argonaut790",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/90304478?v=4"
+      },
+      "topics": [
+        "dsh-plugin"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 103,
+      "createdAt": "2026-08-14T17:44:29Z",
+      "updatedAt": "2026-08-15T21:19:09Z",
+      "pushedAt": "2026-08-15T21:19:04Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "unknown",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "master",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 48,
+        "stars": 2.4,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 6,
+          "activity": 30,
           "status": 12
         }
       },
@@ -68486,8 +68475,8 @@
       "openIssues": 0,
       "size": 5415,
       "createdAt": "2026-08-15T02:12:33Z",
-      "updatedAt": "2026-08-16T04:44:40Z",
-      "pushedAt": "2026-08-16T04:44:33Z",
+      "updatedAt": "2026-08-16T04:42:06Z",
+      "pushedAt": "2026-08-16T04:41:59Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -69459,6 +69448,67 @@
       ],
       "classificationConfidence": "high",
       "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 48,
+        "stars": 2.4,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 6,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1335156872",
+      "repositoryId": 1335156872,
+      "slug": "1335156872",
+      "name": "cleverer-dsh",
+      "fullName": "Classicoke/cleverer-dsh",
+      "description": "DSH execution-discipline plugin suite: 11 plugins + 6 skills, zero dependencies, 426 tests. 让 DeepSeek Harness 变聪明的插件套件。",
+      "url": "https://github.com/Classicoke/cleverer-dsh",
+      "homepage": null,
+      "owner": {
+        "login": "Classicoke",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/314667271?v=4"
+      },
+      "topics": [
+        "agent-skills",
+        "ai-agents",
+        "cordis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 866,
+      "createdAt": "2026-08-15T14:32:44Z",
+      "updatedAt": "2026-08-16T03:52:37Z",
+      "pushedAt": "2026-08-16T03:52:25Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "skill",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [
+        "agent-skills"
+      ],
+      "classificationConfidence": "high",
+      "defaultBranch": "master",
       "awesomeListed": false,
       "verified": false,
       "verificationUrl": null,
@@ -81567,8 +81617,8 @@
       "openIssues": 0,
       "size": 3053,
       "createdAt": "2026-08-15T06:32:49Z",
-      "updatedAt": "2026-08-16T04:45:22Z",
-      "pushedAt": "2026-08-16T04:45:06Z",
+      "updatedAt": "2026-08-16T04:37:30Z",
+      "pushedAt": "2026-08-16T04:37:28Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -85245,6 +85295,80 @@
       }
     },
     {
+      "id": "github:1334537225",
+      "repositoryId": 1334537225,
+      "slug": "1334537225",
+      "name": "dsh-pet-whale",
+      "fullName": "nzl153/dsh-pet-whale",
+      "description": "桌宠小鲸鱼：DSH（DeepSeek Harness）Web 桌宠插件，随 agent 状态切换动画，纯 DOM 零依赖",
+      "url": "https://github.com/nzl153/dsh-pet-whale",
+      "homepage": "https://nzl153.github.io/dsh-pet-whale/",
+      "owner": {
+        "login": "nzl153",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/282125110?v=4"
+      },
+      "topics": [
+        "browser",
+        "cordis",
+        "css-animation",
+        "deepseek-harness",
+        "desktop-pet",
+        "dsh",
+        "dsh-plugin",
+        "i18n",
+        "mascot",
+        "pet",
+        "svg",
+        "svg-animation",
+        "typescript",
+        "ui-widget",
+        "whale",
+        "zero-dependency"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 3144,
+      "createdAt": "2026-08-14T20:02:45Z",
+      "updatedAt": "2026-08-16T04:42:18Z",
+      "pushedAt": "2026-08-16T04:42:13Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "lifestyle",
+      "categories": [
+        "lifestyle",
+        "ui"
+      ],
+      "matchedTopics": [
+        "desktop-pet",
+        "pet",
+        "ui-widget"
+      ],
+      "classificationConfidence": "high",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 48,
+        "stars": 2.4,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 6,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1333763523",
       "repositoryId": 1333763523,
       "slug": "1333763523",
@@ -88814,7 +88938,7 @@
       "size": 1135,
       "createdAt": "2026-08-15T09:36:29Z",
       "updatedAt": "2026-08-16T04:40:52Z",
-      "pushedAt": "2026-08-16T04:44:30Z",
+      "pushedAt": "2026-08-16T04:40:31Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -92230,8 +92354,8 @@
       "openIssues": 0,
       "size": 597,
       "createdAt": "2026-08-13T23:07:00Z",
-      "updatedAt": "2026-08-16T04:46:48Z",
-      "pushedAt": "2026-08-16T04:46:29Z",
+      "updatedAt": "2026-08-15T19:31:56Z",
+      "pushedAt": "2026-08-15T19:31:37Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -100108,6 +100232,69 @@
       }
     },
     {
+      "id": "github:1333810250",
+      "repositoryId": 1333810250,
+      "slug": "1333810250",
+      "name": "adhdgofly-dsh-ext",
+      "fullName": "zuoguyoupan2023/adhdgofly-dsh-ext",
+      "description": "ADHDGoFly POS highlighting plugin for DeepSeek Harness Web: nouns green, verbs red, adjectives/adverbs purple, others gray in rendered Markdown",
+      "url": "https://github.com/zuoguyoupan2023/adhdgofly-dsh-ext",
+      "homepage": "https://www.npmjs.com/package/adhdgofly-dsh-ext",
+      "owner": {
+        "login": "zuoguyoupan2023",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/233212521?v=4"
+      },
+      "topics": [
+        "adhdgofly",
+        "deepseek",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "highlighting",
+        "markdown",
+        "part-of-speech"
+      ],
+      "language": "TypeScript",
+      "license": "MIT",
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 2412,
+      "createdAt": "2026-08-14T05:03:03Z",
+      "updatedAt": "2026-08-15T01:00:05Z",
+      "pushedAt": "2026-08-14T23:11:11Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "data",
+      "categories": [
+        "data"
+      ],
+      "matchedTopics": [
+        "markdown"
+      ],
+      "classificationConfidence": "medium",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 48,
+        "stars": 2.4,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 6,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1333990782",
       "repositoryId": 1333990782,
       "slug": "1333990782",
@@ -100216,62 +100403,6 @@
         "breakdown": {
           "popularity": 6,
           "activity": 28,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1334949071",
-      "repositoryId": 1334949071,
-      "slug": "1334949071",
-      "name": "dsh-codex-approval",
-      "fullName": "040822/dsh-codex-approval",
-      "description": "dsh-codex-approval插件：仿照Codex的AI自动审批，规则+AI三级风险评估自动放行/拒绝，让dsh沙箱审批自动化",
-      "url": "https://github.com/040822/dsh-codex-approval",
-      "homepage": null,
-      "owner": {
-        "login": "040822",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/61908139?v=4"
-      },
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 39,
-      "createdAt": "2026-08-15T09:14:41Z",
-      "updatedAt": "2026-08-16T04:46:31Z",
-      "pushedAt": "2026-08-15T19:44:10Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "unknown",
-      "category": "other",
-      "categories": [
-        "other"
-      ],
-      "matchedTopics": [],
-      "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 46,
-        "stars": 2.3,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 4,
-          "activity": 30,
           "status": 12
         }
       },
@@ -104593,7 +104724,7 @@
       "slug": "1334868392",
       "name": "dsh-notify-win",
       "fullName": "Andyqwe44/dsh-notify-win",
-      "description": "Native Windows toast + taskbar flash for DeepSeek Harness when a task finishes or your input is needed.",
+      "description": "DeepSeek Harness 插件：任务完成或需要你回答时，弹出 Win11 原生通知并闪烁任务栏图标（toast + taskbar flash）",
       "url": "https://github.com/Andyqwe44/dsh-notify-win",
       "homepage": null,
       "owner": {
@@ -104613,7 +104744,7 @@
       "openIssues": 0,
       "size": 60,
       "createdAt": "2026-08-15T07:00:32Z",
-      "updatedAt": "2026-08-16T04:46:30Z",
+      "updatedAt": "2026-08-16T03:22:15Z",
       "pushedAt": "2026-08-15T14:33:32Z",
       "archived": false,
       "fork": false,
@@ -118986,7 +119117,7 @@
       "stars": 1,
       "forks": 0,
       "openIssues": 0,
-      "size": 124,
+      "size": 49,
       "createdAt": "2026-08-15T07:52:31Z",
       "updatedAt": "2026-08-16T04:30:55Z",
       "pushedAt": "2026-08-16T03:46:47Z",
@@ -122576,7 +122707,7 @@
       "language": "TypeScript",
       "license": "MIT",
       "stars": 1,
-      "forks": 1,
+      "forks": 0,
       "openIssues": 0,
       "size": 2313,
       "createdAt": "2026-08-15T05:50:22Z",
@@ -123890,68 +124021,6 @@
       ],
       "matchedTopics": [],
       "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 46,
-        "stars": 2.3,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 4,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335609925",
-      "repositoryId": 1335609925,
-      "slug": "1335609925",
-      "name": "dsh-llm-usage-stats",
-      "fullName": "lightli369/dsh-llm-usage-stats",
-      "description": "DeepSeek Harness (DSH) web plugin: per-model LLM token usage dashboard in Settings (input/output/cache tokens, cache hit rate; day/week/month/custom ranges).",
-      "url": "https://github.com/lightli369/dsh-llm-usage-stats",
-      "homepage": null,
-      "owner": {
-        "login": "lightli369",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/13652754?v=4"
-      },
-      "topics": [
-        "analytics",
-        "dashboard",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "llm",
-        "token-usage"
-      ],
-      "language": "JavaScript",
-      "license": "MIT",
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:08:48Z",
-      "updatedAt": "2026-08-16T04:47:44Z",
-      "pushedAt": "2026-08-16T04:22:57Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "operations",
-      "categories": [
-        "operations"
-      ],
-      "matchedTopics": [
-        "token-usage"
-      ],
-      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -132651,8 +132720,8 @@
       "openIssues": 0,
       "size": 1773,
       "createdAt": "2026-08-15T16:49:37Z",
-      "updatedAt": "2026-08-16T04:46:55Z",
-      "pushedAt": "2026-08-16T04:46:36Z",
+      "updatedAt": "2026-08-15T19:36:20Z",
+      "pushedAt": "2026-08-15T19:35:55Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -139480,8 +139549,8 @@
       "openIssues": 0,
       "size": 1114,
       "createdAt": "2026-08-14T07:45:13Z",
-      "updatedAt": "2026-08-16T04:46:22Z",
-      "pushedAt": "2026-08-16T04:46:13Z",
+      "updatedAt": "2026-08-16T04:40:20Z",
+      "pushedAt": "2026-08-16T04:40:13Z",
       "archived": false,
       "fork": false,
       "projectType": "application",
@@ -141409,7 +141478,7 @@
       "size": 1505,
       "createdAt": "2026-08-15T14:02:22Z",
       "updatedAt": "2026-08-15T15:12:15Z",
-      "pushedAt": "2026-08-16T04:46:12Z",
+      "pushedAt": "2026-08-16T04:39:19Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -145307,8 +145376,8 @@
       "openIssues": 0,
       "size": 118,
       "createdAt": "2026-08-16T03:23:04Z",
-      "updatedAt": "2026-08-16T04:45:51Z",
-      "pushedAt": "2026-08-16T04:45:43Z",
+      "updatedAt": "2026-08-16T04:11:23Z",
+      "pushedAt": "2026-08-16T04:11:06Z",
       "archived": false,
       "fork": false,
       "projectType": "directory",
@@ -152600,6 +152669,62 @@
       }
     },
     {
+      "id": "github:1334949071",
+      "repositoryId": 1334949071,
+      "slug": "1334949071",
+      "name": "dsh-codex-approval",
+      "fullName": "040822/dsh-codex-approval",
+      "description": "dsh-codex-approval插件：仿照Codex的AI自动审批，规则+AI三级风险评估自动放行/拒绝，让dsh沙箱审批自动化",
+      "url": "https://github.com/040822/dsh-codex-approval",
+      "homepage": null,
+      "owner": {
+        "login": "040822",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/61908139?v=4"
+      },
+      "topics": [
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 39,
+      "createdAt": "2026-08-15T09:14:41Z",
+      "updatedAt": "2026-08-15T19:44:24Z",
+      "pushedAt": "2026-08-15T19:44:10Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "unknown",
+      "category": "other",
+      "categories": [
+        "other"
+      ],
+      "matchedTopics": [],
+      "classificationConfidence": "low",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 42,
+        "stars": 2.1,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 0,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
       "id": "github:1335194432",
       "repositoryId": 1335194432,
       "slug": "1335194432",
@@ -153239,8 +153364,8 @@
       "openIssues": 0,
       "size": 0,
       "createdAt": "2026-08-16T04:21:38Z",
-      "updatedAt": "2026-08-16T04:46:49Z",
-      "pushedAt": "2026-08-16T04:46:45Z",
+      "updatedAt": "2026-08-16T04:39:41Z",
+      "pushedAt": "2026-08-16T04:39:25Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -153361,8 +153486,8 @@
       "openIssues": 0,
       "size": 84,
       "createdAt": "2026-08-15T18:48:03Z",
-      "updatedAt": "2026-08-16T04:45:51Z",
-      "pushedAt": "2026-08-16T04:45:46Z",
+      "updatedAt": "2026-08-15T19:38:01Z",
+      "pushedAt": "2026-08-15T18:51:49Z",
       "archived": false,
       "fork": false,
       "projectType": "channel",
@@ -153664,7 +153789,7 @@
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "size": 73,
+      "size": 60,
       "createdAt": "2026-08-15T14:09:50Z",
       "updatedAt": "2026-08-16T03:44:45Z",
       "pushedAt": "2026-08-16T03:52:40Z",
@@ -153926,68 +154051,6 @@
       ],
       "matchedTopics": [],
       "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335626211",
-      "repositoryId": 1335626211,
-      "slug": "1335626211",
-      "name": "dsh-sysmon",
-      "fullName": "21hbguo/dsh-sysmon",
-      "description": "DSH Web GUI 系统性能看板：小悬浮窗实时展示 CPU/内存/磁盘/网络/负载/GPU，host 零依赖采集，占用极小",
-      "url": "https://github.com/21hbguo/dsh-sysmon",
-      "homepage": null,
-      "owner": {
-        "login": "21hbguo",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/139569698?v=4"
-      },
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "monitoring",
-        "system-monitoring"
-      ],
-      "language": "TypeScript",
-      "license": "BSD-3-Clause",
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:46:33Z",
-      "updatedAt": "2026-08-16T04:47:08Z",
-      "pushedAt": "2026-08-16T04:47:05Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "operations",
-      "categories": [
-        "operations"
-      ],
-      "matchedTopics": [
-        "monitoring",
-        "system-monitoring"
-      ],
-      "classificationConfidence": "high",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -155301,8 +155364,8 @@
       "openIssues": 0,
       "size": 1651,
       "createdAt": "2026-08-15T16:34:25Z",
-      "updatedAt": "2026-08-16T04:46:33Z",
-      "pushedAt": "2026-08-16T04:46:30Z",
+      "updatedAt": "2026-08-16T04:32:29Z",
+      "pushedAt": "2026-08-16T04:32:21Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -157963,7 +158026,7 @@
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "size": 184,
+      "size": 103,
       "createdAt": "2026-08-15T14:11:21Z",
       "updatedAt": "2026-08-16T04:41:18Z",
       "pushedAt": "2026-08-16T04:41:12Z",
@@ -160571,8 +160634,8 @@
       "openIssues": 0,
       "size": 0,
       "createdAt": "2026-08-16T04:24:30Z",
-      "updatedAt": "2026-08-16T04:47:38Z",
-      "pushedAt": "2026-08-16T04:47:18Z",
+      "updatedAt": "2026-08-16T04:43:55Z",
+      "pushedAt": "2026-08-16T04:43:47Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -161815,8 +161878,8 @@
       "openIssues": 0,
       "size": 74,
       "createdAt": "2026-08-15T15:57:09Z",
-      "updatedAt": "2026-08-16T04:44:55Z",
-      "pushedAt": "2026-08-16T04:44:42Z",
+      "updatedAt": "2026-08-16T03:32:20Z",
+      "pushedAt": "2026-08-16T03:32:09Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -162108,7 +162171,7 @@
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "size": 35642,
+      "size": 35513,
       "createdAt": "2026-08-15T18:40:42Z",
       "updatedAt": "2026-08-16T04:42:11Z",
       "pushedAt": "2026-08-16T04:41:58Z",
@@ -162526,67 +162589,6 @@
       ],
       "matchedTopics": [],
       "classificationConfidence": "low",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335605870",
-      "repositoryId": 1335605870,
-      "slug": "1335605870",
-      "name": "dsh-skill-stats",
-      "fullName": "chen-zz20/dsh-skill-stats",
-      "description": "该仓库暂未提供项目说明。",
-      "url": "https://github.com/chen-zz20/dsh-skill-stats",
-      "homepage": null,
-      "owner": {
-        "login": "chen-zz20",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/108067336?v=4"
-      },
-      "topics": [
-        "dsh",
-        "dsh-plugin",
-        "plugin",
-        "skill-stats",
-        "statistics"
-      ],
-      "language": "TypeScript",
-      "license": "MIT",
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T03:59:31Z",
-      "updatedAt": "2026-08-16T04:46:02Z",
-      "pushedAt": "2026-08-16T04:45:03Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "skill",
-      "category": "research",
-      "categories": [
-        "research"
-      ],
-      "matchedTopics": [
-        "skill-stats",
-        "statistics"
-      ],
-      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -164605,7 +164607,7 @@
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "size": 107,
+      "size": 0,
       "createdAt": "2026-08-16T03:47:57Z",
       "updatedAt": "2026-08-16T04:12:56Z",
       "pushedAt": "2026-08-16T04:12:20Z",
@@ -167690,8 +167692,8 @@
       "openIssues": 0,
       "size": 0,
       "createdAt": "2026-08-16T04:35:42Z",
-      "updatedAt": "2026-08-16T04:47:21Z",
-      "pushedAt": "2026-08-16T04:47:18Z",
+      "updatedAt": "2026-08-16T04:35:57Z",
+      "pushedAt": "2026-08-16T04:35:46Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -169547,8 +169549,8 @@
       "openIssues": 0,
       "size": 0,
       "createdAt": "2026-08-16T04:15:21Z",
-      "updatedAt": "2026-08-16T04:46:25Z",
-      "pushedAt": "2026-08-16T04:46:21Z",
+      "updatedAt": "2026-08-16T04:15:33Z",
+      "pushedAt": "2026-08-16T04:15:25Z",
       "archived": false,
       "fork": false,
       "projectType": "directory",
@@ -170714,8 +170716,8 @@
       "openIssues": 0,
       "size": 0,
       "createdAt": "2026-08-16T04:10:22Z",
-      "updatedAt": "2026-08-16T04:45:14Z",
-      "pushedAt": "2026-08-16T04:45:02Z",
+      "updatedAt": "2026-08-16T04:36:34Z",
+      "pushedAt": "2026-08-16T04:36:30Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -174629,74 +174631,6 @@
       }
     },
     {
-      "id": "github:1335622031",
-      "repositoryId": 1335622031,
-      "slug": "1335622031",
-      "name": "dsh-theme-cyberpunk2077-custom",
-      "fullName": "Gewuji/dsh-theme-cyberpunk2077-custom",
-      "description": "Customized Cyberpunk 2077 / Night City theme for DeepSeek Harness Web UI",
-      "url": "https://github.com/Gewuji/dsh-theme-cyberpunk2077-custom",
-      "homepage": null,
-      "owner": {
-        "login": "Gewuji",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/30136379?v=4"
-      },
-      "topics": [
-        "cordis",
-        "cyberpunk-2077",
-        "dark-theme",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "night-city",
-        "plugin",
-        "theme",
-        "web-ui"
-      ],
-      "language": "JavaScript",
-      "license": null,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:37:03Z",
-      "updatedAt": "2026-08-16T04:46:05Z",
-      "pushedAt": "2026-08-16T04:45:59Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "ui",
-      "categories": [
-        "ui"
-      ],
-      "matchedTopics": [
-        "dark-theme",
-        "theme",
-        "web-ui"
-      ],
-      "classificationConfidence": "high",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
       "id": "github:1333928322",
       "repositoryId": 1333928322,
       "slug": "1333928322",
@@ -175653,8 +175587,8 @@
       "openIssues": 0,
       "size": 24,
       "createdAt": "2026-08-15T14:40:53Z",
-      "updatedAt": "2026-08-16T04:44:14Z",
-      "pushedAt": "2026-08-16T04:44:07Z",
+      "updatedAt": "2026-08-16T04:34:09Z",
+      "pushedAt": "2026-08-16T04:33:58Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -175716,8 +175650,8 @@
       "openIssues": 0,
       "size": 21,
       "createdAt": "2026-08-16T03:37:18Z",
-      "updatedAt": "2026-08-16T04:47:21Z",
-      "pushedAt": "2026-08-16T04:47:17Z",
+      "updatedAt": "2026-08-16T04:13:07Z",
+      "pushedAt": "2026-08-16T04:13:20Z",
       "archived": false,
       "fork": false,
       "projectType": "skill",
@@ -175783,8 +175717,8 @@
       "openIssues": 0,
       "size": 13,
       "createdAt": "2026-08-16T03:37:26Z",
-      "updatedAt": "2026-08-16T04:47:26Z",
-      "pushedAt": "2026-08-16T04:47:20Z",
+      "updatedAt": "2026-08-16T04:13:11Z",
+      "pushedAt": "2026-08-16T04:13:23Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -175848,8 +175782,8 @@
       "openIssues": 0,
       "size": 115,
       "createdAt": "2026-08-16T02:51:12Z",
-      "updatedAt": "2026-08-16T04:47:37Z",
-      "pushedAt": "2026-08-16T04:47:23Z",
+      "updatedAt": "2026-08-16T04:13:34Z",
+      "pushedAt": "2026-08-16T04:13:15Z",
       "archived": false,
       "fork": false,
       "projectType": "skill",
@@ -178961,8 +178895,8 @@
       "openIssues": 0,
       "size": 3452,
       "createdAt": "2026-08-15T14:24:50Z",
-      "updatedAt": "2026-08-16T04:47:29Z",
-      "pushedAt": "2026-08-16T04:47:14Z",
+      "updatedAt": "2026-08-16T04:27:01Z",
+      "pushedAt": "2026-08-16T04:26:55Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -181551,12 +181485,12 @@
       "verificationUrl": null,
       "featured": false,
       "rating": {
-        "total": 40,
-        "stars": 2,
+        "total": 42,
+        "stars": 2.1,
         "level": "fair",
         "breakdown": {
           "popularity": 0,
-          "activity": 28,
+          "activity": 30,
           "status": 12
         }
       },
@@ -184989,8 +184923,8 @@
       "openIssues": 0,
       "size": 4066,
       "createdAt": "2026-08-15T12:54:48Z",
-      "updatedAt": "2026-08-16T04:45:59Z",
-      "pushedAt": "2026-08-16T04:45:41Z",
+      "updatedAt": "2026-08-15T17:10:36Z",
+      "pushedAt": "2026-08-15T18:33:00Z",
       "archived": false,
       "fork": false,
       "projectType": "application",
@@ -188026,69 +187960,6 @@
       }
     },
     {
-      "id": "github:1335623139",
-      "repositoryId": 1335623139,
-      "slug": "1335623139",
-      "name": "dsh-code-reuse-firewall",
-      "fullName": "keyiadiannao/dsh-code-reuse-firewall",
-      "description": "Pre-write reuse firewall for DeepSeek Harness: before the agent writes a new helper/service, surface the existing implementations that already cover that intent. Deterministic retrieval (no LLM) via the Auto_code_audit capability channel.",
-      "url": "https://github.com/keyiadiannao/dsh-code-reuse-firewall",
-      "homepage": null,
-      "owner": {
-        "login": "keyiadiannao",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/237368748?v=4"
-      },
-      "topics": [
-        "ai-coding",
-        "code-reuse",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "static-analysis"
-      ],
-      "language": "TypeScript",
-      "license": "MIT",
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:39:37Z",
-      "updatedAt": "2026-08-16T04:47:56Z",
-      "pushedAt": "2026-08-16T04:43:07Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "development",
-      "categories": [
-        "development"
-      ],
-      "matchedTopics": [
-        "ai-coding",
-        "code-reuse",
-        "static-analysis"
-      ],
-      "classificationConfidence": "high",
-      "defaultBranch": "master",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
       "id": "github:1335563922",
       "repositoryId": 1335563922,
       "slug": "1335563922",
@@ -190632,8 +190503,8 @@
       "openIssues": 0,
       "size": 24039,
       "createdAt": "2026-08-15T12:12:41Z",
-      "updatedAt": "2026-08-16T04:46:54Z",
-      "pushedAt": "2026-08-16T04:46:44Z",
+      "updatedAt": "2026-08-16T04:42:54Z",
+      "pushedAt": "2026-08-16T04:42:38Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -192253,6 +192124,68 @@
       ],
       "matchedTopics": [
         "english-learning"
+      ],
+      "classificationConfidence": "medium",
+      "defaultBranch": "main",
+      "awesomeListed": false,
+      "verified": false,
+      "verificationUrl": null,
+      "featured": false,
+      "rating": {
+        "total": 42,
+        "stars": 2.1,
+        "level": "fair",
+        "breakdown": {
+          "popularity": 0,
+          "activity": 30,
+          "status": 12
+        }
+      },
+      "status": {
+        "discovery": "topic-listed",
+        "verification": "not-verified"
+      }
+    },
+    {
+      "id": "github:1335609925",
+      "repositoryId": 1335609925,
+      "slug": "1335609925",
+      "name": "dsh-llm-usage-stats",
+      "fullName": "lightli369/dsh-llm-usage-stats",
+      "description": "DeepSeek Harness (DSH) web plugin: per-model LLM token usage dashboard in Settings (input/output/cache tokens, cache hit rate; day/week/month/custom ranges).",
+      "url": "https://github.com/lightli369/dsh-llm-usage-stats",
+      "homepage": null,
+      "owner": {
+        "login": "lightli369",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/13652754?v=4"
+      },
+      "topics": [
+        "analytics",
+        "dashboard",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "llm",
+        "token-usage"
+      ],
+      "language": "JavaScript",
+      "license": "MIT",
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "size": 0,
+      "createdAt": "2026-08-16T04:08:48Z",
+      "updatedAt": "2026-08-16T04:29:50Z",
+      "pushedAt": "2026-08-16T04:22:57Z",
+      "archived": false,
+      "fork": false,
+      "projectType": "plugin",
+      "category": "operations",
+      "categories": [
+        "operations"
+      ],
+      "matchedTopics": [
+        "token-usage"
       ],
       "classificationConfidence": "medium",
       "defaultBranch": "main",
@@ -194133,8 +194066,8 @@
       "openIssues": 0,
       "size": 64007,
       "createdAt": "2026-08-15T15:08:31Z",
-      "updatedAt": "2026-08-16T04:47:42Z",
-      "pushedAt": "2026-08-16T04:47:36Z",
+      "updatedAt": "2026-08-16T04:19:34Z",
+      "pushedAt": "2026-08-16T04:19:11Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
@@ -201664,8 +201597,8 @@
       "openIssues": 0,
       "size": 1277,
       "createdAt": "2026-08-15T01:16:56Z",
-      "updatedAt": "2026-08-16T04:44:46Z",
-      "pushedAt": "2026-08-16T04:44:39Z",
+      "updatedAt": "2026-08-16T04:04:38Z",
+      "pushedAt": "2026-08-16T04:04:33Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -202268,67 +202201,6 @@
       ],
       "matchedTopics": [
         "cron"
-      ],
-      "classificationConfidence": "medium",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335609722",
-      "repositoryId": 1335609722,
-      "slug": "1335609722",
-      "name": "dsh-skill-stats",
-      "fullName": "omdsh-dev/dsh-skill-stats",
-      "description": "Skill usage statistics plugin for DSH (community mirror)",
-      "url": "https://github.com/omdsh-dev/dsh-skill-stats",
-      "homepage": null,
-      "owner": {
-        "login": "omdsh-dev",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/312905287?v=4"
-      },
-      "topics": [
-        "dsh",
-        "dsh-plugin",
-        "plugin",
-        "skill-stats",
-        "statistics"
-      ],
-      "language": "TypeScript",
-      "license": "MIT",
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:08:18Z",
-      "updatedAt": "2026-08-16T04:46:04Z",
-      "pushedAt": "2026-08-16T04:42:48Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "skill",
-      "category": "research",
-      "categories": [
-        "research"
-      ],
-      "matchedTopics": [
-        "skill-stats",
-        "statistics"
       ],
       "classificationConfidence": "medium",
       "defaultBranch": "main",
@@ -206798,65 +206670,6 @@
         "mcp-tools"
       ],
       "classificationConfidence": "high",
-      "defaultBranch": "main",
-      "awesomeListed": false,
-      "verified": false,
-      "verificationUrl": null,
-      "featured": false,
-      "rating": {
-        "total": 42,
-        "stars": 2.1,
-        "level": "fair",
-        "breakdown": {
-          "popularity": 0,
-          "activity": 30,
-          "status": 12
-        }
-      },
-      "status": {
-        "discovery": "topic-listed",
-        "verification": "not-verified"
-      }
-    },
-    {
-      "id": "github:1335623195",
-      "repositoryId": 1335623195,
-      "slug": "1335623195",
-      "name": "dsh-searxng",
-      "fullName": "rogerdigital/dsh-searxng",
-      "description": "该仓库暂未提供项目说明。",
-      "url": "https://github.com/rogerdigital/dsh-searxng",
-      "homepage": null,
-      "owner": {
-        "login": "rogerdigital",
-        "avatarUrl": "https://avatars.githubusercontent.com/u/13251150?v=4"
-      },
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "search-provider",
-        "searxng"
-      ],
-      "language": "TypeScript",
-      "license": "MIT",
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "size": 0,
-      "createdAt": "2026-08-16T04:39:45Z",
-      "updatedAt": "2026-08-16T04:46:47Z",
-      "pushedAt": "2026-08-16T04:46:28Z",
-      "archived": false,
-      "fork": false,
-      "projectType": "plugin",
-      "category": "data",
-      "categories": [
-        "data"
-      ],
-      "matchedTopics": [
-        "search-provider"
-      ],
-      "classificationConfidence": "medium",
       "defaultBranch": "main",
       "awesomeListed": false,
       "verified": false,
@@ -213385,8 +213198,8 @@
       "openIssues": 0,
       "size": 5,
       "createdAt": "2026-08-16T03:06:03Z",
-      "updatedAt": "2026-08-16T04:45:52Z",
-      "pushedAt": "2026-08-16T04:45:36Z",
+      "updatedAt": "2026-08-16T03:13:35Z",
+      "pushedAt": "2026-08-16T03:09:05Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -217768,8 +217581,8 @@
       "openIssues": 0,
       "size": 49,
       "createdAt": "2026-08-15T14:00:34Z",
-      "updatedAt": "2026-08-16T04:47:02Z",
-      "pushedAt": "2026-08-16T04:46:58Z",
+      "updatedAt": "2026-08-16T04:43:33Z",
+      "pushedAt": "2026-08-16T04:43:25Z",
       "archived": false,
       "fork": false,
       "projectType": "unknown",
@@ -230688,8 +230501,8 @@
       "openIssues": 0,
       "size": 39,
       "createdAt": "2026-08-15T04:28:51Z",
-      "updatedAt": "2026-08-16T04:45:54Z",
-      "pushedAt": "2026-08-16T04:45:44Z",
+      "updatedAt": "2026-08-16T03:54:59Z",
+      "pushedAt": "2026-08-16T03:54:44Z",
       "archived": false,
       "fork": false,
       "projectType": "plugin",
