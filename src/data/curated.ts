@@ -131,8 +131,8 @@ export const CURATED_PICKS: CuratedPick[] = [
   {
     category: '🔁 工作流与自动化',
     rank: 2,
-    fullName: 'icetomoyo/dsh_workflow',
-    reason: 'UltraCode 式多 Agent 调度：可生成、可保存、可治理、可观察、可恢复的 Workflow 层。',
+    fullName: 'omdsh-dev/dsh_workflow',
+    reason: 'UltraCode 式多 Agent 调度：可生成、可保存、可治理、可观察、可恢复的 Workflow 层（原 icetomoyo 仓库，已迁移至 omdsh-dev）。',
   },
   {
     category: '🔁 工作流与自动化',
