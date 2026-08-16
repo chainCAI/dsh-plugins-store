@@ -1,2 +1,56 @@
 [
+  {
+    "id": "community:sub-1786874532144-w78gjf",
+    "repositoryId": 1296269,
+    "slug": "community-sub-1786874532144-w78gjf",
+    "name": "Hello-World",
+    "fullName": "octocat/Hello-World",
+    "description": "My first repository on GitHub!",
+    "url": "https://github.com/octocat/Hello-World",
+    "homepage": null,
+    "owner": {
+      "login": "octocat",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/583231?v=4"
+    },
+    "topics": [],
+    "language": null,
+    "license": null,
+    "stars": 3770,
+    "forks": 6500,
+    "openIssues": 6889,
+    "size": 1,
+    "createdAt": "2011-01-26T19:01:12Z",
+    "updatedAt": "2026-08-16T03:56:29Z",
+    "pushedAt": "2024-08-20T23:54:42Z",
+    "archived": false,
+    "fork": false,
+    "projectType": "community",
+    "category": "other",
+    "categories": [
+      "other"
+    ],
+    "matchedTopics": [],
+    "classificationConfidence": "low",
+    "defaultBranch": "master",
+    "awesomeListed": false,
+    "verified": false,
+    "verificationUrl": null,
+    "featured": true,
+    "rating": {
+      "total": 70,
+      "stars": 3.5,
+      "level": "good",
+      "breakdown": {
+        "popularity": 40,
+        "activity": 6,
+        "status": 24
+      }
+    },
+    "status": {
+      "discovery": "community",
+      "verification": "not-verified"
+    },
+    "source": "community",
+    "submittedAt": "2026-08-16T10:02:12.144Z"
+  }
 ]
