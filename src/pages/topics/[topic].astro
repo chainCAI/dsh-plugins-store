@@ -9,26 +9,35 @@ import catalogData from '../../data/catalog.json'
 interface Props {
   topic: string
   repositories: CatalogEntry[]
+  totalCount: number
 }
 
+/** 单个标签页最多渲染的项目数：dsh-plugin 标签有数千个项目，
+ *  全量渲染会撑爆 Cloudflare Pages 25 MiB 单文件上限，且对用户不可用。 */
 export function getStaticPaths() {
+  const MAX_TOPIC_REPOSITORIES = 200
   const catalog = catalogData as Catalog
   const topics = [...new Set(catalog.repositories.flatMap((repository) => repository.topics))]
     .sort((left, right) => left.localeCompare(right))
 
-  return topics.map((topic) => ({
-    params: { topic },
-    props: {
-      topic,
-      repositories: sortCatalogEntries(
-        catalog.repositories.filter((repository) => repository.topics.includes(topic)),
-        'rating',
-      ),
-    },
-  }))
+  return topics.map((topic) => {
+    const all = sortCatalogEntries(
+      catalog.repositories.filter((repository) => repository.topics.includes(topic)),
+      'rating',
+    )
+    return {
+      params: { topic },
+      props: {
+        topic,
+        repositories: all.slice(0, MAX_TOPIC_REPOSITORIES),
+        totalCount: all.length,
+      },
+    }
+  })
 }
 
-const { topic, repositories } = Astro.props as Props
+const { topic, repositories, totalCount } = Astro.props as Props
+const isTruncated = totalCount > repositories.length
 const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 ---
 
@@ -44,7 +53,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
           <p class="mono-label">GITHUB TOPIC</p>
           <h1><Tag size={26} stroke-width={1.6} /> {topic}</h1>
         </div>
-        <p><strong>{repositories.length}</strong> 个项目包含此标签</p>
+        <p><strong>{totalCount}</strong> 个项目包含此标签</p>
       </div>
     </div>
   </section>
@@ -52,9 +61,14 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
   <section class="topic-results">
     <div class="container">
       <div class="results-head">
-        <p><span id="result-count">{repositories.length}</span> 个项目</p>
+        <p><span id="result-count">{totalCount}</span> 个项目</p>
         <p class="results-head__note">GitHub Topic 精确匹配</p>
       </div>
+      {isTruncated && (
+        <p class="topic-truncate-note">
+          该标签共 {totalCount} 个项目，仅展示评分最高的 {repositories.length} 个；完整列表请在首页搜索或筛选查看。
+        </p>
+      )}
       <div class="project-grid">
         {repositories.map((repository) => <ProjectCard repository={repository} />)}
       </div>
@@ -133,9 +147,20 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding-bottom: 16px;
+    padding-bottom: 14px;
     color: var(--text-3);
     font-size: 12px;
+  }
+
+  .topic-truncate-note {
+    margin-bottom: 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--bg-subtle);
+    padding: 8px 12px;
+    color: var(--text-3);
+    font-size: 12px;
+    line-height: 18px;
   }
 
   .results-head p {
