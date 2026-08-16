@@ -111,7 +111,7 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
   let repo: SubmissionRepo | null = null
   let validated = false
   try {
-    const response = await fetch(`https://api.github.com/repos/${encodeURIComponent(fullName)}`, {
+    const response = await fetch(`https://api.github.com/repos/${fullName.split('/').map(encodeURIComponent).join('/')}`, {
       headers: {
         Accept: 'application/vnd.github+json',
         'User-Agent': 'dsh-plugin-store',

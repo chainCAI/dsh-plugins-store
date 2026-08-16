@@ -84,7 +84,7 @@ async function refillRepoSnapshot(submission: CommunitySubmission): Promise<void
 
   try {
     const response = await fetch(
-      `https://api.github.com/repos/${encodeURIComponent(submission.fullName)}`,
+      `https://api.github.com/repos/${submission.fullName.split('/').map(encodeURIComponent).join('/')}`,
       { headers },
     )
     if (response.ok) {
