@@ -38,6 +38,7 @@ jobs:
         run: npm run sync:community
         env:
           COMMUNITY_API_URL: ${{ vars.COMMUNITY_API_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test
         run: npm test

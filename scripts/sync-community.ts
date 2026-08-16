@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import {
+  sanitizeRepoSnapshot,
   toCommunityEntry,
   type CommunityEntry,
   type CommunitySubmission,
@@ -63,6 +64,42 @@ function readCatalogFullNames(): Set<string> {
   }
 }
 
+/**
+ * 提交时服务端复核可能因 GitHub 限流失败（repo 快照缺失）。
+ * 同步时在 CI 用 GITHUB_TOKEN 复核补全，确保真实仓库能被收录；仍解析不出的跳过。
+ */
+let lastGithubFetchAt = 0
+async function refillRepoSnapshot(submission: CommunitySubmission): Promise<void> {
+  const wait = 1_200 - (Date.now() - lastGithubFetchAt)
+  if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait))
+  lastGithubFetchAt = Date.now()
+
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'dsh-plugin-store-sync',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN
+  if (token) headers.Authorization = `Bearer ${token}`
+
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${encodeURIComponent(submission.fullName)}`,
+      { headers },
+    )
+    if (response.ok) {
+      submission.repo = sanitizeRepoSnapshot(await response.json(), submission.fullName)
+      submission.validated = true
+    } else if (response.status === 404) {
+      console.warn(`跳过不存在的仓库：${submission.fullName}`)
+    } else {
+      console.warn(`复核失败 ${submission.fullName}：${response.status}，按快照原样处理`)
+    }
+  } catch (error) {
+    console.warn(`复核网络异常 ${submission.fullName}：${error instanceof Error ? error.message : error}`)
+  }
+}
+
 async function sync() {
   const submissions = await fetchSubmissions()
   if (submissions.length === 0) return
@@ -78,6 +115,11 @@ async function sync() {
     if (!existing || submission.submittedAt > existing.submittedAt) {
       byFullName.set(key, submission)
     }
+  }
+
+  // 补全提交时缺失的仓库快照（服务端复核受 GitHub 限流影响时）
+  for (const submission of byFullName.values()) {
+    if (!submission.repo) await refillRepoSnapshot(submission)
   }
 
   const entries = [...byFullName.values()]

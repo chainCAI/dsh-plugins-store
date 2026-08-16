@@ -820,6 +820,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
           body: JSON.stringify({
             fullName,
             url: fetchedRepo.html_url || `https://github.com/${fullName}`,
+            repo: fetchedRepo,
           }),
         })
         const data = await response.json().catch(() => ({}))

@@ -2,12 +2,17 @@
  * 社区发布 · 提交接口（Cloudflare Pages Function）
  *
  * POST /api/community/submit
- * body: { fullName: string, url?: string }
+ * body: { fullName: string, url?: string, repo?: Record<string, unknown> }
  *
- * 依赖 KV 绑定 COMMUNITY_KV（在 Cloudflare Pages 项目 → Settings → Functions
- * → KV namespace bindings 中配置，变量名必须为 COMMUNITY_KV）。
- * KV 未绑定时返回 501，前端会提示“提交服务暂未配置”。
+ * - fullName 格式校验 + 每日每 IP 限流 + 按仓库去重；
+ * - 服务端复核 GitHub 仓库存在性（404 直接拒绝）；
+ *   复核失败（限流/网络异常）时改用客户端提交的 repo 快照兜底（sanitizeRepoSnapshot），
+ *   由 scripts/sync-community.ts 在 CI 中用 GITHUB_TOKEN 复核补全；
+ * - 依赖 KV 绑定 COMMUNITY_KV（Cloudflare Pages 项目 → Settings → Functions
+ *   → KV namespace bindings，变量名必须为 COMMUNITY_KV）。KV 未绑定时返回 501。
  */
+
+import { sanitizeRepoSnapshot } from '../../../src/lib/community'
 
 interface CommunityKV {
   get(key: string, type?: 'json'): Promise<unknown>
@@ -101,7 +106,8 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
     return json({ ok: false, error: '该仓库已经提交过了，无需重复提交。' }, 409)
   }
 
-  // 服务端复核仓库是否存在（404 直接拒绝；GitHub 限流时降级为“未校验”）
+  // 服务端复核仓库是否存在（404 直接拒绝；GitHub 限流/网络异常时用客户端快照兜底，
+  // 交由同步脚本在 CI 里用 GITHUB_TOKEN 复核补全）
   let repo: SubmissionRepo | null = null
   let validated = false
   try {
@@ -120,6 +126,9 @@ export const onRequestPost = async (context: { request: Request; env: Env }): Pr
     }
   } catch {
     // 网络异常时保留提交，标记为未校验，由同步脚本兜底
+  }
+  if (!repo) {
+    repo = sanitizeRepoSnapshot(body.repo, fullName)
   }
 
   const submission: Submission = {

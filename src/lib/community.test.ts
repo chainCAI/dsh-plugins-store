@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { buildCatalog, type GitHubRepository } from './catalog'
 import {
   mergeCommunityEntries,
+  sanitizeRepoSnapshot,
   toCommunityEntry,
   type CommunityEntry,
   type CommunitySubmission,
@@ -94,6 +95,45 @@ describe('社群发布 toCommunityEntry', () => {
       repo: { ...baseSubmission.repo!, stargazers_count: 120 },
     })
     expect(entry!.featured).toBe(true)
+  })
+})
+
+describe('社群发布 sanitizeRepoSnapshot', () => {
+  it('清洗客户端快照为服务端认可的字段，并拒绝非对象', () => {
+    const snapshot = sanitizeRepoSnapshot({
+      id: 42,
+      name: 'hello',
+      full_name: 'octocat/Hello-World',
+      html_url: 'https://github.com/octocat/Hello-World',
+      owner: { login: 'octocat', avatar_url: 'https://x/avatar.png' },
+      description: 'My first repository on GitHub!',
+      stargazers_count: 1234,
+      topics: ['demo', 'dsh-plugin'],
+      license: { spdx_id: 'MIT' },
+      extraJunk: 'should be dropped',
+    }, 'octocat/Hello-World')
+
+    expect(snapshot).not.toBeNull()
+    expect(snapshot).toMatchObject({
+      full_name: 'octocat/Hello-World',
+      name: 'hello',
+      id: 42,
+      stargazers_count: 1234,
+      topics: ['demo', 'dsh-plugin'],
+      license: { spdx_id: 'MIT' },
+    })
+    expect((snapshot as unknown as Record<string, unknown>).extraJunk).toBeUndefined()
+    expect(sanitizeRepoSnapshot(null, 'a/b')).toBeNull()
+    expect(sanitizeRepoSnapshot('not-an-object', 'a/b')).toBeNull()
+  })
+
+  it('缺字段时使用兜底值（owner / 时间 / 分支）', () => {
+    const snapshot = sanitizeRepoSnapshot({ name: 'x' }, 'owner/repo')
+    expect(snapshot).not.toBeNull()
+    expect(snapshot!.full_name).toBe('owner/repo')
+    expect(snapshot!.owner.login).toBe('owner')
+    expect(snapshot!.default_branch).toBe('main')
+    expect(snapshot!.archived).toBe(false)
   })
 })
 

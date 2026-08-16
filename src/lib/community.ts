@@ -88,6 +88,58 @@ export interface CommunitySubmission {
   repo: CommunitySubmissionRepo | null
 }
 
+/** 客户端传入的任意仓库对象，清洗成服务端认可的 SubmissionRepo 结构（防伪造字段） */
+export function sanitizeRepoSnapshot(value: unknown, fallbackFullName: string): CommunitySubmissionRepo | null {
+  if (!value || typeof value !== 'object') return null
+  const source = value as Record<string, unknown>
+  const owner = source.owner
+  const license = source.license
+  const pickString = (key: string): string | null =>
+    typeof source[key] === 'string' ? (source[key] as string) : null
+  const pickNumber = (key: string): number =>
+    typeof source[key] === 'number' && Number.isFinite(source[key] as number)
+      ? (source[key] as number)
+      : 0
+
+  return {
+    id: pickNumber('id') || 0,
+    name: pickString('name') ?? fallbackFullName.split('/')[1] ?? fallbackFullName,
+    full_name: pickString('full_name') ?? fallbackFullName,
+    html_url: pickString('html_url') ?? `https://github.com/${fallbackFullName}`,
+    owner: owner && typeof owner === 'object'
+      ? {
+        login: typeof (owner as Record<string, unknown>).login === 'string'
+          ? (owner as Record<string, unknown>).login as string
+          : fallbackFullName.split('/')[0] ?? '',
+        avatar_url: typeof (owner as Record<string, unknown>).avatar_url === 'string'
+          ? (owner as Record<string, unknown>).avatar_url as string
+          : '',
+      }
+      : { login: fallbackFullName.split('/')[0] ?? '', avatar_url: '' },
+    description: pickString('description'),
+    homepage: pickString('homepage'),
+    language: pickString('language'),
+    license: license && typeof license === 'object'
+      ? { spdx_id: typeof (license as Record<string, unknown>).spdx_id === 'string'
+        ? (license as Record<string, unknown>).spdx_id as string
+        : null }
+      : null,
+    stargazers_count: pickNumber('stargazers_count'),
+    forks_count: pickNumber('forks_count'),
+    open_issues_count: pickNumber('open_issues_count'),
+    size: pickNumber('size'),
+    created_at: pickString('created_at') ?? new Date().toISOString(),
+    updated_at: pickString('updated_at') ?? new Date().toISOString(),
+    pushed_at: pickString('pushed_at') ?? new Date().toISOString(),
+    topics: Array.isArray(source.topics)
+      ? (source.topics as unknown[]).filter((topic): topic is string => typeof topic === 'string').slice(0, 50)
+      : [],
+    archived: Boolean(source.archived),
+    fork: Boolean(source.fork),
+    default_branch: pickString('default_branch') ?? 'main',
+  }
+}
+
 /** 把社区提交记录转换为目录条目；repo 快照缺失时返回 null（无法补全信息，跳过） */
 export function toCommunityEntry(submission: CommunitySubmission): CommunityEntry | null {
   const repo = submission.repo
