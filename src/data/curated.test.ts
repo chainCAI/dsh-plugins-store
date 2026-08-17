@@ -8,7 +8,7 @@ const catalogNames = Object.fromEntries(
   catalog.repositories.map((repository) => [repository.fullName, true]),
 ) as Record<string, boolean>
 
-describe('站长精选 curated picks', () => {
+describe('社群精选 curated picks', () => {
   it('每个精选都有推荐理由，排名在 1-3 之间', () => {
     for (const pick of CURATED_PICKS) {
       expect(pick.reason.trim().length).toBeGreaterThan(0)

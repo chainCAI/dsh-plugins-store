@@ -34,7 +34,7 @@ const AWESOME_REPOSITORY = 'AdamPlatin123/awesome-dsh-plugins'
 const VERIFY_REPOSITORY = 'qing3a/dsh-plugin-verify'
 const PAGE_SIZE = 100
 /** 只收录公测后创建的仓库：DeepSeek Harness 本体创建于 2026-08-13，此前的仓库都是蹭标签的老项目。
- *  站长收藏清单（src/data/curated.ts）中的仓库不受此过滤，经 collectCurated 白名单补充收录。 */
+ *  社群精选清单（src/data/curated.ts）中的仓库不受此过滤，经 collectCurated 白名单补充收录。 */
 const MIN_CREATED_AT = '2026-08-13T00:00:00Z'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const outputPath = resolve(root, 'src/data/catalog.json')
@@ -173,10 +173,10 @@ async function collectRange(
 }
 
 /**
- * 站长收藏补充收录。
- * 站长收藏清单（src/data/curated.ts）里的仓库可能早于公测创建，
+ * 社群精选补充收录。
+ * 社群精选清单（src/data/curated.ts）里的仓库可能早于公测创建，
  * 不满足 MIN_CREATED_AT 搜索过滤，这里按白名单经 REST 接口单独收录，
- * 保证「站长收藏」区块在目录中都能解析到详情页。
+ * 保证「社群精选」区块在目录中都能解析到详情页。
  */
 async function collectCurated(repositories: Map<number, GitHubRepository>): Promise<number> {
   let collected = 0
@@ -210,7 +210,7 @@ async function fetchRepositories() {
 
   const curatedCount = await collectCurated(repositories)
 
-  console.log(`站长收藏补充收录 ${curatedCount} 个仓库`)
+  console.log(`社群精选补充收录 ${curatedCount} 个仓库`)
   const repositoriesList = [...repositories.values()].filter(
     (repository) => !EXCLUDED_REPOSITORIES.has(repository.full_name),
   )

@@ -26,7 +26,7 @@ import communityData from '../data/community.json'
 
 const catalog = mergeCommunityEntries(catalogData as Catalog, communityData as CommunityEntry[])
 const featuredCount = catalog.repositories.filter((repository) => repository.featured).length
-const initialRepositories = sortCatalogEntries(catalog.repositories, 'created').slice(0, 24)
+const initialRepositories = sortCatalogEntries(catalog.repositories, 'stars').slice(0, 24)
 const generatedDate = new Intl.DateTimeFormat('zh-CN', {
   timeZone: 'Asia/Shanghai',
   year: 'numeric',
@@ -83,7 +83,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
         <div class="home-hero__actions">
           <a class="curated-hero-btn" href={`${baseUrl}curated`}>
             <Crown size={16} stroke-width={1.8} aria-hidden="true" />
-            <span class="curated-hero-btn__label">站长精选</span>
+            <span class="curated-hero-btn__label">社群精选</span>
           </a>
           <button class="curated-hero-btn curated-hero-btn--community" id="community-open-btn" type="button">
             <Send size={16} stroke-width={1.8} aria-hidden="true" />
@@ -100,10 +100,10 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
         <div class="home-tools__selects">
           <label class="field select-field">
             <SlidersHorizontal size={14} stroke-width={1.7} />
-            <span class="select-value" id="sort-filter-value">最新创建</span>
+            <span class="select-value" id="sort-filter-value">最多 Star</span>
             <select id="sort-filter" aria-label="排序方式">
-              <option value="created">最新创建</option>
               <option value="stars">最多 Star</option>
+              <option value="created">最新创建</option>
               <option value="updated">最近更新</option>
               <option value="name">名称排序</option>
             </select>
@@ -131,7 +131,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
           </button>
           <button class="chip" type="button" data-category="curated">
             <Crown size={12} stroke-width={1.8} />
-            站长精选 <span class="chip__count">{CURATED_PICKS.length}</span>
+            社群精选 <span class="chip__count">{CURATED_PICKS.length}</span>
           </button>
           <button class="chip" type="button" data-category="featured">
             <i class="chip__dot chip__dot--featured"></i>
@@ -157,7 +157,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
       </div>
 
       <div class="project-grid" id="project-grid">
-        {initialRepositories.map((repository) => <ProjectCard repository={repository} createdDisplay="relative" />)}
+        {initialRepositories.map((repository) => <ProjectCard repository={repository} />)}
       </div>
 
       <div class="empty-state" id="empty-state" hidden>
@@ -385,6 +385,8 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 
       const categoryDot = card.querySelector('.project-card__category i')
       if (categoryDot) categoryDot.style.setProperty('--category-color', category.color)
+      const categoryChip = card.querySelector('.project-card__category')
+      if (categoryChip) categoryChip.hidden = category.id === 'other'
       setText(card, '[data-field="category"]', category.label)
       setText(card, '[data-field="project-type"]', projectType.label)
       setText(card, '[data-field="owner"]', repository.owner.login)
@@ -585,7 +587,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     clearFilters.addEventListener('click', () => {
       searchInput.value = ''
       typeFilter.value = 'all'
-      sortFilter.value = 'created'
+      sortFilter.value = 'stars'
       syncSelectValue(typeFilter, typeFilterValue)
       syncSelectValue(sortFilter, sortFilterValue)
       setCategory('all')
@@ -1144,7 +1146,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     }
   }
 
-  /* ---------- 社区发布弹窗（玻璃拟态） ---------- */
+  /* ---------- 社区发布弹窗 ---------- */
 
   .community-modal {
     position: fixed;
@@ -1158,12 +1160,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
   .community-modal__backdrop {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(120% 90% at 12% 8%, rgb(22 93 255 / 0.16), transparent 55%),
-      radial-gradient(120% 90% at 88% 92%, rgb(0 180 42 / 0.14), transparent 55%),
-      linear-gradient(160deg, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.3));
-    backdrop-filter: blur(18px) saturate(1.4);
-    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    background: rgb(23 32 51 / 0.45);
   }
 
   .community-modal__panel {
@@ -1171,14 +1168,10 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     width: min(540px, 100%);
     max-height: min(720px, calc(100vh - 48px));
     overflow-y: auto;
-    border: 1px solid rgb(255 255 255 / 0.65);
+    border: 1px solid var(--line-strong);
     border-radius: 18px;
-    background: linear-gradient(165deg, rgb(255 255 255 / 0.88), rgb(255 255 255 / 0.62));
-    backdrop-filter: blur(26px) saturate(1.5);
-    -webkit-backdrop-filter: blur(26px) saturate(1.5);
-    box-shadow:
-      0 24px 64px rgb(29 33 41 / 0.22),
-      inset 0 1px 0 rgb(255 255 255 / 0.95);
+    background: var(--bg);
+    box-shadow: 0 24px 64px rgb(29 33 41 / 0.25);
     padding: 30px 30px 26px;
   }
 
@@ -1193,7 +1186,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     height: 32px;
     border: 1px solid transparent;
     border-radius: 50%;
-    background: rgb(255 255 255 / 0.6);
+    background: var(--bg-soft);
     color: var(--text-3);
     cursor: pointer;
     transition:
@@ -1202,7 +1195,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
   }
 
   .community-modal__close:hover {
-    background: rgb(255 255 255 / 0.95);
+    background: var(--bg-hover);
     color: var(--text-1);
   }
 
@@ -1268,7 +1261,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     min-height: 40px;
     border: 1px dashed var(--line-strong);
     border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.5);
+    background: var(--bg-soft);
     color: var(--text-1);
     font-family: var(--font-mono);
     font-size: 15px;
@@ -1281,7 +1274,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     min-height: 40px;
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.7);
+    background: var(--bg);
     color: var(--text-1);
     font-size: 14px;
     padding: 0 12px;
@@ -1329,9 +1322,9 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
 
   /* 仓库信息预览 */
   .community-preview {
-    border: 1px solid rgb(255 255 255 / 0.8);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
-    background: rgb(255 255 255 / 0.55);
+    background: var(--bg-soft);
     padding: 14px;
   }
 

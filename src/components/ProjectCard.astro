@@ -75,7 +75,7 @@ const formatRelativeCreated = (value: string): string => {
   data-created={repository.createdAt}
 >
   <div class="project-card__topline">
-    <span class="project-card__category">
+    <span class="project-card__category" hidden={repository.category === 'other'}>
       <i style={`--category-color: ${category.color}`}></i>
       <span data-field="category">{category.label}</span>
     </span>
