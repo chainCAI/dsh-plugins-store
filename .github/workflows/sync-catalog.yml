@@ -33,13 +33,13 @@ jobs:
       - name: Sync GitHub Topic
         run: npm run sync
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Sync community submissions
         run: npm run sync:community
         env:
           COMMUNITY_API_URL: ${{ vars.COMMUNITY_API_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Test
         run: npm test
