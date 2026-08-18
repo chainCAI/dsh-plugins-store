@@ -1456,4 +1456,59 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, '')}/`
     font-size: 13px;
     line-height: 20px;
   }
+
+  /* ---------- 社区发布弹窗手机端适配 ---------- */
+  @media (max-width: 767px) {
+    .community-modal {
+      padding: 16px;
+      align-items: flex-end;
+    }
+
+    .community-modal__panel {
+      max-height: min(720px, calc(100vh - 32px));
+      padding: 22px 18px 20px;
+      border-radius: 14px;
+    }
+
+    .community-modal__close {
+      width: 36px;
+      height: 36px;
+    }
+
+    .community-modal__head h2 {
+      font-size: 19px;
+      line-height: 28px;
+    }
+
+    .community-modal__sub {
+      font-size: 12.5px;
+      line-height: 19px;
+    }
+
+    #community-form {
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .community-modal__actions {
+      flex-direction: column;
+    }
+
+    .community-modal__actions .btn {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .community-preview {
+      padding: 12px;
+    }
+
+    .community-preview__body {
+      gap: 10px;
+    }
+
+    .community-success {
+      padding: 16px 0 8px;
+    }
+  }
 </style>
