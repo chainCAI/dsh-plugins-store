@@ -106,13 +106,64 @@ npm run build
 ```
 
 ## 数据说明
+## 收录与分类机制
 
-- 收录仅表示仓库出现在 `dsh-plugin` Topic，不代表项目通过安装、兼容性、安全性或质量验证；站点不会下载、构建或执行第三方仓库代码；
-- 分类优先使用仓库公开的 GitHub Topics，并与站内词典和词根规则比对；标签不足时保留为"其他"或"待识别"，不会根据名称强行推断；
-- 只收录 DeepSeek Harness 公测（2026-08-13）之后创建的仓库，公测前创建的蹭标签项目不收录；例外是「社群精选」清单（`src/data/curated.ts`）中的仓库，它们经白名单由同步脚本单独补充收录，不受公测时间过滤；
-- 社群发布条目（`src/data/community.json`）由用户自行提交，属于独立数据类型（「社群发布」），与 GitHub Topic 自动收录分开统计与展示；已收录的仓库不会重复展示；
-- "精选"指 Star 数达到 100 的仓库。
+### 1. 自动收录机制（推荐）
 
+本市场通过每日自动同步脚本（`scripts/sync-github.ts`）调用 GitHub Search API 进行全量检索收录，**无需提 PR 或人工审核**：
+
+- **核心检索条件**：
+  ```text
+  topic:dsh-plugin created:>=2026-08-13
+  ```
+- **收录要求**：
+  1. 在 GitHub 仓库设置（About 区域）中添加 Topic（主题标签）：**`dsh-plugin`**；
+  2. 仓库创建时间需在 DeepSeek Harness 公测日（**2026-08-13**）之后（排除公测前蹭标签的不相关项目）；
+  3. 仓库保持公开可访问。
+
+### 2. 其它收录渠道
+
+- **社群发布（网页提交）**：点击首页「社区发布」按钮可直接提交 GitHub 仓库链接，经过服务端存活与基本信息校验后进入独立「社群发布」分类（不强制要求包含 `dsh-plugin` Topic）；
+- **社群精选白名单**：维护于 `src/data/curated.ts`，收录社区推荐的头部标杆与官方项目（不受 2026-08-13 创建时间限制，独立白名单补充拉取）。
+
+### 3. 分类与标签映射指南
+
+收录后，分类引擎（`src/lib/classification.ts`）会根据仓库设置的 **GitHub Topics** 自动做加权计算，匹配项目类型与使用场景：
+
+| 类型 / 分类 | 推荐添加的 GitHub Topics 示例 |
+| --- | --- |
+| **项目类型：插件** | `plugin`, `dsh-plugin`（默认兜底） |
+| **项目类型：技能** | `skill`, `skills`, `agent-skills`, `skill-pack` |
+| **项目类型：渠道适配** | `feishu`, `lark`, `telegram`, `wechat`, `wecom`, `qq`, `discord`, `slack`, `bot` |
+| **项目类型：完整应用** | `desktop-app`, `web-app`, `mobile-app` |
+| **项目类型：插件合集** | `plugin-pack`, `plugin-collection`, `collection` |
+| **项目类型：基础设施** | `plugin-registry`, `plugin-manager`, `infrastructure` |
+| **场景：界面增强** | `web-ui`, `ui`, `theme`, `skin`, `tui`, `frontend`, `sidebar` |
+| **场景：Agent 与会话** | `agent-memory`, `session-management`, `workflow`, `multi-agent`, `subagent` |
+| **场景：开发工具** | `coding`, `git`, `github`, `lsp`, `vscode`, `developer-tools`, `cli` |
+| **场景：消息通讯** | `wechat`, `telegram`, `feishu`, `lark`, `discord`, `slack`, `messaging`, `email` |
+| **场景：文件与数据** | `database`, `file-management`, `rag`, `ocr`, `vision`, `sqlite`, `markdown` |
+| **场景：模型与 MCP** | `mcp`, `mcp-server`, `mcp-client`, `model-provider`, `llm-provider` |
+| **场景：安全与治理** | `security`, `sandbox`, `permission`, `security-audit`, `policy` |
+| **场景：部署运维** | `docker`, `deployment`, `devops`, `monitoring`, `telemetry`, `health-check` |
+| **场景：生活娱乐** | `music`, `game`, `companion-ai`, `social-media`, `productivity` |
+| **场景：学习研究** | `research`, `paper`, `education`, `learning`, `knowledge` |
+
+> **提示**：若未打任何场景标签或标签权重较低，将归类为「待识别」或「其他」，不会被丢弃。
+
+### 4. 状态徽章说明
+
+- **官方**：仅限 `deepseek-ai/deepseek-harness` 官方主仓库；
+- **精选**：GitHub Star 数达到 100 自动点亮蓝色精选徽章；
+- **已验证**：收录并匹配自 [`qing3a/dsh-plugin-verify`](https://github.com/qing3a/dsh-plugin-verify) 验证清单；
+- **Awesome**：收录并匹配自 [`AdamPlatin123/awesome-dsh-plugins`](https://github.com/AdamPlatin123/awesome-dsh-plugins) 社区清单；
+- **社群发布**：用户通过站内直接提交的插件项目。
+
+## 免责声明
+
+- 自动收录仅表示仓库公开标注了 `dsh-plugin` Topic，不代表本站对该项目的安全性、兼容性或代码质量背书；
+- 本站为纯静态展示索引，不会拉取、构建或执行任何第三方仓库代码；
+- 使用第三方插件请自行甄别并遵循其开源许可证。
 ## 许可证
 
 [MIT License](LICENSE)
