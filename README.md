@@ -27,6 +27,19 @@
 - **标签跳转**：卡片标签可点击，跳转到对应标签聚合页
 - **自动更新**：GitHub Actions 每天北京时间凌晨 0:00 同步一次，catalog.json / community.json 有变化即提交，push 自动触发 Cloudflare Pages 重建
 
+## 界面预览
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="screenshots/home-cards.webp" alt="首页插件列表" width="100%" /><br/><sub>首页：自动收录的插件卡片列表</sub></td>
+    <td width="50%" align="center"><img src="screenshots/curated.webp" alt="社群精选" width="100%" /><br/><sub>社群精选页：社区头部项目与官方项目</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="screenshots/topics.webp" alt="话题聚合页" width="100%" /><br/><sub>话题聚合页：按 GitHub Topic 筛选</sub></td>
+    <td width="50%" align="center"><img src="screenshots/plugin-detail.webp" alt="插件详情页" width="100%" /><br/><sub>插件详情页：仓库信息、评分与标签</sub></td>
+  </tr>
+</table>
+
 ## 技术栈
 
 - [Astro](https://astro.build/)（SSG 纯静态输出）
