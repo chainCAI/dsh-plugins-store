@@ -29,7 +29,7 @@ export const CURATED_PICKS: CuratedPick[] = [
   {
     category: '🎨 UI 增强',
     rank: 1,
-    fullName: 'zhu1090093659/dsh-web-ui',
+    fullName: 'zhu1090093659/dsh-web',
     reason: 'UI 全家桶：任务看板、Git 图、右侧面板、桌宠、实时 token 统计与皮肤中心一站集齐。',
   },
   // 🏆 官方项目
