@@ -22,7 +22,7 @@ export const CURATED_PICKS: CuratedPick[] = [
   {
     category: '🖥️ 桌面端',
     rank: 1,
-    fullName: 'anywhere-labs/deepseek-harness-desktop',
+    fullName: 'anywhere-labs/dsh-desktop',
     reason: 'DeepSeek Harness 桌面客户端：原生桌面体验，Star 断层第一。',
   },
   // 🎨 UI 增强
