@@ -207,6 +207,7 @@ export function createCatalogEntry(
   repository: GitHubRepository,
   awesomeRepositoryNames: ReadonlySet<string> = new Set(),
   verifiedRepositoryNames: ReadonlySet<string> = new Set(),
+  now = new Date(),
 ): CatalogEntry {
   const classification = classifyRepository({
     fullName: repository.full_name,
@@ -261,7 +262,7 @@ export function createCatalogEntry(
       featured,
       archived: repository.archived,
       fork: repository.fork,
-    }),
+    }, now),
     status: {
       discovery: 'topic-listed',
       verification: verificationUrl ? 'verified' : 'not-verified',
@@ -288,11 +289,13 @@ export function buildCatalog(
   const normalizedVerifiedNames = new Set(
     [...verifiedRepositoryNames].map((name) => name.toLowerCase()),
   )
+  const generatedDate = new Date(generatedAt)
   const entries = sortCatalogEntries(
     [...uniqueRepositories.values()].map((repository) => createCatalogEntry(
       repository,
       normalizedAwesomeNames,
       normalizedVerifiedNames,
+      generatedDate,
     )),
     'recommended',
   )

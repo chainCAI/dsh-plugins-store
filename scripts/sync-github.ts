@@ -7,10 +7,12 @@ import { fileURLToPath } from 'node:url'
 // 零依赖实现，避免为同步脚本引入 dotenv。
 const envFilePath = resolve(dirname(fileURLToPath(import.meta.url)), '..', '.env')
 try {
-  for (const line of readFileSync(envFilePath, 'utf8').split('\n')) {
-    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/)
-    if (match && !(match[1] in process.env)) {
-      process.env[match[1]] = match[2].replace(/^(['"])(.*)\1$/, '$2')
+  for (const rawLine of readFileSync(envFilePath, 'utf8').split('\n')) {
+    const line = rawLine.trim()
+    if (!line || line.startsWith('#')) continue
+    const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/)
+    if (match) {
+      process.env[match[1]] = match[2].trim().replace(/^(['"])(.*)\1$/, '$2')
     }
   }
 } catch {
@@ -109,8 +111,8 @@ async function throttledFetch(url: string): Promise<Response> {
 
 /** GitHub Search 单查询最多返回 1000 条 */
 const SEARCH_RESULT_CAP = 1000
-/** 创建时间窗二分最大深度：2^6 = 64 段，足以自适应目录增长 */
-const MAX_SPLIT_DEPTH = 6
+/** 创建时间窗二分最大深度：2^10 = 1024 段，足以自适应目录密集增长 */
+const MAX_SPLIT_DEPTH = 10
 
 function buildRangeQuery(stars: string, start: string, end: string): string {
   const base = `topic:dsh-plugin created:${start}..${end}`
@@ -147,10 +149,13 @@ async function collectRange(
       )
     }
     const mid = splitMidpoint(start, end)
+    console.log(`[sync] 时间窗二分 (深度 ${depth + 1}): ${firstPage.total_count} 条，切分为 ${start.slice(0, 16)}..${mid.slice(0, 16)} 和 ${mid.slice(0, 16)}..${end.slice(0, 16)}`)
     await collectRange(stars, start, mid, depth + 1, repositories)
     await collectRange(stars, mid, end, depth + 1, repositories)
     return
   }
+
+  console.log(`[sync] 正在收集 ${start.slice(0, 10)}..${end.slice(0, 10)}: 共 ${firstPage.total_count} 个仓库 (${pageCount} 页)，当前已累计 ${repositories.size} 个`)
 
   let incomplete: boolean = firstPage.incomplete_results
   for (const repository of firstPage.items) repositories.set(repository.id, repository)

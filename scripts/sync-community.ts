@@ -19,6 +19,19 @@ import {
  */
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const envFilePath = resolve(root, '.env')
+try {
+  for (const rawLine of readFileSync(envFilePath, 'utf8').split('\n')) {
+    const line = rawLine.trim()
+    if (!line || line.startsWith('#')) continue
+    const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/)
+    if (match) {
+      process.env[match[1]] = match[2].trim().replace(/^(['"])(.*)\1$/, '$2')
+    }
+  }
+} catch {
+  // 没有 .env 文件时保持原样
+}
 const outputPath = resolve(root, 'src/data/community.json')
 const catalogPath = resolve(root, 'src/data/catalog.json')
 
