@@ -115,7 +115,7 @@ const SEARCH_RESULT_CAP = 1000
 const MAX_SPLIT_DEPTH = 10
 
 function buildRangeQuery(stars: string, start: string, end: string): string {
-  const base = `topic:dsh-plugin created:${start}..${end}`
+  const base = `topic:dsh-plugin created:>=${MIN_CREATED_AT} pushed:${start}..${end}`
   return stars ? `${base} ${stars}` : base
 }
 
@@ -204,14 +204,19 @@ const EXCLUDED_REPOSITORIES: ReadonlySet<string> = new Set(['ZASENJC/dsh-plugins
 
 async function fetchRepositories() {
   const repositories = new Map<number, GitHubRepository>()
-  const now = new Date().toISOString()
+  const now = new Date()
+  const nowIso = now.toISOString()
   const reportedByGitHub = await fetchPage(
     1,
     `topic:dsh-plugin created:>=${MIN_CREATED_AT}`,
   ).then((page) => page.total_count)
 
-  // 全量 topic 仓库按创建时间窗二分收集，单段超过 1000 条时自动切分
-  await collectRange('', MIN_CREATED_AT, now, 0, repositories)
+  // 仅拉取最近半个月（15天）内有代码更新的活跃仓库；超过半个月未更新则忽略
+  const HALF_MONTH_MS = 15 * 24 * 60 * 60 * 1000
+  const minPushedAt = new Date(now.getTime() - HALF_MONTH_MS).toISOString()
+
+  console.log(`[sync] GitHub 插件总数: ${reportedByGitHub}，开始拉取最近 15 天内有更新的活跃仓库 (${minPushedAt.slice(0, 10)}..${nowIso.slice(0, 10)})`)
+  await collectRange('', minPushedAt, nowIso, 0, repositories)
 
   const curatedCount = await collectCurated(repositories)
 
