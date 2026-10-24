@@ -214,26 +214,30 @@ async function collectCurated(repositories: Map<number, GitHubRepository>): Prom
 }
 
 const EXCLUDED_REPOSITORIES: ReadonlySet<string> = new Set(['ZASENJC/dsh-plugins-store'])
+const TOP_PLUGINS_PAGES = 2 // 2 页 * 100 = 前 200 个最热门精选插件
 
 async function fetchRepositories() {
   const repositories = new Map<number, GitHubRepository>()
-  const now = new Date()
-  const nowIso = now.toISOString()
-  const reportedByGitHub = await fetchPage(
-    1,
-    `topic:dsh-plugin created:>=${MIN_CREATED_AT}`,
-  ).then((page) => page.total_count)
+  const query = `topic:dsh-plugin created:>=${MIN_CREATED_AT}`
 
-  // 仅拉取最近半个月（15天）内有代码更新的活跃仓库；超过半个月未更新则忽略
-  const HALF_MONTH_MS = 15 * 24 * 60 * 60 * 1000
-  const minPushedAt = new Date(now.getTime() - HALF_MONTH_MS).toISOString()
+  console.log(`[sync] 查询 GitHub 插件总数并拉取前 ${TOP_PLUGINS_PAGES * PAGE_SIZE} 个热门精选插件...`)
+  let reportedByGitHub = 0
 
-  console.log(`[sync] GitHub 插件总数: ${reportedByGitHub}，开始拉取最近 15 天内有更新的活跃仓库 (${minPushedAt.slice(0, 10)}..${nowIso.slice(0, 10)})`)
-  await collectRange('', minPushedAt, nowIso, 0, repositories)
+  for (let page = 1; page <= TOP_PLUGINS_PAGES; page += 1) {
+    const pageData = await fetchPage(page, query)
+    if (page === 1) {
+      reportedByGitHub = pageData.total_count
+      console.log(`[sync] GitHub 插件总数: ${reportedByGitHub}`)
+    }
+    for (const repo of pageData.items) {
+      repositories.set(repo.id, repo)
+    }
+    console.log(`[sync] 已拉取第 ${page}/${TOP_PLUGINS_PAGES} 页 (当前累计 ${repositories.size} 个热门插件)`)
+  }
 
   const curatedCount = await collectCurated(repositories)
-
   console.log(`社群精选补充收录 ${curatedCount} 个仓库`)
+
   const repositoriesList = [...repositories.values()].filter(
     (repository) => !EXCLUDED_REPOSITORIES.has(repository.full_name),
   )
