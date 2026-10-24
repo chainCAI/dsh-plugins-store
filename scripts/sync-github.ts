@@ -88,25 +88,38 @@ async function fetchPage(page: number, query: string): Promise<SearchResponse> {
   return response.json() as Promise<SearchResponse>
 }
 
-/** 简单节流：Search API 限额 30 次/分钟，请求间隔至少 2.1 秒 */
+function delay(ms: number): Promise<void> {
+  const { promise, resolve } = Promise.withResolvers<void>()
+  setTimeout(resolve, ms)
+  return promise
+}
+
+/** 节流：Search API 限额 30 次/分钟，请求间隔设为 2.3 秒严格低于限额 */
 let lastRequestAt = 0
 async function throttledFetch(url: string): Promise<Response> {
-  const wait = 2_100 - (Date.now() - lastRequestAt)
-  if (wait > 0) await new Promise((resolve) => setTimeout(resolve, wait))
-  lastRequestAt = Date.now()
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    const wait = 2_300 - (Date.now() - lastRequestAt)
+    if (wait > 0) await delay(wait)
+    lastRequestAt = Date.now()
 
-  let lastError: unknown
-  for (let attempt = 1; attempt <= 4; attempt += 1) {
     try {
-      return await fetch(url, { headers: getHeaders() })
+      const response = await fetch(url, { headers: getHeaders() })
+      if (response.status === 403 && response.headers.get('x-ratelimit-remaining') === '0') {
+        const resetHeader = response.headers.get('x-ratelimit-reset')
+        const resetMs = resetHeader ? Number(resetHeader) * 1000 - Date.now() + 1000 : 10_000
+        const sleepMs = Math.max(resetMs, 3000)
+        console.log(`[sync] 达到 GitHub Search 限额，自动等待 ${Math.ceil(sleepMs / 1000)} 秒重试...`)
+        await delay(sleepMs)
+        continue
+      }
+      return response
     } catch (error) {
-      lastError = error
-      if (attempt < 4) {
-        await new Promise((resolve) => setTimeout(resolve, 2_000 * attempt))
+      if (attempt < 5) {
+        await delay(2_000 * attempt)
       }
     }
   }
-  throw lastError
+  throw new Error(`请求多次重试失败：${url}`)
 }
 
 /** GitHub Search 单查询最多返回 1000 条 */
